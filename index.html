@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KPSS Ders Notları - Ana Sayfa</title>
+    <meta name="description" content="KPSS Tarih, Türkçe, Coğrafya ve Vatandaşlık ders notları portalı.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        :root {
+            --bg: #f8f9ff;
+            --surface: #ffffff;
+            --text: #0f172a;
+            --muted: #64748b;
+            --border: #e2e8f0;
+        }
+        
+        html.dark {
+            --bg: #0a0f1e;
+            --surface: #111827;
+            --text: #f1f5f9;
+            --muted: #94a3b8;
+            --border: #1e293b;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        /* Subtle grid pattern overlay */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(99,102,241,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99,102,241,0.04) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse at center, transparent 0%, black 80%);
+        }
+        html.dark body::before {
+            background-image:
+                linear-gradient(rgba(99,102,241,0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99,102,241,0.06) 1px, transparent 1px);
+        }
+
+        /* Animated background */
+        .bg-orbs {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.25;
+            animation: floatOrb 20s ease-in-out infinite;
+        }
+        html.dark .orb { opacity: 0.18; }
+        .orb-1 { width: 700px; height: 700px; background: radial-gradient(circle, #6366f1, #7c3aed); top: -250px; left: -150px; animation-delay: 0s; }
+        .orb-2 { width: 550px; height: 550px; background: radial-gradient(circle, #ec4899, #f43f5e); bottom: -150px; right: -100px; animation-delay: -7s; }
+        .orb-3 { width: 450px; height: 450px; background: radial-gradient(circle, #06b6d4, #3b82f6); top: 35%; left: 45%; animation-delay: -14s; }
+
+        @keyframes floatOrb {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(40px, -30px) scale(1.05); }
+            66% { transform: translate(-20px, 40px) scale(0.95); }
+        }
+
+        /* Particles */
+        .particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            border-radius: 50%;
+            background: rgba(99,102,241,0.5);
+            animation: particleFloat linear infinite;
+        }
+        html.dark .particle { background: rgba(139,92,246,0.4); }
+
+        @keyframes particleFloat {
+            0% { opacity: 0; transform: translateY(100vh) scale(0); }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; transform: translateY(-100vh) scale(1); }
+        }
+
+        /* Header */
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(248,249,255,0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: background 0.3s;
+        }
+        html.dark .top-bar {
+            background: rgba(10,15,30,0.8);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text);
+        }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            box-shadow: 0 8px 20px rgba(99,102,241,0.35);
+        }
+        .logo-text {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        .logo-text span {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .top-actions { display: flex; align-items: center; gap: 10px; }
+        .dark-btn {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--muted);
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+        }
+        .dark-btn:hover { background: var(--border); }
+
+        /* Main content */
+        .main {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 24px 60px;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            margin-bottom: 64px;
+            animation: heroFadeIn 0.8s ease-out both;
+        }
+
+        @keyframes heroFadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 18px;
+            background: linear-gradient(135deg, rgba(99,102,241,0.12), rgba(139,92,246,0.12));
+            border: 1px solid rgba(99,102,241,0.25);
+            border-radius: 100px;
+            font-size: 11.5px;
+            font-weight: 700;
+            color: #6366f1;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 28px;
+            box-shadow: 0 0 20px rgba(99,102,241,0.1);
+        }
+        html.dark .hero-badge {
+            color: #818cf8;
+            border-color: rgba(129,140,248,0.25);
+            background: rgba(99,102,241,0.08);
+            box-shadow: 0 0 24px rgba(99,102,241,0.15);
+        }
+
+        .hero-title {
+            font-size: clamp(40px, 8vw, 80px);
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 1.05;
+            margin-bottom: 20px;
+        }
+
+        .hero-title .line1 { display: block; color: var(--text); }
+        .hero-title .line2 {
+            display: block;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 40%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: gradientFlow 4s linear infinite;
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+            100% { background-position: 0% center; }
+        }
+
+        .hero-sub {
+            font-size: 18px;
+            color: var(--muted);
+            font-weight: 400;
+            max-width: 520px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Subject Cards */
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        @media (max-width: 600px) {
+            .subjects-grid { grid-template-columns: 1fr; }
+        }
+
+        .subject-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 28px;
+            padding: 36px 32px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+            animation: cardFadeIn 0.6s ease-out both;
+        }
+        .subject-card:nth-child(1) { animation-delay: 0.1s; }
+        .subject-card:nth-child(2) { animation-delay: 0.2s; }
+        .subject-card:nth-child(3) { animation-delay: 0.3s; }
+        .subject-card:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes cardFadeIn {
+            from { opacity: 0; transform: translateY(40px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .subject-card:hover {
+            transform: translateY(-10px) scale(1.02);
+        }
+
+        /* Shimmer highlight on card */
+        .subject-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 40%;
+            height: 200%;
+            background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.18) 50%, transparent 60%);
+            transform: skewX(-15deg);
+            transition: left 0.6s ease;
+            pointer-events: none;
+        }
+        .subject-card:hover::after {
+            left: 120%;
+        }
+
+        /* Card backgrounds */
+        .card-tarih { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); box-shadow: 0 20px 50px rgba(79,70,229,0.4); }
+        .card-tarih:hover { box-shadow: 0 30px 70px rgba(79,70,229,0.55); }
+
+        .card-turkce { background: linear-gradient(135deg, #e11d48 0%, #ec4899 100%); box-shadow: 0 20px 50px rgba(225,29,72,0.4); }
+        .card-turkce:hover { box-shadow: 0 30px 70px rgba(225,29,72,0.55); }
+
+        .card-cografya { background: linear-gradient(135deg, #0891b2 0%, #06b6d4 100%); box-shadow: 0 20px 50px rgba(8,145,178,0.4); }
+        .card-cografya:hover { box-shadow: 0 30px 70px rgba(8,145,178,0.55); }
+
+        .card-vatandaslik { background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%); box-shadow: 0 20px 50px rgba(22,163,74,0.4); }
+        .card-vatandaslik:hover { box-shadow: 0 30px 70px rgba(22,163,74,0.55); }
+
+        /* Card decorative shapes */
+        .card-blob {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.12);
+            pointer-events: none;
+            transition: transform 0.5s ease;
+        }
+        .blob-1 { width: 200px; height: 200px; top: -60px; right: -60px; }
+        .blob-2 { width: 120px; height: 120px; bottom: -30px; left: -30px; }
+        .subject-card:hover .blob-1 { transform: scale(1.2) rotate(15deg); }
+        .subject-card:hover .blob-2 { transform: scale(1.3) rotate(-10deg); }
+
+        .card-coming {
+            position: absolute;
+            top: 16px; right: 16px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 20px;
+            padding: 4px 10px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-icon-wrap {
+            width: 64px; height: 64px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 18px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+        .subject-card:hover .card-icon-wrap { transform: rotate(-5deg) scale(1.1); }
+
+        .card-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.75;
+        }
+        .card-title {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+        }
+        .card-desc {
+            font-size: 14px;
+            opacity: 0.8;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+        .card-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 20px;
+            padding: 8px 16px;
+            margin-top: 4px;
+            width: fit-content;
+            transition: background 0.2s;
+        }
+        .subject-card:hover .card-cta { background: rgba(255,255,255,0.3); }
+        .card-cta i { transition: transform 0.2s; }
+        .subject-card:hover .card-cta i { transform: translateX(4px); }
+
+        /* Countdown widget */
+        .countdown-wrap {
+            margin-top: 56px;
+            animation: heroFadeIn 0.8s 0.5s ease-out both;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .countdown-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--muted);
+        }
+        .countdown-label .dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: #ef4444;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.75); }
+        }
+        .countdown-blocks {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .cd-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+        .cd-num {
+            min-width: 80px;
+            height: 80px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            font-weight: 900;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            box-shadow: 0 8px 24px rgba(99,102,241,0.3);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.15s ease;
+        }
+        .cd-num::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .cd-num.flip {
+            animation: flipAnim 0.3s ease;
+        }
+        @keyframes flipAnim {
+            0% { transform: rotateX(0deg); }
+            50% { transform: rotateX(-90deg); opacity: 0.5; }
+            100% { transform: rotateX(0deg); }
+        }
+        .cd-unit {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--muted);
+        }
+        .cd-sep {
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--border);
+            align-self: flex-start;
+            margin-top: 14px;
+            line-height: 1;
+        }
+        .cd-date-note {
+            font-size: 13px;
+            color: var(--muted);
+            font-weight: 500;
+        }
+        .cd-date-note strong { color: var(--text); font-weight: 700; }
+
+        /* Footer */
+        .footer-note {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: var(--muted);
+            font-weight: 500;
+            z-index: 10;
+            white-space: nowrap;
+        }
+
+        /* Ripple effect on card click */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.4);
+            transform: scale(0);
+            animation: rippleAnim 0.6s linear;
+            pointer-events: none;
+        }
+        @keyframes rippleAnim {
+            to { transform: scale(4); opacity: 0; }
+        }
+
+        /* ── Dark mode special polish ── */
+        html.dark .top-bar {
+            background: rgba(8, 12, 24, 0.9);
+            border-bottom: 1px solid rgba(99,102,241,0.12);
+        }
+        html.dark .logo-icon {
+            box-shadow: 0 8px 24px rgba(99,102,241,0.45);
+        }
+        html.dark .cd-num {
+            box-shadow: 0 8px 32px rgba(99,102,241,0.45);
+        }
+        html.dark .subject-card.card-tarih      { box-shadow: 0 20px 50px rgba(79,70,229,0.5); }
+        html.dark .subject-card.card-turkce     { box-shadow: 0 20px 50px rgba(225,29,72,0.5); }
+        html.dark .subject-card.card-cografya   { box-shadow: 0 20px 50px rgba(8,145,178,0.5); }
+        html.dark .subject-card.card-vatandaslik{ box-shadow: 0 20px 50px rgba(22,163,74,0.5); }
+
+        html.dark .subject-card.card-tarih:hover      { box-shadow: 0 32px 70px rgba(79,70,229,0.65); }
+        html.dark .subject-card.card-turkce:hover     { box-shadow: 0 32px 70px rgba(225,29,72,0.65); }
+        html.dark .subject-card.card-cografya:hover   { box-shadow: 0 32px 70px rgba(8,145,178,0.65); }
+        html.dark .subject-card.card-vatandaslik:hover{ box-shadow: 0 32px 70px rgba(22,163,74,0.65); }
+
+        /* Countdown block glow in dark */
+        html.dark .countdown-wrap .cd-num {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        }
+
+        /* ── Mobile Polish ── */
+        @media (max-width: 640px) {
+            .hero { margin-bottom: 40px; }
+            .hero-title { font-size: 38px; }
+            .hero-sub { font-size: 15px; }
+            
+            .cd-num {
+                min-width: 60px;
+                height: 60px;
+                font-size: 24px;
+                border-radius: 12px;
+            }
+            .cd-sep { font-size: 24px; margin-top: 8px; }
+            .cd-unit { font-size: 9px; }
+            
+            .subject-card { padding: 24px 20px; }
+            .card-title { font-size: 22px; }
+            .card-icon-wrap { width: 50px; height: 50px; font-size: 22px; }
+
+            .top-bar { padding: 12px 20px; }
+            .logo-text { font-size: 18px; }
+        }
+
+        /* Tilt effect applied via JS */
+        .subject-card {
+            transform-style: preserve-3d;
+            perspective: 800px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Animated background -->
+    <div class="bg-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    <div class="particles" id="particles"></div>
+
+    <!-- Top bar -->
+    <header class="top-bar">
+        <a href="anasayfa.html" class="logo">
+            <div class="logo-icon"><i class="fas fa-graduation-cap"></i></div>
+            <div class="logo-text">KPSS <span>Notlarım</span></div>
+        </a>
+        <div class="top-actions">
+            <button class="dark-btn" id="darkToggle" title="Karanlık mod">
+                <i class="fas fa-moon" id="darkIcon"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="main">
+        <!-- Hero -->
+        <div class="hero">
+            <div class="hero-badge">
+                <i class="fas fa-bolt"></i>
+                KPSS 2026 Hazırlık Platformu
+            </div>
+            <h1 class="hero-title">
+                <span class="line1">Sınavı Birlikte</span>
+                <span class="line2">Fethediyoruz</span>
+            </h1>
+            <p class="hero-sub">
+                KPSS Lisans 2026'ya hazırlanıyorum. Dört derste kapsamlı notlar, çıkmış soru analizleri ve çalışma araçları burada.
+            </p>
+        </div>
+
+        <!-- Subject cards -->
+        <div class="subjects-grid">
+
+            <!-- Tarih -->
+            <a href="index.html" class="subject-card card-tarih" onclick="addRipple(event)">
+                <div class="card-blob blob-1"></div>
+                <div class="card-blob blob-2"></div>
+                <div class="card-icon-wrap">🏛️</div>
+                <div>
+                    <div class="card-label">Ders 01</div>
+                    <div class="card-title">Tarih</div>
+                    <div class="card-desc">İslamiyet öncesinden çağdaş tarihe, 25 ünite kapsamlı not ve çıkmış analizi.</div>
+                </div>
+                <div class="card-cta">
+                    Notlara Git <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+
+            <!-- Türkçe -->
+            <a href="turkce.html" class="subject-card card-turkce" onclick="addRipple(event)">
+                <div class="card-blob blob-1"></div>
+                <div class="card-blob blob-2"></div>
+                <div class="card-icon-wrap">📝</div>
+                <div>
+                    <div class="card-label">Ders 02</div>
+                    <div class="card-title">Türkçe</div>
+                    <div class="card-desc">Ses bilgisi, yazım kuralları, sözcük türleri ve cümle yapısı konularında detaylı notlar.</div>
+                </div>
+                <div class="card-cta">
+                    Notlara Git <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+
+            <!-- Coğrafya - Coming Soon -->
+            <a href="#" class="subject-card card-cografya" onclick="addRipple(event); return false;" style="cursor: not-allowed; opacity: 0.75;">
+                <div class="card-blob blob-1"></div>
+                <div class="card-blob blob-2"></div>
+                <div class="card-coming">Yakında</div>
+                <div class="card-icon-wrap">🌍</div>
+                <div>
+                    <div class="card-label">Ders 03</div>
+                    <div class="card-title">Coğrafya</div>
+                    <div class="card-desc">Türkiye ve dünya coğrafyası, beşeri coğrafya ve harita bilgisi notları hazırlanıyor.</div>
+                </div>
+                <div class="card-cta" style="opacity: 0.6;">
+                    Hazırlanıyor <i class="fas fa-hourglass-half"></i>
+                </div>
+            </a>
+
+            <!-- Vatandaşlık - Coming Soon -->
+            <a href="#" class="subject-card card-vatandaslik" onclick="addRipple(event); return false;" style="cursor: not-allowed; opacity: 0.75;">
+                <div class="card-blob blob-1"></div>
+                <div class="card-blob blob-2"></div>
+                <div class="card-coming">Yakında</div>
+                <div class="card-icon-wrap">⚖️</div>
+                <div>
+                    <div class="card-label">Ders 04</div>
+                    <div class="card-title">Vatandaşlık</div>
+                    <div class="card-desc">Anayasa, temel hak ve özgürlükler, hukuk ve devlet yapısı konuları hazırlanıyor.</div>
+                </div>
+                <div class="card-cta" style="opacity: 0.6;">
+                    Hazırlanıyor <i class="fas fa-hourglass-half"></i>
+                </div>
+            </a>
+
+        </div>
+
+        <!-- Countdown -->
+        <div class="countdown-wrap">
+            <div class="countdown-label">
+                <span class="dot"></span>
+                KPSS Lisans Sınavına Kalan Süre
+            </div>
+            <div class="countdown-blocks">
+                <div class="cd-block">
+                    <div class="cd-num" id="cd-days">--</div>
+                    <div class="cd-unit">Gün</div>
+                </div>
+                <div class="cd-sep">:</div>
+                <div class="cd-block">
+                    <div class="cd-num" id="cd-hours">--</div>
+                    <div class="cd-unit">Saat</div>
+                </div>
+                <div class="cd-sep">:</div>
+                <div class="cd-block">
+                    <div class="cd-num" id="cd-mins">--</div>
+                    <div class="cd-unit">Dakika</div>
+                </div>
+                <div class="cd-sep">:</div>
+                <div class="cd-block">
+                    <div class="cd-num" id="cd-secs">--</div>
+                    <div class="cd-unit">Saniye</div>
+                </div>
+            </div>
+            <div class="cd-date-note">📅 Hedef: <strong>06 Eylül 2026</strong> — KPSS Lisans Sınavı</div>
+        </div>
+    </main>
+
+    <div class="footer-note">© 2026 KPSS Notlarım · Başarılar 🎯</div>
+
+    <script>
+        // Dark mode
+        const darkToggle = document.getElementById('darkToggle');
+        const darkIcon = document.getElementById('darkIcon');
+
+        function applyDark(isDark) {
+            document.documentElement.classList.toggle('dark', isDark);
+            darkIcon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+            darkIcon.style.color = isDark ? '#fbbf24' : '';
+        }
+
+        const saved = localStorage.getItem('darkMode');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        applyDark(saved === 'true' || (saved === null && prefersDark));
+
+        darkToggle.addEventListener('click', () => {
+            const isDark = !document.documentElement.classList.contains('dark');
+            applyDark(isDark);
+            localStorage.setItem('darkMode', isDark);
+        });
+
+        // Ripple effect
+        function addRipple(e) {
+            const card = e.currentTarget;
+            const rect = card.getBoundingClientRect();
+            const ripple = document.createElement('span');
+            const size = Math.max(rect.width, rect.height);
+            ripple.className = 'ripple';
+            ripple.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - rect.left - size/2}px;top:${e.clientY - rect.top - size/2}px`;
+            card.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 700);
+        }
+
+        // Floating particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const count = 35;
+            for (let i = 0; i < count; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                const size = Math.random() * 4 + 2;
+                const x = Math.random() * 100;
+                const dur = Math.random() * 15 + 10;
+                const delay = Math.random() * 20;
+                p.style.cssText = `
+                    left: ${x}%;
+                    width: ${size}px;
+                    height: ${size}px;
+                    animation-duration: ${dur}s;
+                    animation-delay: -${delay}s;
+                    opacity: ${Math.random() * 0.5 + 0.2};
+                `;
+                container.appendChild(p);
+            }
+        }
+        createParticles();
+
+        // 3D Tilt effect on subject cards
+        document.querySelectorAll('.subject-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const cx = rect.width / 2;
+                const cy = rect.height / 2;
+                const rotX = ((y - cy) / cy) * -8;
+                const rotY = ((x - cx) / cx) * 8;
+                card.style.transform = `translateY(-10px) scale(1.02) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+                card.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease';
+            });
+            card.addEventListener('mouseenter', () => {
+                card.style.transition = 'transform 0.1s ease, box-shadow 0.35s ease';
+            });
+        });
+
+        // Countdown timer to Sept 6, 2026
+        const TARGET = new Date('2026-09-06T09:00:00+03:00').getTime();
+        const ids = {
+            days: document.getElementById('cd-days'),
+            hours: document.getElementById('cd-hours'),
+            mins: document.getElementById('cd-mins'),
+            secs: document.getElementById('cd-secs')
+        };
+        const prevVals = { days: -1, hours: -1, mins: -1, secs: -1 };
+
+        function pad(n) { return String(n).padStart(2, '0'); }
+
+        function flipEl(el) {
+            el.classList.remove('flip');
+            void el.offsetWidth; // reflow
+            el.classList.add('flip');
+        }
+
+        function updateCountdown() {
+            const now = Date.now();
+            const diff = TARGET - now;
+            if (diff <= 0) {
+                Object.values(ids).forEach(el => el.textContent = '00');
+                return;
+            }
+            const d = Math.floor(diff / 86400000);
+            const h = Math.floor((diff % 86400000) / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000);
+            const s = Math.floor((diff % 60000) / 1000);
+
+            if (d !== prevVals.days) { ids.days.textContent = d; if (prevVals.days !== -1) flipEl(ids.days); prevVals.days = d; }
+            if (h !== prevVals.hours) { ids.hours.textContent = pad(h); if (prevVals.hours !== -1) flipEl(ids.hours); prevVals.hours = h; }
+            if (m !== prevVals.mins) { ids.mins.textContent = pad(m); if (prevVals.mins !== -1) flipEl(ids.mins); prevVals.mins = m; }
+            if (s !== prevVals.secs) { ids.secs.textContent = pad(s); if (prevVals.secs !== -1) flipEl(ids.secs); prevVals.secs = s; }
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KPSS Tarih Özetlerim</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-slate-50 text-slate-900 leading-relaxed antialiased">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm px-4 py-4 border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
+        <div class="max-w-[1600px] mx-auto flex justify-between items-center px-4 md:px-8">
+            <div class="flex items-center space-x-4">
+                <div class="bg-gradient-to-br from-indigo-500 to-purple-600 text-white p-2.5 rounded-xl shadow-lg shadow-indigo-200/50 dark:shadow-indigo-900/50">
+                    <i class="fas fa-bookmark text-lg"></i>
+                </div>
+                <h1 class="text-2xl font-extrabold tracking-tight">KPSS <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">Ders Notlarım</span></h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <!-- Dersler Menüsü -->
+                <a href="../anasayfa.html" class="hidden lg:flex items-center gap-1.5 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 font-semibold text-sm transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700 mr-1" title="Ana Sayfaya Dön">
+                    <i class="fas fa-home text-sm"></i>
+                    <span>Ana Sayfa</span>
+                </a>
+                <nav class="hidden lg:flex items-center space-x-1 mr-2">
+                    <a href="../index.html" class="px-3 py-2 rounded-lg font-bold text-sm transition-colors bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400">Tarih</a>
+                    <a href="../turkce.html" class="px-3 py-2 rounded-lg font-bold text-sm transition-colors text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 font-semibold">Türkçe</a>
+                    <a href="#" class="px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 font-semibold text-sm transition-colors">Coğrafya</a>
+                    <a href="#" class="px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 font-semibold text-sm transition-colors">Vatandaşlık</a>
+                </nav>
+                
+                <!-- Arama Kutusu -->
+                <div class="hidden md:flex items-center bg-slate-100 dark:bg-slate-800 rounded-full px-4 py-2 border border-slate-200 dark:border-slate-700 focus-within:ring-2 focus-within:ring-indigo-500 transition-all relative z-50">
+                    <i class="fas fa-search text-slate-400"></i>
+                    <input type="text" id="searchInput" placeholder="Notlarda ara..." class="bg-transparent border-none outline-none ml-2 text-sm text-slate-800 dark:text-slate-200 placeholder-slate-400 w-48 lg:w-64" autocomplete="off">
+                    
+                    <!-- Sonuç Kutusu -->
+                    <div id="searchResults" class="absolute top-full right-0 mt-3 w-80 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 hidden flex-col max-h-[70vh] overflow-y-auto z-50 custom-scrollbar divide-y divide-slate-100 dark:divide-slate-700/50">
+                    </div>
+                </div>
+                
+                <button id="dark-mode-toggle" class="p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300">
+                    <i class="fas fa-moon dark:hidden text-lg"></i>
+                    <i class="fas fa-sun hidden dark:block text-yellow-400 text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-[1600px] mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12 p-4 md:p-8 lg:px-12">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="w-full lg:w-72 shrink-0">
+            <div class="sticky top-28 space-y-4">
+                <!-- Test Coz Button -->
+                <a href="../test.html" class="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-3.5 rounded-2xl font-bold shadow-lg shadow-emerald-200 dark:shadow-none hover:shadow-xl hover:-translate-y-1 transition-all duration-300 mb-2 group">
+                    <i class="fas fa-pencil text-lg group-hover:rotate-12 transition-transform"></i>
+                    <span>Test Çöz</span>
+                </a>
+
+                <a href="../flashcards.html" class="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-violet-500 to-purple-600 text-white px-4 py-3.5 rounded-2xl font-bold shadow-lg shadow-violet-200 dark:shadow-none hover:shadow-xl hover:-translate-y-1 transition-all duration-300 mb-2 group">
+                    <i class="fas fa-layer-group text-lg group-hover:rotate-6 transition-transform"></i>
+                    <span>Hafıza Kartları</span>
+                </a>
+
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden">
+                    <button onclick="toggleSidebarSection('unitNav', this)" class="w-full text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 active:bg-slate-100 dark:active:bg-slate-700 transition-colors cursor-pointer">
+                        <span class="flex items-center"><i class="fas fa-layer-group mr-2"></i> TARİH ÜNİTELERİ</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300" id="unitNav-chevron"></i>
+                    </button>
+                    <div class="px-3 pb-3"><nav id="unitNav" class="space-y-1.5 max-h-[45vh] overflow-y-auto pr-1.5 custom-scrollbar hidden">
+                        <a href="../index.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-landmark text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">1. İslamiyet Öncesi Türk Tarihi</span>
+                            </div>
+                        </a>
+                        <a href="unite2.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-mosque text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">2. İlk Türk İslam Devletleri</span>
+                            </div>
+                        </a>
+                        <a href="unite3.html" class="flex items-center justify-between bg-gradient-to-r from-indigo-600 to-indigo-500 text-white px-3 py-3 rounded-xl font-semibold shadow-md shadow-indigo-200 dark:shadow-none transition-transform hover:scale-[1.02] mb-2 mt-2">
+                            <div class="flex items-start space-x-3">
+                                <i class="fas fa-chess-knight w-4 text-center mt-0.5"></i>
+                                <span class="text-[13px] leading-snug">3. Anadolu (Türkiye) Selçuklu Devleti</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-[10px] opacity-70 shrink-0 ml-2 mt-1"></i>
+                        </a>
+                        <a href="unite4.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-landmark-dome text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">4. Osmanlı Devleti Kültür ve Medeniyeti</span>
+                            </div>
+                        </a>
+                        <a href="unite5.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-campground text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">5. Osmanlı Devleti Kuruluş Dönemi (1299 - 1453)</span>
+                            </div>
+                        </a>
+                        <a href="unite6.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-chess-rook text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">6. Osmanlı Devleti Yükselme Dönemi (1453 - 1595)</span>
+                            </div>
+                        </a>
+                        <a href="unite7.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-hourglass-end text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">7. XVII. Yüzyılda Osmanlı Devleti (Duraklama Dönemi) (1595 - 1699)</span>
+                            </div>
+                        </a>
+                        <a href="unite8.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-arrow-trend-down text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">8. XVIII. Yüzyılda Osmanlı Devleti (Gerileme Dönemi) (1699 - 1792)</span>
+                            </div>
+                        </a>
+                        <a href="unite9.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-unlink text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">9. XIX. Yüzyılda Osmanlı Devleti (Daşılma Dönemi) (1792 - 1922)</span>
+                            </div>
+                        </a>
+                        <a href="unite10.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-globe text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">10. XX. Yüzyıl Başlarında Osmanlı Devleti</span>
+                            </div>
+                        </a>
+                        <a href="unite11.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-bullhorn text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">11. Millî Mücadele Hazırlık Dönemi</span>
+                            </div>
+                        </a>
+                        <a href="unite12.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-building-columns text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">12. I. TBMM Dönemi ve Gelişmeleri (1920 - 1923)</span>
+                            </div>
+                        </a>
+                        <a href="unite13.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-shield-halved text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">13. Millî Mücadele Muharebeler Dönemi</span>
+                            </div>
+                        </a>
+                        <a href="unite14.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-user-tie text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">14. Atatürk'ün Hayatı</span>
+                            </div>
+                        </a>
+                        <a href="unite15.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-landmark-flag text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">15. Atatürk Dönemi İç Politika</span>
+                            </div>
+                        </a>
+                        <a href="unite16.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-scale-balanced text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">16. Atatürk İlkeleri</span>
+                            </div>
+                        </a>
+                        <a href="unite17.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-lightbulb text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">17. Atatürk İnkılapları</span>
+                            </div>
+                        </a>
+                        <a href="unite18.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-earth-europe text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">18. Atatürk Dönemi Türk Dış Politikası</span>
+                            </div>
+                        </a>
+                        <a href="unite19.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-masks-theater text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">19. Cumhuriyet Dönemi Kültür ve Medeniyeti</span>
+                            </div>
+                        </a>
+                        <a href="unite20.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-earth-americas text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">20. Çağdaş Türk ve Dünya Tarihi</span>
+                            </div>
+                        </a>
+                        <a href="unite21.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-biohazard text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">21. XX. Yüzyıl Başlarında Dünya</span>
+                            </div>
+                        </a>
+                        <a href="unite22.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-fighter-jet text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">22. II. Dünya Savaşı (1939 - 1945)</span>
+                            </div>
+                        </a>
+                        <a href="unite23.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-snowflake text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">23. Soğuk Savaş Dönemi (1947 - 1990)</span>
+                            </div>
+                        </a>
+                        <a href="unite24.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-handshake-angle text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">24. Yumuşama (Detant) Dönemi</span>
+                            </div>
+                        </a>
+                        <a href="unite25.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-network-wired text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">25. Küreselleğen Dünya (1990 - 2026)</span>
+                            </div>
+                        </a>
+                    </nav></div>
+                </div></div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 space-y-8 lg:space-y-12">
+            <header class="space-y-4 bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 relative overflow-hidden">
+                <div class="absolute right-0 bottom-0 opacity-5 dark:opacity-10 pointer-events-none transform translate-x-1/4 translate-y-1/4">
+                    <i class="fas fa-horse-head text-[20rem]"></i>
+                </div>
+                <div class="relative z-10">
+                    <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 text-xs font-bold uppercase tracking-widest mb-2 shadow-inner">
+                        KPSS Tarih Hazırlık
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white leading-tight uppercase tracking-tight">3. ÜNİTE:<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">ANADOLU (TÜRKİYE) SELÇUKLU DEVLETİ VE II. BEYLİKLER</span></h2>
+                    <p class="text-slate-500 dark:text-slate-400 mt-4 text-lg max-w-2xl">Bu ünitede Türkiye Selçuklu Devleti'nin siyasi ve kültürel geliğimi, Ahilik teşkilatı ve İkinci Beylikler Dönemi incelenmektedir.</p>
+                </div>
+            </header>
+
+            <!-- KARTLAR MASONRY DÜZENİ -->
+            <div class="columns-1 xl:columns-2 gap-8 space-y-8">
+                
+                <!-- MOR BÖLÜM -->
+                <section class="category-purple note-card p-6 md:p-8 rounded-3xl">
+                    <h3 class="text-xl font-extrabold mb-6 flex items-center text-purple-900 dark:text-purple-200">
+                        <div class="bg-purple-100 dark:bg-purple-900/50 p-2.5 rounded-xl mr-3 shadow-sm">
+                            <i class="fas fa-star text-purple-600 dark:text-purple-300"></i>
+                        </div>
+                        İlkler, Sonlar ve Kesin Yargılar
+                    </h3>
+                    <ul class="space-y-4 text-slate-800 dark:text-purple-100 font-medium">
+                        <li class="flex items-start"><i class="fas fa-caret-right mt-1 mr-2 text-purple-400"></i> <span>Türkiye Selçuklu Devleti, Kutalmışoşlu Süleyman Şah tarafından Bizans�"taki taht kavgalarından yararlanılarak başkenti <strong class="text-purple-700 dark:text-purple-400">İznik</strong> olmak üzere kurulmuştur.</span></li>
+                        <li class="flex items-start"><i class="fas fa-caret-right mt-1 mr-2 text-purple-400"></i> <span>Anadolu'dan "Türkiye" diye ilk defa <strong class="text-purple-700 dark:text-purple-400">I. Mesut</strong> Dönemi'nde bahsedilmiştir.</span></li>
+                        <li class="flex items-start"><i class="fas fa-caret-right mt-1 mr-2 text-purple-400"></i> <span>Devletin ilk madeni parası (bakır) <strong class="text-purple-700 dark:text-purple-400">I. Mesut</strong> döneminde, ilk altın parası ise <strong class="text-purple-700 dark:text-purple-400">II. Kılıçarslan</strong> döneminde basılmıştır.</span></li>
+                        <li class="flex items-start"><i class="fas fa-caret-right mt-1 mr-2 text-purple-400"></i> <span>Anadolu'nun kesin olarak "Türk yurdu" hâline gelmesi, Bizans'a karşı kazanılan 1176 <strong class="text-purple-700 dark:text-purple-400">Miryokefalon Savaşı</strong> (Yurttutan) ile gerçekleşmiştir.</span></li>
+                        <li class="flex items-start"><i class="fas fa-caret-right mt-1 mr-2 text-purple-400"></i> <span>Türkiye Selçuklularına en parlak dönemini yaşatan hükümdar <strong class="text-purple-700 dark:text-purple-400">I. Alaaddin Keykubat'tır</strong>.</span></li>
+                        <li class="flex items-start"><i class="fas fa-caret-right mt-1 mr-2 text-purple-400"></i> <span>Türk tarihinde denizaşırı ilk sefer, Karadeniz'in kuzeyindeki Suğdak Limanı'nın (Kırım) alınmasıyla yapılmıştır (<strong class="text-purple-700 dark:text-purple-400">I. Alaaddin Keykubat</strong>).</span></li>
+                        <li class="flex items-start"><i class="fas fa-caret-right mt-1 mr-2 text-purple-400"></i> <span>Dünya tarihinde ilk kez devlet sigortacılışı sistemini (tüccarların zararını devletin karşılaması) uygulayan devlet <strong class="text-purple-700 dark:text-purple-400">Türkiye Selçuklularıdır</strong>.</span></li>
+                        <li class="flex items-start"><i class="fas fa-caret-right mt-1 mr-2 text-purple-400"></i> <span>Osmanlı Devleti'ne katılan ilk beylik <strong class="text-purple-700 dark:text-purple-400">Karesioğulları</strong>, katılan son beylik ise <strong class="text-purple-700 dark:text-purple-400">Dulkadiroğulları'dır</strong>.</span></li>
+                        
+                        <div class="mt-4 p-4 bg-purple-50 dark:bg-purple-900/30 rounded-2xl border border-purple-100 dark:border-purple-800/50">
+                            <p class="font-bold text-purple-800 dark:text-purple-300 mb-2 border-b border-purple-200 dark:border-purple-800/50 pb-2"><i class="fas fa-building mr-2"></i>İlk Mimari Eserler</p>
+                            <ul class="space-y-2 text-sm mt-2">
+                                <li><strong class="text-purple-700 dark:text-purple-400">İlk Hastane:</strong> Kayseri Gevher Nesibe Darüşşifası</li>
+                                <li><strong class="text-purple-700 dark:text-purple-400">İlk Medrese:</strong> Kayseri Kocahasan Medresesi</li>
+                                <li><strong class="text-purple-700 dark:text-purple-400">İlk Cami:</strong> Konya Alaaddin Camii</li>
+                                <li><strong class="text-purple-700 dark:text-purple-400">İlk Kervansaray:</strong> Aksaray Alay Han</li>
+                            </ul>
+                        </div>
+                    </ul>
+                </section>
+                <section class="category-yellow note-card p-6 md:p-8 rounded-3xl">
+                    <h3 class="text-xl font-extrabold mb-6 flex items-center text-yellow-900 dark:text-yellow-200">
+                        <div class="bg-yellow-100 dark:bg-yellow-900/50 p-2.5 rounded-xl mr-3 shadow-sm">
+                            <i class="fas fa-user-crown text-yellow-600 dark:text-yellow-300"></i>
+                        </div>
+                        Önemli Şahsiyetler
+                    </h3>
+                    <ul class="space-y-4 text-slate-800 dark:text-yellow-100 font-medium">
+                        <li class="bg-white/40 dark:bg-black/10 p-3 rounded-xl"><strong class="text-yellow-800 dark:text-yellow-300 block text-lg mb-1">I. Kılıçarslan:</strong> I. Haçlı Seferi sırasında başkent İznik'i kaybetmiş ve devletin merkezini Konya'ya taşımak zorunda kalmıştır.</li>
+                        <li class="bg-white/40 dark:bg-black/10 p-3 rounded-xl"><strong class="text-yellow-800 dark:text-yellow-300 block text-lg mb-1">II. Kılıçarslan:</strong> Miryokefalon Savaşı'nı kazanmış, ölmeden önce eski Türk geleneğine uyarak ülkeyi 11 oğlu arasında paylaştırmıştır.</li>
+                        <li class="bg-white/40 dark:bg-black/10 p-3 rounded-xl"><strong class="text-yellow-800 dark:text-yellow-300 block text-lg mb-1">I. Alaaddin Keykubat:</strong> Devlete en parlak dönemini yaşatan, Alaiye (Alanya) ve Suğdak'ı alan, Moğol tehlikesine karşı surları güçlendiren büyük sultandır.</li>
+                        <li class="bg-white/40 dark:bg-black/10 p-3 rounded-xl"><strong class="text-yellow-800 dark:text-yellow-300 block text-lg mb-1">Sadettin Köpek:</strong> Devletin ünlü veziri ve başmimarıdır. Zazadin Hanı ve Kubadabad Sarayı'nı yapmıştır. Gücünün aşırı artmasından rahatsız olan II. Gıyaseddin Keyhüsrev tarafından öldürtülmüştür.</li>
+                        <li class="bg-white/40 dark:bg-black/10 p-3 rounded-xl"><strong class="text-yellow-800 dark:text-yellow-300 block text-lg mb-1">Ahi Evran (Mahmut bin Ahmet el-Hoyi):</strong> Ahilik (esnaf ve zanaatkâr) teşkilatının kurucusudur. Asıl adı Mahmut bin Ahmet el-Hoyi'dir. "Letaif-i Hikmet" adlı eseri yazmıştır.</li>
+                        <li class="bg-white/40 dark:bg-black/10 p-3 rounded-xl"><strong class="text-yellow-800 dark:text-yellow-300 block text-lg mb-1">Fatma Bacı:</strong> Ahi Evran'ın eşidir. Dünyanın ilk kadın sivil toplum örgütü sayılan "Bacıyan-ı Rum"u (Anadolu Kadınları) kurmuştur.</li>
+                        <li class="bg-white/40 dark:bg-black/10 p-3 rounded-xl"><strong class="text-yellow-800 dark:text-yellow-300 block text-lg mb-1">Hoca Dehhani:</strong> Divan edebiyatının kurucusu kabul edilir. En ünlü eseri Selçuklu Şehnamesi'dir.</li>
+                        <li class="bg-white/40 dark:bg-black/10 p-3 rounded-xl"><strong class="text-yellow-800 dark:text-yellow-300 block text-lg mb-1">Muhyiddin Arabi:</strong> "Şeyh Ekber" lakabıyla bilinir. (Daha sonra Yavuz Sultan Selim mezarını buldurup türbe yaptıracaktır).</li>
+                        <li class="bg-white/40 dark:bg-black/10 p-3 rounded-xl"><strong class="text-yellow-800 dark:text-yellow-300 block text-lg mb-1">Alaaddin Siyavuş (Cimri Olayı):</strong> Karamanoğlu Mehmet Bey'in Türkçeyi resmî dil ilan ettiği dönemde (1277), kukla bir hükümdar olarak tahta geçirmeye çalıştışı sahte şehzadedir. Halk ona "Cimri" lakabını takmıştır.</li>
+                        <li class="bg-white/40 dark:bg-black/10 p-3 rounded-xl"><strong class="text-yellow-800 dark:text-yellow-300 block text-lg mb-1">Diğer Edebi Şahsiyetler:</strong> Mevlâna (Kebir ve Mesnevi), Hacı Bektaş Veli (Makâlât), Yunus Emre (Risaletü'n Nushiyye), Aşık Paşa (Garipname), Gülşehri (Mantıku't Tayr).</li>
+                    </ul>
+                </section>
+                <section class="category-turquoise note-card p-6 md:p-8 rounded-3xl">
+                    <h3 class="text-xl font-extrabold mb-6 flex items-center text-cyan-900 dark:text-cyan-200">
+                        <div class="bg-cyan-100 dark:bg-cyan-900/50 p-2.5 rounded-xl mr-3 shadow-sm">
+                            <i class="fas fa-book-open text-cyan-600 dark:text-cyan-300"></i>
+                        </div>
+                        Kavramlar ve Savaşlar
+                    </h3>
+                    <div class="space-y-6 text-slate-800 dark:text-cyan-100 font-medium">
+                        
+                        <div class="bg-cyan-50/50 dark:bg-cyan-900/20 p-4 rounded-2xl">
+                            <p class="font-bold text-cyan-800 dark:text-cyan-300 mb-2 flex items-center"><i class="fas fa-store mr-2"></i>Ahilik Kavramları</p>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+                                <span class="bg-white dark:bg-slate-800 px-3 py-2 rounded-lg shadow-sm border border-cyan-100 dark:border-cyan-800"><strong class="text-cyan-700 dark:text-cyan-400 block mb-0.5">Narh Kesmek</strong> Üretilen malın fiyatını belirlemektir.</span>
+                                <span class="bg-white dark:bg-slate-800 px-3 py-2 rounded-lg shadow-sm border border-cyan-100 dark:border-cyan-800"><strong class="text-cyan-700 dark:text-cyan-400 block mb-0.5">Gedik</strong> Dükkân açma izni / hakkıdır.</span>
+                                <span class="bg-white dark:bg-slate-800 px-3 py-2 rounded-lg shadow-sm border border-cyan-100 dark:border-cyan-800"><strong class="text-cyan-700 dark:text-cyan-400 block mb-0.5">İcazetname</strong> Mesleki eğitimi bitirene verilen diplomadır.</span>
+                                <span class="bg-white dark:bg-slate-800 px-3 py-2 rounded-lg shadow-sm border border-cyan-100 dark:border-cyan-800"><strong class="text-cyan-700 dark:text-cyan-400 block mb-0.5">Fütüvvetname</strong> Ahilik teşkilatının yazılı olmayan ahlak ve meslek kurallarıdır.</span>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-cyan-200 dark:border-cyan-800/50 pt-4">
+                            <p class="font-bold text-cyan-800 dark:text-cyan-300 mb-3"><i class="fas fa-crosshairs mr-2"></i>Önemli Olaylar ve Savaşlar</p>
+                            <div class="flex flex-col gap-2 text-sm">
+                                <div class="bg-white dark:bg-slate-800 px-4 py-3 rounded-lg shadow-sm border border-cyan-100 dark:border-cyan-800">
+                                    <strong class="text-cyan-700 dark:text-cyan-400 block mb-1">Yassıçimen Savaşı (1230):</strong> I. Alaaddin Keykubat döneminde Harzemşahların yenilerek yıkılış sürecine girdiği savaştır. Bu savaşın kazanılması, Doğu Anadolu'da Moğollarla aradaki tampon bölgenin kalkmasına ve Moğol istilasının hızlanmasına neden olmuştur.
+                                </div>
+                                <div class="bg-white dark:bg-slate-800 px-4 py-3 rounded-lg shadow-sm border border-cyan-100 dark:border-cyan-800">
+                                    <strong class="text-cyan-700 dark:text-cyan-400 block mb-1">Baba İshak (Babailer) İsyanı (1240):</strong> Türkiye Selçuklu tarihindeki ilk dinî ve sosyal nitelikli büyük Türkmen isyanıdır. Devletin zayıflışını gören Moğollar Anadolu'ya saldırma cesareti bulmuştur.
+                                </div>
+                                <div class="bg-white dark:bg-slate-800 px-4 py-3 rounded-lg shadow-sm border border-cyan-100 dark:border-cyan-800">
+                                    <strong class="text-cyan-700 dark:text-cyan-400 block mb-1">Kösedaş Savaşı (1243):</strong> İlhanlılar (Moğollar) ile yapılmış ve kaybedilmiştir. Sonuçlarında; devlet daşılma sürecine girmiş, Anadolu Türk siyasi birliği bozulmuş, Moğol tahribatı yağanmış ve Anadolu'da "İkinci Türk Beylikleri" dönemi başlamıştır.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="category-green note-card p-6 md:p-8 rounded-3xl">
+                    <h3 class="text-xl font-extrabold mb-4 flex items-center text-emerald-900 dark:text-emerald-200">
+                        <div class="bg-emerald-100 dark:bg-emerald-900/50 p-2.5 rounded-xl mr-3 shadow-sm">
+                            <i class="fas fa-handshake text-emerald-600 dark:text-emerald-300"></i>
+                        </div>
+                        Antlaşmalar
+                    </h3>
+                    <div class="bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 p-4 rounded-2xl text-slate-800 dark:text-emerald-100 font-medium">
+                        <p class="mb-2"><strong class="text-emerald-800 dark:text-emerald-300">Uluslararası Ticaret Antlaşmaları:</strong></p>
+                        <p class="text-sm">I. Gıyaseddin Keyhüsrev ve I. İzzeddin Keykavus dönemlerinde Kıbrıs Krallışı ve Venedikliler ile tarihteki ilk ticari gümrük antlaşmaları yapılmıştır.</p>
+                    </div>
+                </section>
+                <section class="category-orange note-card p-6 md:p-8 rounded-3xl">
+                    <h3 class="text-xl font-extrabold mb-6 flex items-center text-orange-900 dark:text-orange-200">
+                        <div class="bg-orange-100 dark:bg-orange-900/50 p-2.5 rounded-xl mr-3 shadow-sm">
+                            <i class="fas fa-users-cog text-orange-600 dark:text-orange-300"></i>
+                        </div>
+                        Divanlar, Görevliler ve Unvanlar
+                    </h3>
+                    <div class="space-y-4 text-slate-800 dark:text-orange-100 font-medium">
+                        <div class="bg-white/60 dark:bg-black/10 p-4 rounded-xl border border-orange-200 dark:border-orange-800/40">
+                            <strong class="text-orange-800 dark:text-orange-300 text-lg block mb-1">Divan-ı Pervane:</strong>
+                            <p class="text-sm">İkta topraklarının kayıtlarını tutan ve daşıtımını yapan divandır. Sorumlusuna <em class="text-slate-600 dark:text-slate-400">Pervaneci</em> denir.</p>
+                        </div>
+                        <div class="bg-white/60 dark:bg-black/10 p-4 rounded-xl border border-orange-200 dark:border-orange-800/40">
+                            <strong class="text-orange-800 dark:text-orange-300 text-lg block mb-1">Divan-ı Berid:</strong>
+                            <p class="text-sm">Posta ve haberleşme teşkilatıdır.</p>
+                        </div>
+                        <div class="bg-white/60 dark:bg-black/10 p-4 rounded-xl border border-orange-200 dark:border-orange-800/40">
+                            <strong class="text-orange-800 dark:text-orange-300 text-lg block mb-1">Reisül Bahr veya Meliküs Sevahil:</strong>
+                            <p class="text-sm">Denizaşırı seferler yapan donanma komutanlarına verilen unvanlardır (Denizlerin Reisi / Sahillerin Meliki).</p>
+                        </div>
+                        <div class="border-l-4 border-orange-400 pl-4 py-2 mt-4 bg-orange-50/50 dark:bg-orange-900/20 rounded-r-xl">
+                            <strong class="text-orange-800 dark:text-orange-300 block mb-1">Farsça Unvanlar:</strong>
+                            <p class="text-sm">Selçuklu hükümdarları padişah veya sultan anlamında Keyhüsrev, Keykavus, Keykubat gibi Farsça unvanlar kullanmışlardır. Bu, Fars kültürünün yönetimdeki etkisini gösterir.</p>
+                        </div>
+                    </div>
+                </section>
+                <section class="category-red note-card p-6 md:p-8 rounded-3xl">
+                    <h3 class="text-xl font-extrabold mb-6 flex items-center text-red-900 dark:text-red-200">
+                        <div class="bg-red-100 dark:bg-red-900/50 p-2.5 rounded-xl mr-3 shadow-sm">
+                            <i class="fas fa-exclamation-triangle text-red-600 dark:text-red-300"></i>
+                        </div>
+                        Kritik Uyarılar ve Analizler
+                    </h3>
+                    <div class="space-y-4 text-slate-800 dark:text-red-100 font-medium">
+                        <div class="border-l-4 border-red-400 pl-4 py-2">
+                            <strong class="text-red-800 dark:text-red-300 block mb-1">Gevher Nesibe Darüşşifası'nın Özel Durumu:</strong>
+                            <p class="text-sm">Bu yapı sadece ilk hastane değil; aynı zamanda Anadolu'nun İslam Dönemi'ne ait en eski şifahanesi ve dünyanın ilk tıp fakültesi olarak kabul edilmektedir.</p>
+                        </div>
+                        <div class="border-l-4 border-red-400 pl-4 py-2">
+                            <strong class="text-red-800 dark:text-red-300 block mb-1">Muinüddin Pervane'nin İkili Politikası:</strong>
+                            <p class="text-sm">Kösedaş Savaşı sonrası Moğollar Anadolu'ya geldiğinde, Sinop'ta Pervaneoğullarını kuran Vezir Muinüddin Pervane, Moğollardan yana bir tavır takınmış, ardından gizlice Memlüklerden yardım istemiştir.</p>
+                        </div>
+                        <div class="border-l-4 border-red-400 pl-4 py-2">
+                            <strong class="text-red-800 dark:text-red-300 block mb-1">Ahilik Teşkilatı ve Dini Yapı:</strong>
+                            <p class="text-sm">Ahilik teşkilatına kesinlikle gayrimüslimler alınmamıştır. Sadece bir esnaf örgütü değil, gerektiğinde "cihata katılan" silahlı bir yapıdır.</p>
+                        </div>
+                        <div class="border-l-4 border-red-400 pl-4 py-2">
+                            <strong class="text-red-800 dark:text-red-300 block mb-1">Mimari Eser Bulma Şifresi:</strong>
+                            <p class="text-sm">İsminde "Paşa, Çelebi, Haseki, Ağa, Sultan, Yeşil" kelimeleri geçiyorsa o eser istisnalar hariç Osmanlı Devleti'ne aittir. İsminde "Çifte" veya "Alaaddin" kelimeleriyle başlayan eserler ise genellikle Anadolu Selçuklu Devleti'ne aittir.</p>
+                        </div>
+                        <div class="border-l-4 border-red-400 pl-4 py-2">
+                            <strong class="text-red-800 dark:text-red-300 block mb-1">Ticaret Stratejisi:</strong>
+                            <p class="text-sm">Alanya, Sinop, Antalya, Suğdak gibi liman şehirlerinin fethi, kervansarayların inşası ve gümrük indirimleri tamamen "Anadolu'yu uluslararası bir ticaret merkezi yapmak" amacına yöneliktir.</p>
+                        </div>
+                    </div>
+                </section>
+                <section class="category-red note-card p-6 md:p-8 rounded-3xl ">
+                    <h3 class="text-xl font-extrabold mb-4 flex items-center text-red-900 dark:text-red-200">
+                        <div class="bg-red-100 dark:bg-red-900/50 p-2.5 rounded-xl mr-3 shadow-sm"><i class="fas fa-fire text-red-600 dark:text-red-300"></i></div>
+                        Kritik İsyan ve Divan Kavramı
+                    </h3>
+                    <div class="flex flex-col gap-4 text-slate-800 dark:text-red-100 font-medium text-sm">
+                        <div class="bg-red-50 dark:bg-red-900/20 p-4 rounded-xl border border-red-200 dark:border-red-800">
+                            <strong class="text-red-800 dark:text-red-300 block mb-2">Baba İshak (Babailer) İsyanı (1240):</strong> Türk tarihindeki ilk dinî ve sosyal nitelikli isyandır. Bu isyan Anadolu Selçuklu Devleti'ni çok yıpratmış ve devleti <strong>1243 Kösedaş Savaşı'nda Moğollara (İlhanlılara) karşı zayıf düşürmüştür</strong>.
+                        </div>
+                        <div class="bg-red-50 dark:bg-red-900/20 p-4 rounded-xl border border-red-200 dark:border-red-800">
+                            <strong class="text-red-800 dark:text-red-300 block mb-2">Divan-ı Pervane:</strong> İkta topraklarının kayıtlarını tutan ve daşıtan divandır, başındaki görevliye <strong>"Pervaneci"</strong> denir. Sadece Anadolu Selçuklularına has bir kurumdur.
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SARI BÖLÜM -->
+                
+
+                <!-- TURKUAZ BÖLÜM -->
+                
+
+                <!-- YEŞİL BÖLÜM -->
+                
+
+                <!-- TURUNCU BÖLÜM -->
+                
+
+                <!-- KIRMIZI BÖLÜM -->
+                
+            
+                <!-- EKLENEN KRİTİK KAVRAMLAR -->
+                
+            </div>
+            <!-- SINAV HAFIZASI BÖLÜMÜ -->
+            <section class="exam-memory note-card p-8 md:p-12 rounded-3xl shadow-2xl shadow-indigo-500/20 relative overflow-hidden group mt-12">
+                <div class="absolute right-0 top-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-700"></div>
+                <div class="absolute right-8 top-1/2 -translate-y-1/2 opacity-10 transform group-hover:rotate-12 transition-transform duration-700 pointer-events-none">
+                    <i class="fas fa-brain text-[12rem] text-indigo-900"></i>
+                </div>
+                
+                <div class="relative z-10">
+                    <h3 class="text-3xl font-black mb-8 flex items-center tracking-tight">
+                        <i class="fas fa-graduation-cap text-4xl mr-4 text-indigo-600 dark:text-indigo-400"></i> SINAV HAFIZASI VE DİKKAT ANALİZİ
+                    </h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 uppercase tracking-widest font-bold">Çıkmış Bilgi Soruları</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        
+                        <div class="bg-white/95 hover:bg-white dark:bg-slate-900/90 dark:hover:bg-slate-900 transition-colors p-5 rounded-2xl border border-indigo-100 dark:border-indigo-800/50 backdrop-blur-sm relative">
+                            <div class="absolute -top-3 -left-3 bg-indigo-600 text-white font-black text-xs px-3 py-1.5 rounded-lg shadow-md">2019 KPSS</div>
+                            <p class="text-sm font-medium leading-relaxed mt-2 text-slate-800 dark:text-slate-300">ÖSYM, şıklara çeldirici olarak "Nizamiye Medreseleri"ni koyar. Nizamiye Medreseleri kime aittir?<br><strong class="text-indigo-600 dark:text-indigo-400 mt-2 block text-base">Cevap: Büyük Selçuklu Devleti'ne (Türkiye Selçuklularında yoktur)</strong></p>
+                        </div>
+                        
+                        <div class="bg-white/95 hover:bg-white dark:bg-slate-900/90 dark:hover:bg-slate-900 transition-colors p-5 rounded-2xl border border-indigo-100 dark:border-indigo-800/50 backdrop-blur-sm relative">
+                            <div class="absolute -top-3 -left-3 bg-indigo-600 text-white font-black text-xs px-3 py-1.5 rounded-lg shadow-md">2016 KPSS</div>
+                            <p class="text-sm font-medium leading-relaxed mt-2 text-slate-800 dark:text-slate-300">Balıkesir yöresinde Taceddinoğulları kurulmuştur bilgisi yanlış kabul edilmiştir. Balıkesir yöresinde hangi beylik kurulmuştur?<br><strong class="text-indigo-600 dark:text-indigo-400 mt-2 block text-base">Cevap: Karesioğulları</strong></p>
+                        </div>
+
+                        <div class="bg-white/95 hover:bg-white dark:bg-slate-900/90 dark:hover:bg-slate-900 transition-colors p-5 rounded-2xl border border-indigo-100 dark:border-indigo-800/50 backdrop-blur-sm relative">
+                            <div class="absolute -top-3 -left-3 bg-indigo-600 text-white font-black text-xs px-3 py-1.5 rounded-lg shadow-md">2016 / 2021</div>
+                            <p class="text-sm font-medium leading-relaxed mt-2 text-slate-800 dark:text-slate-300">Zengin liman kentlerinin alınması (Sinop, Antalya), düşük gümrük tarifeleri uygulanması ve tüccarların mallarının devlet güvencesine alınması neyin göstergesidir?<br><strong class="text-indigo-600 dark:text-indigo-400 mt-2 block text-base">Cevap: Ticareti Geliştirme Politikası</strong></p>
+                        </div>
+                        
+                        <div class="bg-white/95 hover:bg-white dark:bg-slate-900/90 dark:hover:bg-slate-900 transition-colors p-5 rounded-2xl border border-indigo-100 dark:border-indigo-800/50 backdrop-blur-sm relative">
+                            <div class="absolute -top-3 -left-3 bg-indigo-600 text-white font-black text-xs px-3 py-1.5 rounded-lg shadow-md">2020 KPSS</div>
+                            <p class="text-sm font-medium leading-relaxed mt-2 text-slate-800 dark:text-slate-300">I. Haçlı Seferi'nde İznik'in elden çıkması üzerine başkentin İznik'ten Konya'ya taşınması kimin döneminde gerçekleşmiştir?<br><strong class="text-indigo-600 dark:text-indigo-400 mt-2 block text-base">Cevap: I. Kılıçarslan</strong></p>
+                        </div>
+
+                        <div class="bg-white/95 hover:bg-white dark:bg-slate-900/90 dark:hover:bg-slate-900 transition-colors p-5 rounded-2xl border border-indigo-100 dark:border-indigo-800/50 backdrop-blur-sm relative">
+                            <div class="absolute -top-3 -left-3 bg-indigo-600 text-white font-black text-xs px-3 py-1.5 rounded-lg shadow-md">2022 KPSS</div>
+                            <p class="text-sm font-medium leading-relaxed mt-2 text-slate-800 dark:text-slate-300">ÖSYM, mimari eserler ile beylikleri eşleştirmiştir. Divriği Ulu Camii ve Yaşıbasan Medresesi hangi beyliklere aittir?<br><strong class="text-indigo-600 dark:text-indigo-400 mt-2 block text-base">Cevap: Mengücekler ve Danişmentliler</strong></p>
+                        </div>
+
+                        <div class="bg-white/95 hover:bg-white dark:bg-slate-900/90 dark:hover:bg-slate-900 transition-colors p-5 rounded-2xl border border-indigo-100 dark:border-indigo-800/50 backdrop-blur-sm relative">
+                            <div class="absolute -top-3 -left-3 bg-indigo-600 text-white font-black text-xs px-3 py-1.5 rounded-lg shadow-md">2023 KPSS</div>
+                            <p class="text-sm font-medium leading-relaxed mt-2 text-slate-800 dark:text-slate-300">I. Alaeddin Keykubat döneminde Alanya'nın alınıp tersane inşa edilmesi devletin hangi alanda faaliyete giriştiğini gösterir?<br><strong class="text-indigo-600 dark:text-indigo-400 mt-2 block text-base">Cevap: Akdeniz'de Denizcilik</strong></p>
+                        </div>
+
+                        <div class="bg-white/95 hover:bg-white dark:bg-slate-900/90 dark:hover:bg-slate-900 transition-colors p-5 rounded-2xl border border-indigo-100 dark:border-indigo-800/50 backdrop-blur-sm relative">
+                            <div class="absolute -top-3 -left-3 bg-indigo-600 text-white font-black text-xs px-3 py-1.5 rounded-lg shadow-md">2024 KPSS</div>
+                            <p class="text-sm font-medium leading-relaxed mt-2 text-slate-800 dark:text-slate-300">Ülkeyi 11 oğlu arasında paylaştıran ve Miryokefalon Savaşı'nı kazanarak Anadolu'yu kesin Türk yurdu yapan lider kimdir?<br><strong class="text-indigo-600 dark:text-indigo-400 mt-2 block text-base">Cevap: II. Kılıçarslan</strong></p>
+                        </div>
+
+                        <div class="bg-white/95 hover:bg-white dark:bg-slate-900/90 dark:hover:bg-slate-900 transition-colors p-5 rounded-2xl border border-indigo-100 dark:border-indigo-800/50 backdrop-blur-sm relative">
+                            <div class="absolute -top-3 -left-3 bg-indigo-600 text-white font-black text-xs px-3 py-1.5 rounded-lg shadow-md">2025 KPSS</div>
+                            <p class="text-sm font-medium leading-relaxed mt-2 text-slate-800 dark:text-slate-300">İbn Batuta'nın "Türkmenlerin en ulu sultanı" olarak nitelendirdiği ve Alanya'yı fetheden sultan kimdir?<br><strong class="text-indigo-600 dark:text-indigo-400 mt-2 block text-base">Cevap: I. Alaeddin Keykubad</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DEVLETLER KÜNYESİ (FULL WIDTH) -->
+            <section class="bg-white dark:bg-slate-800 p-8 md:p-12 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 mt-12">
+                <h3 class="text-3xl font-black mb-8 flex items-center text-slate-900 dark:text-white">
+                    <div class="bg-slate-100 dark:bg-slate-700 p-3 rounded-2xl mr-4 text-slate-600 dark:text-slate-300">
+                        <i class="fas fa-monument"></i>
+                    </div>
+                    KÖSEDAĞ SAVAŞI SONRASI KURULAN II. TÜRK BEYLİKLERİ
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 text-sm font-medium">
+                    <div class="p-4 bg-slate-50 hover:bg-slate-100 dark:bg-slate-900/50 dark:hover:bg-slate-700/50 rounded-2xl border border-slate-200 dark:border-slate-700 transition-colors">
+                        <div class="font-bold text-indigo-600 dark:text-indigo-400 mb-1">1. Osmanoğulları</div>
+                        <p class="text-slate-600 dark:text-slate-300 text-xs">Söşüt-Domaniç civarında kurulmuştur. Merkezi otoritesi en güçlü olan ve cihan imparatorluğuna dönüşen beyliktir.</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 hover:bg-slate-100 dark:bg-slate-900/50 dark:hover:bg-slate-700/50 rounded-2xl border border-slate-200 dark:border-slate-700 transition-colors">
+                        <div class="font-bold text-indigo-600 dark:text-indigo-400 mb-1">2. Karamanoğulları</div>
+                        <p class="text-slate-600 dark:text-slate-300 text-xs">Konya-Karaman'da kurulmuştur. Osmanlı'yı en çok uşraştıran beyliktir. 1277'de Türkçeyi resmî dil ilan etmişlerdir.</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 hover:bg-slate-100 dark:bg-slate-900/50 dark:hover:bg-slate-700/50 rounded-2xl border border-slate-200 dark:border-slate-700 transition-colors">
+                        <div class="font-bold text-indigo-600 dark:text-indigo-400 mb-1">3. Karesioğulları</div>
+                        <p class="text-slate-600 dark:text-slate-300 text-xs">Balıkesir-Çanakkale'de kurulmuştur. Donanması vardır. Osmanlı Devleti'ne katılan İLK beylik olmuştur.</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 hover:bg-slate-100 dark:bg-slate-900/50 dark:hover:bg-slate-700/50 rounded-2xl border border-slate-200 dark:border-slate-700 transition-colors">
+                        <div class="font-bold text-indigo-600 dark:text-indigo-400 mb-1">4. Dulkadiroğulları</div>
+                        <p class="text-slate-600 dark:text-slate-300 text-xs">Maraş'ta kurulmuştur. Osmanlı Devleti'ne katılan SON beyliktir (1515 Turnadağ Savaşı).</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 hover:bg-slate-100 dark:bg-slate-900/50 dark:hover:bg-slate-700/50 rounded-2xl border border-slate-200 dark:border-slate-700 transition-colors">
+                        <div class="font-bold text-indigo-600 dark:text-indigo-400 mb-1">5. Hamitoğulları</div>
+                        <p class="text-slate-600 dark:text-slate-300 text-xs">Isparta-Antalya yöresinde kurulmuştur. Osmanlı'nın para ile (satın alma yoluyla) sınırlarına kattışı beyliktir.</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 hover:bg-slate-100 dark:bg-slate-900/50 dark:hover:bg-slate-700/50 rounded-2xl border border-slate-200 dark:border-slate-700 transition-colors">
+                        <div class="font-bold text-indigo-600 dark:text-indigo-400 mb-1">6. Germiyanoğulları</div>
+                        <p class="text-slate-600 dark:text-slate-300 text-xs">Kütahya'da kurulmuştur. Osmanlı'ya çeyiz ve vasiyet yoluyla katılmışlardır.</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 hover:bg-slate-100 dark:bg-slate-900/50 dark:hover:bg-slate-700/50 rounded-2xl border border-slate-200 dark:border-slate-700 transition-colors">
+                        <div class="font-bold text-indigo-600 dark:text-indigo-400 mb-1">7. Aydınoğulları</div>
+                        <p class="text-slate-600 dark:text-slate-300 text-xs">Aydın yöresinde kurulmuştur. Güçlü bir donanma ile Ege Adaları'na seferler yapmışlardır.</p>
+                    </div>
+                    <div class="p-4 bg-slate-50 hover:bg-slate-100 dark:bg-slate-900/50 dark:hover:bg-slate-700/50 rounded-2xl border border-slate-200 dark:border-slate-700 transition-colors">
+                        <div class="font-bold text-indigo-600 dark:text-indigo-400 mb-1">8. Diğer Denizci Beylikler</div>
+                        <p class="text-slate-600 dark:text-slate-300 text-xs">Menteğeoşulları (Muşla), Candaroğulları (Sinop-Kastamonu), Saruhanoğulları (Manisa) denizcilikle uşraşmıştır.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 mt-12">
+        <div class="max-w-[1600px] mx-auto px-8 flex flex-col md:flex-row justify-between items-center text-slate-500 dark:text-slate-400 text-sm">
+            <p>© 2025 KPSS Tarih Notları ⬢ Bağarılar Dileriz!</p>
+            <div class="flex space-x-4 mt-4 md:mt-0">
+                <a href="#" class="hover:text-indigo-500 transition-colors"><i class="fab fa-twitter text-xl"></i></a>
+                <a href="#" class="hover:text-indigo-500 transition-colors"><i class="fab fa-instagram text-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/script.js"></script>
+    
+
+
+    <!-- Odaklanma Modu Butonu -->
+    <div class="focus-controls">
+        <button id="focus-mode-btn" class="focus-btn" title="Odaklanma Modu (Sadece Notlar)">
+            <i class="fas fa-expand"></i>
+        </button>
+    </div>
+
+    <script>
+        (function() {
+            const focusBtn = document.getElementById('focus-mode-btn');
+            const body = document.body;
+            if (focusBtn) {
+                focusBtn.addEventListener('click', function() {
+                    body.classList.toggle('focus-mode');
+                    focusBtn.classList.toggle('active');
+                    const icon = focusBtn.querySelector('i');
+                    if (body.classList.contains('focus-mode')) {
+                        icon.className = 'fas fa-compress';
+                    } else {
+                        icon.className = 'fas fa-expand';
+                    }
+                });
+            }
+        })();
+    </script>
+
+</body>
+</html>
+

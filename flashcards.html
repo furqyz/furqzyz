@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="tr" class="">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KPSS – Hafıza Kartları</title>
+<script>(function(){const d=localStorage.getItem('dark-mode');if(d==='true'||(d===null&&window.matchMedia('(prefers-color-scheme: dark)').matches))document.documentElement.classList.add('dark')})();</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={darkMode:'class'}</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+body{font-family:'Inter',sans-serif}
+.card-scene{perspective:1200px}
+.card-inner{position:relative;width:100%;height:100%;transition:transform 0.55s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d;cursor:pointer}
+.card-inner.flipped{transform:rotateY(180deg)}
+.card-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:1.5rem;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem}
+.card-back{transform:rotateY(180deg)}
+@keyframes slideUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.slide-up{animation:slideUp .3s ease forwards}
+</style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 min-h-screen transition-colors duration-300">
+
+<header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-100 dark:border-slate-800">
+  <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-2 text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors font-medium text-sm">
+      <i class="fas fa-arrow-left"></i><span>Notlara Dön</span>
+    </a>
+    <span class="font-bold text-slate-700 dark:text-slate-200 text-sm hidden sm:block">🃏 Hafıza Kartları</span>
+    <div class="flex items-center gap-2">
+      <span id="deckInfo" class="text-xs font-semibold text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full"></span>
+      <button id="darkToggle" class="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all text-slate-500 dark:text-slate-400">
+        <i class="fas fa-moon dark:hidden"></i><i class="fas fa-sun hidden dark:block text-yellow-400"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="max-w-3xl mx-auto px-4 py-8">
+  <!-- Progress -->
+  <div class="mb-6 flex items-center gap-3 text-sm">
+    <span id="cardCounter" class="font-bold text-violet-600 dark:text-violet-400 shrink-0">1 / ?</span>
+    <div class="flex-1 h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+      <div id="progressBar" class="h-2 bg-gradient-to-r from-violet-500 to-pink-500 rounded-full transition-all duration-500" style="width:0%"></div>
+    </div>
+    <div class="flex gap-2 shrink-0">
+      <span id="knownCount" class="text-emerald-600 dark:text-emerald-400 font-bold">0 ✓</span>
+      <span class="text-slate-300 dark:text-slate-600">|</span>
+      <span id="unknownCount" class="text-rose-500 dark:text-rose-400 font-bold">0 ✗</span>
+    </div>
+  </div>
+
+  <!-- Card -->
+  <div class="card-scene" style="height:320px" id="cardScene">
+    <div class="card-inner" id="cardInner">
+      <!-- Front -->
+      <div class="card-face bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 shadow-xl">
+        <div class="text-xs font-bold text-violet-400 uppercase tracking-widest mb-6">Soru</div>
+        <p id="cardQuestion" class="text-lg md:text-xl font-bold text-slate-800 dark:text-white text-center leading-relaxed"></p>
+        <p class="text-xs text-slate-400 dark:text-slate-600 mt-8">Cevabı görmek için tıkla veya Boşluk'a bas</p>
+      </div>
+      <!-- Back -->
+      <div class="card-back card-face bg-gradient-to-br from-violet-500 to-purple-700 dark:from-violet-700 dark:to-purple-900 border-0 shadow-xl">
+        <div class="text-xs font-bold text-violet-200 uppercase tracking-widest mb-6">Cevap</div>
+        <div id="cardAnswerLetter" class="text-5xl font-black text-white mb-3"></div>
+        <p id="cardAnswerText" class="text-lg font-bold text-white text-center leading-relaxed"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action buttons (show after flip) -->
+  <div id="actionBtns" class="hidden mt-6 flex gap-4 justify-center slide-up">
+    <button id="unknownBtn" class="flex-1 max-w-[200px] flex items-center justify-center gap-2 bg-rose-500 hover:bg-rose-600 active:scale-95 text-white px-6 py-4 rounded-2xl font-bold text-base transition-all shadow-lg shadow-rose-200 dark:shadow-none">
+      <i class="fas fa-rotate-left"></i> Bilmiyorum
+    </button>
+    <button id="knownBtn" class="flex-1 max-w-[200px] flex items-center justify-center gap-2 bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white px-6 py-4 rounded-2xl font-bold text-base transition-all shadow-lg shadow-emerald-200 dark:shadow-none">
+      Biliyorum <i class="fas fa-check"></i>
+    </button>
+  </div>
+
+  <p class="text-center text-xs text-slate-400 dark:text-slate-600 mt-4">Boşluk: çevir · ← Bilmiyorum · → Biliyorum</p>
+
+  <!-- Finish -->
+  <div id="finishScreen" class="hidden bg-white dark:bg-slate-900 rounded-3xl border border-slate-100 dark:border-slate-800 p-10 text-center mt-4">
+    <div class="text-6xl mb-4" id="finishEmoji">🎉</div>
+    <h2 class="text-2xl font-bold text-slate-800 dark:text-white mb-2">Tur Tamamlandı!</h2>
+    <p id="finishText" class="text-slate-500 dark:text-slate-400 mb-8"></p>
+    <div class="flex flex-col sm:flex-row gap-3 justify-center">
+      <button id="reviewWrongBtn" class="bg-rose-500 hover:bg-rose-600 text-white px-6 py-3 rounded-2xl font-bold transition-all">
+        <i class="fas fa-redo mr-2"></i>Yanlışları Tekrarla
+      </button>
+      <button onclick="startFresh()" class="bg-violet-600 hover:bg-violet-700 text-white px-6 py-3 rounded-2xl font-bold transition-all">
+        <i class="fas fa-shuffle mr-2"></i>Baştan Başla
+      </button>
+      <a href="index.html" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 px-6 py-3 rounded-2xl font-bold transition-all text-center">
+        <i class="fas fa-book mr-2"></i>Notlara Dön
+      </a>
+    </div>
+  </div>
+</main>
+
+<script src="assets/js/testQuestions.js"></script>
+<script>
+// Dark mode
+document.getElementById('darkToggle').addEventListener('click',()=>{
+  document.documentElement.classList.toggle('dark');
+  localStorage.setItem('dark-mode',document.documentElement.classList.contains('dark'));
+});
+
+// State
+let deck = [], unknown = [], known = 0, unknownCnt = 0, currentIdx = 0, flipped = false;
+
+function buildDeck(questions) {
+  // Shuffle
+  return [...questions].sort(()=>Math.random()-0.5);
+}
+
+function startFresh() {
+  deck = buildDeck(testQuestions);
+  unknown = []; known = 0; unknownCnt = 0; currentIdx = 0;
+  document.getElementById('finishScreen').classList.add('hidden');
+  document.getElementById('cardScene').style.display='';
+  document.getElementById('actionBtns').classList.add('hidden');
+  updateUI();
+  showCard();
+}
+
+function showCard() {
+  flipped = false;
+  const inner = document.getElementById('cardInner');
+  inner.classList.remove('flipped');
+  document.getElementById('actionBtns').classList.add('hidden');
+
+  if (currentIdx >= deck.length) { showFinish(); return; }
+
+  const q = deck[currentIdx];
+  document.getElementById('cardQuestion').textContent = q.question;
+  document.getElementById('cardAnswerLetter').textContent = q.answer + ')';
+  document.getElementById('cardAnswerText').textContent = q.options[q.answer];
+  updateUI();
+}
+
+function flipCard() {
+  if (flipped) return;
+  flipped = true;
+  document.getElementById('cardInner').classList.add('flipped');
+  setTimeout(()=>{
+    const ab = document.getElementById('actionBtns');
+    ab.classList.remove('hidden');
+    ab.classList.add('slide-up');
+  }, 300);
+}
+
+function markKnown() {
+  known++;
+  document.getElementById('knownCount').textContent = known + ' ✓';
+  nextCard();
+}
+
+function markUnknown() {
+  unknownCnt++;
+  unknown.push(deck[currentIdx]);
+  document.getElementById('unknownCount').textContent = unknownCnt + ' ✗';
+  nextCard();
+}
+
+function nextCard() {
+  currentIdx++;
+  const inner = document.getElementById('cardInner');
+  inner.style.opacity = '0';
+  inner.style.transform = 'translateX(30px)';
+  setTimeout(()=>{
+    showCard();
+    inner.style.transition = 'none';
+    inner.style.transform = 'translateX(-30px)';
+    inner.style.opacity = '0';
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      inner.style.transition = '';
+      inner.style.transform = '';
+      inner.style.opacity = '1';
+    }));
+  }, 150);
+}
+
+function updateUI() {
+  const total = deck.length;
+  document.getElementById('cardCounter').textContent = `${Math.min(currentIdx+1, total)} / ${total}`;
+  document.getElementById('progressBar').style.width = `${(currentIdx/total)*100}%`;
+  document.getElementById('deckInfo').textContent = `${total} kart`;
+}
+
+function showFinish() {
+  document.getElementById('cardScene').style.display='none';
+  document.getElementById('actionBtns').classList.add('hidden');
+  document.getElementById('finishScreen').classList.remove('hidden');
+  const pct = Math.round((known/(known+unknownCnt||1))*100);
+  document.getElementById('finishText').textContent = `${known} biliyorum · ${unknownCnt} bilmiyorum · Başarı: %${pct}`;
+  document.getElementById('finishEmoji').textContent = pct>=80?'🏆':pct>=60?'🎯':'📚';
+  const rwBtn = document.getElementById('reviewWrongBtn');
+  if (unknown.length===0) { rwBtn.disabled=true; rwBtn.classList.add('opacity-40'); }
+  else { rwBtn.disabled=false; rwBtn.classList.remove('opacity-40'); }
+}
+
+document.getElementById('cardInner').addEventListener('click', flipCard);
+document.getElementById('knownBtn').addEventListener('click', markKnown);
+document.getElementById('unknownBtn').addEventListener('click', markUnknown);
+document.getElementById('reviewWrongBtn').addEventListener('click', ()=>{
+  deck = buildDeck(unknown); unknown=[]; known=0; unknownCnt=0; currentIdx=0;
+  document.getElementById('finishScreen').classList.add('hidden');
+  document.getElementById('cardScene').style.display='';
+  document.getElementById('knownCount').textContent='0 ✓';
+  document.getElementById('unknownCount').textContent='0 ✗';
+  updateUI(); showCard();
+});
+
+// Keyboard
+document.addEventListener('keydown', e=>{
+  if (e.key===' '||e.key==='Enter') { e.preventDefault(); flipCard(); }
+  else if (e.key==='ArrowRight' && flipped) markKnown();
+  else if (e.key==='ArrowLeft' && flipped) markUnknown();
+});
+
+startFresh();
+</script>
+</body>
+</html>

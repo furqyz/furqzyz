@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KPSS Tarih Özetlerim</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-slate-50 text-slate-900 leading-relaxed antialiased">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm px-4 py-4 border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
+        <div class="max-w-[1600px] mx-auto flex justify-between items-center px-4 md:px-8">
+            <div class="flex items-center space-x-4">
+                <div class="bg-gradient-to-br from-indigo-500 to-purple-600 text-white p-2.5 rounded-xl shadow-lg shadow-indigo-200/50 dark:shadow-indigo-900/50">
+                    <i class="fas fa-bookmark text-lg"></i>
+                </div>
+                <h1 class="text-2xl font-extrabold tracking-tight">KPSS <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">Ders Notlarım</span></h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <!-- Dersler Menüsü -->
+                <a href="../anasayfa.html" class="hidden lg:flex items-center gap-1.5 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-indigo-600 dark:hover:text-indigo-400 font-semibold text-sm transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700 mr-1" title="Ana Sayfaya Dön">
+                    <i class="fas fa-home text-sm"></i>
+                    <span>Ana Sayfa</span>
+                </a>
+                <nav class="hidden lg:flex items-center space-x-1 mr-2">
+                    <a href="../index.html" class="px-3 py-2 rounded-lg font-bold text-sm transition-colors bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400">Tarih</a>
+                    <a href="../turkce.html" class="px-3 py-2 rounded-lg font-bold text-sm transition-colors text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 font-semibold">Türkçe</a>
+                    <a href="#" class="px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 font-semibold text-sm transition-colors">Coğrafya</a>
+                    <a href="#" class="px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 font-semibold text-sm transition-colors">Vatandaşlık</a>
+                </nav>
+                
+                <!-- Arama Kutusu -->
+                <div class="hidden md:flex items-center bg-slate-100 dark:bg-slate-800 rounded-full px-4 py-2 border border-slate-200 dark:border-slate-700 focus-within:ring-2 focus-within:ring-indigo-500 transition-all relative z-50">
+                    <i class="fas fa-search text-slate-400"></i>
+                    <input type="text" id="searchInput" placeholder="Notlarda ara..." class="bg-transparent border-none outline-none ml-2 text-sm text-slate-800 dark:text-slate-200 placeholder-slate-400 w-48 lg:w-64" autocomplete="off">
+                    
+                    <!-- Sonuç Kutusu -->
+                    <div id="searchResults" class="absolute top-full right-0 mt-3 w-80 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 hidden flex-col max-h-[70vh] overflow-y-auto z-50 custom-scrollbar divide-y divide-slate-100 dark:divide-slate-700/50">
+                    </div>
+                </div>
+                
+                <button id="dark-mode-toggle" class="p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300">
+                    <i class="fas fa-moon dark:hidden text-lg"></i>
+                    <i class="fas fa-sun hidden dark:block text-yellow-400 text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-[1600px] mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12 p-4 md:p-8 lg:px-12">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="w-full lg:w-72 shrink-0">
+            <div class="sticky top-28 space-y-4">
+                <!-- Test Coz Button -->
+                <a href="../test.html" class="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white px-4 py-3.5 rounded-2xl font-bold shadow-lg shadow-emerald-200 dark:shadow-none hover:shadow-xl hover:-translate-y-1 transition-all duration-300 mb-2 group">
+                    <i class="fas fa-pencil text-lg group-hover:rotate-12 transition-transform"></i>
+                    <span>Test Çöz</span>
+                </a>
+
+                <a href="../flashcards.html" class="w-full flex items-center justify-center gap-3 bg-gradient-to-r from-violet-500 to-purple-600 text-white px-4 py-3.5 rounded-2xl font-bold shadow-lg shadow-violet-200 dark:shadow-none hover:shadow-xl hover:-translate-y-1 transition-all duration-300 mb-2 group">
+                    <i class="fas fa-layer-group text-lg group-hover:rotate-6 transition-transform"></i>
+                    <span>Hafıza Kartları</span>
+                </a>
+
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden">
+                    <button onclick="toggleSidebarSection('unitNav', this)" class="w-full text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 active:bg-slate-100 dark:active:bg-slate-700 transition-colors cursor-pointer">
+                        <span class="flex items-center"><i class="fas fa-layer-group mr-2"></i> TARİH ÜNİTELERİ</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300" id="unitNav-chevron"></i>
+                    </button>
+                    <div class="px-3 pb-3"><nav id="unitNav" class="space-y-1.5 max-h-[45vh] overflow-y-auto pr-1.5 custom-scrollbar hidden">
+                        <a href="../index.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-landmark text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">1. İslamiyet Öncesi Türk Tarihi</span>
+                            </div>
+                        </a>
+                        <a href="unite2.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-mosque text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">2. İlk Türk İslam Devletleri</span>
+                            </div>
+                        </a>
+                        <a href="unite3.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-chess-knight text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">3. Anadolu (Türkiye) Selçuklu Devleti</span>
+                            </div>
+                        </a>
+                        <a href="unite4.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-landmark-dome text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">4. Osmanlı Devleti Kültür ve Medeniyeti</span>
+                            </div>
+                        </a>
+                        <a href="unite5.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-campground text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">5. Osmanlı Devleti Kuruluş Dönemi (1299 - 1453)</span>
+                            </div>
+                        </a>
+                        <a href="unite6.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-chess-rook text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">6. Osmanlı Devleti Yükselme Dönemi (1453 - 1595)</span>
+                            </div>
+                        </a>
+                        <a href="unite7.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-hourglass-end text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">7. XVII. Yüzyılda Osmanlı Devleti (Duraklama Dönemi) (1595 - 1699)</span>
+                            </div>
+                        </a>
+                        <a href="unite8.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-arrow-trend-down text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">8. XVIII. Yüzyılda Osmanlı Devleti (Gerileme Dönemi) (1699 - 1792)</span>
+                            </div>
+                        </a>
+                        <a href="unite9.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-unlink text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">9. XIX. Yüzyılda Osmanlı Devleti (Daşılma Dönemi) (1792 - 1922)</span>
+                            </div>
+                        </a>
+                        <a href="unite10.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-globe text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">10. XX. Yüzyıl Başlarında Osmanlı Devleti</span>
+                            </div>
+                        </a>
+                        <a href="unite11.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-bullhorn text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">11. Millî Mücadele Hazırlık Dönemi</span>
+                            </div>
+                        </a>
+                        <a href="unite12.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-building-columns text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">12. I. TBMM Dönemi ve Gelişmeleri (1920 - 1923)</span>
+                            </div>
+                        </a>
+                        <a href="unite13.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-shield-halved text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">13. Millî Mücadele Muharebeler Dönemi</span>
+                            </div>
+                        </a>
+                        <a href="unite14.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-user-tie text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">14. Atatürk'ün Hayatı</span>
+                            </div>
+                        </a>
+                        <a href="unite15.html" class="flex items-center justify-between bg-gradient-to-r from-indigo-600 to-indigo-500 text-white px-3 py-3 rounded-xl font-semibold shadow-md shadow-indigo-200 dark:shadow-none transition-transform hover:scale-[1.02] mb-2 mt-2">
+                            <div class="flex items-start space-x-3">
+                                <i class="fas fa-landmark-flag w-4 text-center mt-0.5"></i>
+                                <span class="text-[13px] leading-snug">15. Atatürk Dönemi İç Politika</span>
+                            </div>
+                            <i class="fas fa-chevron-right text-[10px] opacity-70 shrink-0 ml-2 mt-1"></i>
+                        </a>
+                        <a href="unite16.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-scale-balanced text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">16. Atatürk İlkeleri</span>
+                            </div>
+                        </a>
+                        <a href="unite17.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-lightbulb text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">17. Atatürk İnkılapları</span>
+                            </div>
+                        </a>
+                        <a href="unite18.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-earth-europe text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">18. Atatürk Dönemi Türk Dış Politikası</span>
+                            </div>
+                        </a>
+                        <a href="unite19.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-masks-theater text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">19. Cumhuriyet Dönemi Kültür ve Medeniyeti</span>
+                            </div>
+                        </a>
+                        <a href="unite20.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-earth-americas text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">20. Çağdaş Türk ve Dünya Tarihi</span>
+                            </div>
+                        </a>
+                        <a href="unite21.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-biohazard text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">21. XX. Yüzyıl Başlarında Dünya</span>
+                            </div>
+                        </a>
+                        <a href="unite22.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-fighter-jet text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">22. II. Dünya Savaşı (1939 - 1945)</span>
+                            </div>
+                        </a>
+                        <a href="unite23.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-snowflake text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">23. Soğuk Savaş Dönemi (1947 - 1990)</span>
+                            </div>
+                        </a>
+                        <a href="unite24.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-handshake-angle text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">24. Yumuşama (Detant) Dönemi</span>
+                            </div>
+                        </a>
+                        <a href="unite25.html" class="flex items-center justify-between text-slate-500 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-700/50 px-3 py-2.5 rounded-xl transition-all group">
+                            <div class="flex items-start space-x-3 pr-2">
+                                <i class="fas fa-network-wired text-slate-400 dark:text-slate-500 group-hover:text-indigo-500 transition-colors w-4 text-center shrink-0 mt-0.5"></i>
+                                <span class="group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-[13px] leading-snug font-medium">25. Küreselleğen Dünya (1990 - 2026)</span>
+                            </div>
+                        </a>
+                    </nav></div>
+                </div></div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 space-y-8 lg:space-y-12">
+
+            <header class="space-y-4 bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 relative overflow-hidden">
+                <div class="absolute right-0 bottom-0 opacity-5 dark:opacity-10 pointer-events-none transform translate-x-1/4 translate-y-1/4">
+                    <i class="fas fa-landmark-flag text-[20rem]"></i>
+                </div>
+                <div class="relative z-10">
+                    <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-300 text-xs font-bold uppercase tracking-widest mb-2 shadow-inner">KPSS Tarih Hazırlık</div>
+                    <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white leading-tight uppercase tracking-tight">15. ÜNİTE:<br><span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-400 dark:to-purple-400">ATATÜRK DÖNEMİ İÇ POLİTİKA</span></h2>
+                    <p class="text-slate-500 dark:text-slate-400 mt-4 text-lg max-w-2xl">Çok partili hayata geçiş denemeleri, siyasi partiler, rejime yönelik isyanlar ve milliyetçilik refleksli olaylar bu ünitenin konusudur.</p>
+                </div>
+            </header>
+
+            <div class="columns-1 xl:columns-2 gap-8 space-y-8">
+                <!-- TURKUAZ BÖLÜM -->
+                <section class="category-indigo note-card p-6 md:p-8 rounded-3xl">
+                    <h3 class="text-xl font-extrabold mb-6 flex items-center text-indigo-900 dark:text-indigo-200">
+                        <div class="bg-indigo-100 dark:bg-indigo-900/50 p-2.5 rounded-xl mr-3 shadow-sm"><i class="fas fa-fire text-indigo-600 dark:text-indigo-300"></i></div>
+                        Rejime Yönelik Tehditler ve İsyanlar
+                    </h3>
+                    <div class="space-y-4 text-slate-800 dark:text-indigo-100 font-medium">
+                        
+                        <div class="bg-indigo-50/80 dark:bg-indigo-900/30 p-4 rounded-xl border border-indigo-100 dark:border-indigo-800/50">
+                            <strong class="text-indigo-800 dark:text-indigo-300 block mb-1 text-lg">Şeyh Sait İsyanı (1925):</strong>
+                            <p class="text-sm mb-2">Cumhuriyet rejimine (laikliğe) karşı çıkan <strong>ilk büyük isyandır</strong>. İngilizler Musul'u kaybetmemizi sağlamak için bu isyanı kışkırtmıştır.</p>
+                            <p class="text-sm"><strong>Sonuçları:</strong> Ali Fethi Okyar istifa etmiş, sertlik yanlısı İsmet İnönü Hükümeti kurulmuştur. <strong>"Takrir-i Sükûn Kanunu"</strong> (1925-1929) çıkarılmış ve İstiklal Mahkemeleri görev yapmıştır.</p>
+                        </div>
+
+                        <div class="bg-indigo-50/80 dark:bg-indigo-900/30 p-4 rounded-xl border border-indigo-100 dark:border-indigo-800/50">
+                            <strong class="text-indigo-800 dark:text-indigo-300 block mb-1 text-lg">İzmir Suikastı (1926):</strong>
+                            <p class="text-sm">M. Kemal'e yönelik suikast girişimidir. İstiklal Mahkemelerinin görev yaptışı <strong>son olaydır</strong>. M. Kemal tarihi <em>"Benim naçiz vücudum elbet bir gün toprak olacaktır..."</em> sözünü burada söylemiştir.</p>
+                        </div>
+
+                        <div class="bg-white/60 dark:bg-slate-800/60 p-4 rounded-xl border border-indigo-200 dark:border-indigo-800/50 relative overflow-hidden">
+                            <div class="absolute right-0 top-0 bg-indigo-500 text-white text-[10px] font-black px-2 py-1 rounded-bl-lg">ÇİFTE TUZAK</div>
+                            <strong class="text-indigo-800 dark:text-indigo-300 block mb-1 text-lg">Menemen (Kubilay) Olayı (1930):</strong>
+                            <p class="text-sm mb-3">Rejime yönelik ikinci büyük isyandır. Asteğmen Kubilay şehit edilmiştir.</p>
+                            <ul class="text-sm space-y-2 border-t border-indigo-200 dark:border-indigo-800/50 pt-2">
+                                <li><strong class="text-indigo-600 dark:text-indigo-400">TUZAK 1:</strong> Bu olay Serbest Cumhuriyet Fırkası kapatıldıktan <strong>SONRA</strong> çıkmıştır (Partinin kapatılma nedeni değildir).</li>
+                                <li><strong class="text-indigo-600 dark:text-indigo-400">TUZAK 2:</strong> Menemen olayında isyancıları İstiklal Mahkemeleri DEĞİL, askerî mahkeme olan <strong>Divan-ı Harp</strong> yargılamıştır.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                <section class="category-indigo note-card p-6 md:p-8 rounded-3xl ">
+                    <h3 class="text-xl font-extrabold mb-6 flex items-center text-indigo-900 dark:text-indigo-200">
+                        <div class="bg-indigo-100 dark:bg-indigo-900/50 p-2.5 rounded-xl mr-3 shadow-sm"><i class="fas fa-flag text-indigo-600 dark:text-indigo-300"></i></div>
+                        Milliyetçilik Refleksli Diğer Olaylar
+                    </h3>
+                    <div class="flex flex-col gap-4 text-slate-800 dark:text-indigo-100 font-medium">
+                        
+                        <div class="bg-indigo-50/80 dark:bg-indigo-900/30 p-4 rounded-xl border border-indigo-100 dark:border-indigo-800/50">
+                            <strong class="text-indigo-800 dark:text-indigo-300 block mb-1 text-lg">Bursa Olayı:</strong>
+                            <p class="text-sm">Ezanın Türkçe okunmasına gösterilen tepkidir. M. Kemal "Bu bir din meselesi değil, dil meselesidir" demiştir.</p>
+                        </div>
+                        
+                        <div class="bg-indigo-50/80 dark:bg-indigo-900/30 p-4 rounded-xl border border-indigo-100 dark:border-indigo-800/50">
+                            <strong class="text-indigo-800 dark:text-indigo-300 block mb-1 text-lg">Vagon-Li (Wagons-Lits) Olayı (1933):</strong>
+                            <p class="text-sm">Fransız demiryolu şirketinde Türkçe konuğulmasının yasaklanması üzerine öşrencilerin çıkardışı milliyetçi olaydır.</p>
+                        </div>
+                        
+                        <div class="bg-indigo-50/80 dark:bg-indigo-900/30 p-4 rounded-xl border border-indigo-100 dark:border-indigo-800/50">
+                            <strong class="text-indigo-800 dark:text-indigo-300 block mb-1 text-lg">Bozkurt - Lotus Olayı (1926):</strong>
+                            <p class="text-sm">Türk gemisi (Bozkurt) ile Fransız gemisinin (Lotus) Ege'de çarpışmasıdır. Türkiye'yi Lahey Adalet Divanında dönemin Adalet Bakanı Mahmut Esat (Bozkurt) bağarıyla savunmuştur.</p>
+                        </div>
+                        
+                        <div class="bg-indigo-50/80 dark:bg-indigo-900/30 p-4 rounded-xl border border-indigo-100 dark:border-indigo-800/50">
+                            <strong class="text-indigo-800 dark:text-indigo-300 block mb-1 text-lg">Razgrad Olayı (1933):</strong>
+                            <p class="text-sm">Bulgaristan'ın Razgrad şehrinde bulunan Türk mezarlıklarının Bulgarlar tarafından tahrip edilmesine karşı, İstanbul'daki Türk öşrencilerin Bulgar mezarlarına çelenk bırakarak verdiği "medeni ve milliyetçi" tepkidir.</p>
+                        </div>
+                    </div>
+                </section>
+                <section class="category-yellow note-card p-6 md:p-8 rounded-3xl ">
+                    <h3 class="text-xl font-extrabold mb-4 flex items-center text-yellow-900 dark:text-yellow-200">
+                        <div class="bg-yellow-100 dark:bg-yellow-900/50 p-2.5 rounded-xl mr-3 shadow-sm"><i class="fas fa-bomb text-yellow-600 dark:text-yellow-300"></i></div>
+                        Nasturi Ayaklanması
+                    </h3>
+                    <div class="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-xl border border-yellow-200 dark:border-yellow-800 text-slate-800 dark:text-yellow-100 font-medium text-sm">
+                        <strong>Nasturi Ayaklanması (1924):</strong> İngilizlerin Musul'u Türkiye'ye bırakmamak ve Türk ordusunu yıpratmak amacıyla Hakkâri bölgesinde kışkırttışı azınlık ayaklanmasıdır. Şeyh Sait isyanından bir yıl önce yağanmıştır.
+                    </div>
+                </section>
+                <section class="category-orange note-card p-6 md:p-8 rounded-3xl">
+                    <h3 class="text-xl font-extrabold mb-6 flex items-center text-orange-900 dark:text-orange-200">
+                        <div class="bg-orange-100 dark:bg-orange-900/50 p-2.5 rounded-xl mr-3 shadow-sm"><i class="fas fa-users-viewfinder text-orange-600 dark:text-orange-300"></i></div>
+                        Siyasi Partiler
+                    </h3>
+                    <div class="space-y-4 text-slate-800 dark:text-orange-100 font-medium">
+                        
+                        <div class="bg-orange-50/80 dark:bg-orange-900/40 p-4 rounded-xl border border-orange-100 dark:border-orange-800/50">
+                            <strong class="text-orange-800 dark:text-orange-300 block mb-1 text-lg">Cumhuriyet Halk Fırkası (CHF):</strong>
+                            <p class="text-sm">Kurucusu M. Kemal'dir. Türkiye'nin <strong>ilk partisidir</strong>. Ekonomide "Devletçilik" ilkesini savunmuştur.</p>
+                        </div>
+                        
+                        <div class="bg-orange-50/80 dark:bg-orange-900/40 p-4 rounded-xl border border-orange-100 dark:border-orange-800/50">
+                            <strong class="text-orange-800 dark:text-orange-300 block mb-1 text-lg">Terakkiperver Cumhuriyet Fırkası (1924):</strong>
+                            <p class="text-sm mb-2">Türkiye'nin <strong>ilk muhalefet partisidir</strong>. Kurucuları: Kazım Karabekir, Ali Fuat, Refet, Adnan, Rauf (<strong class="bg-orange-200 dark:bg-orange-800 px-1 rounded text-orange-900 dark:text-orange-100">KARAR</strong> şifresi). Ekonomide liberalizmi benimsemiştir.</p>
+                            <p class="text-sm text-red-600 dark:text-red-400">Parti tüzüşündeki "Dini inançlara saygılıdır" maddesi isyancıları cesaretlendirmiş ve Şeyh Sait İsyanı sonrasında kapatılmıştır.</p>
+                        </div>
+
+                        <div class="bg-orange-50/80 dark:bg-orange-900/40 p-4 rounded-xl border border-orange-100 dark:border-orange-800/50">
+                            <strong class="text-orange-800 dark:text-orange-300 block mb-1 text-lg">Serbest Cumhuriyet Fırkası (1930):</strong>
+                            <p class="text-sm">İkinci muhalefet partisidir. <strong>1929 Dünya Ekonomik Krizinin (Kara Perşembe)</strong> etkilerini azaltmak için bizzat M. Kemal'in isteğiyle <strong>Ali Fethi Okyar</strong> tarafından kurulmuştur. Olayların kontrolden çıkacaşı endişesiyle kurucusu tarafından kendi kendini feshetmiştir (kapatmıştır).</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- KIRMIZI BÖLÜM -->
+                
+
+                <!-- TURUNCU BÖLÜM -->
+                
+            
+                <!-- EKLENEN KRİTİK KAVRAMLAR -->
+                
+            </div>
+            <!-- SINAV HAFIZASI BÖLÜMÜ -->
+            <section class="exam-memory note-card p-8 md:p-12 rounded-3xl shadow-2xl shadow-indigo-500/20 relative overflow-hidden group mt-12">
+                <div class="absolute right-0 top-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-700"></div>
+                <div class="absolute right-8 top-1/2 -translate-y-1/2 opacity-10 transform group-hover:rotate-12 transition-transform duration-700 pointer-events-none">
+                    <i class="fas fa-brain text-[12rem] text-indigo-900"></i>
+                </div>
+                
+                <div class="relative z-10">
+                    <h3 class="text-3xl font-black mb-8 flex items-center tracking-tight">
+                        <i class="fas fa-graduation-cap text-4xl mr-4 text-indigo-600 dark:text-indigo-400"></i> SINAV HAFIZASI VE DİKKAT ANALİZİ
+                    </h3>
+                    <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 uppercase tracking-widest font-bold">Çıkmış Bilgi Soruları</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        
+                        <div class="bg-red-50 hover:bg-white dark:bg-red-900/30 dark:hover:bg-slate-900 transition-colors p-5 rounded-2xl border border-red-200 dark:border-red-800/50 backdrop-blur-sm relative lg:col-span-2">
+                            <div class="absolute -top-3 -left-3 bg-red-600 text-white font-black text-xs px-3 py-1.5 rounded-lg shadow-md flex items-center"><i class="fas fa-exclamation-circle mr-1"></i> İÇ POLİTİKA KRONOLOJİ TUZAĞI (2022 İPTAL KPSS)</div>
+                            <p class="text-sm font-medium leading-relaxed mt-2 text-slate-800 dark:text-slate-200">Çok partili hayata geçişle ilgili soruda "Serbest Cumhuriyet Fırkasının, Takrir-i Sükûn Dönemi'nde kurulduğu" şıkkı <strong>yanlış cevap (çeldirici)</strong> olarak verilmiştir. (Takrir-i Sükûn 1925-1929 yılları arasıdır, SCF ise 1930'da kurulmuştur).</p>
+                        </div>
+                        
+                        <div class="bg-white/95 hover:bg-white dark:bg-slate-900/90 dark:hover:bg-slate-900 transition-colors p-5 rounded-2xl border border-indigo-100 dark:border-indigo-800/50 backdrop-blur-sm relative">
+                            <div class="absolute -top-3 -left-3 bg-indigo-600 text-white font-black text-xs px-3 py-1.5 rounded-lg shadow-md">2018 KPSS</div>
+                            <p class="text-sm font-medium leading-relaxed mt-2 text-slate-800 dark:text-slate-200">Saltanat ve halifeliğin kaldırılmasının ortak nedeni nedir?<br><strong class="text-indigo-600 dark:text-indigo-400 mt-2 block text-base">Cevap: Rejimin cumhuriyet olmasını (ulusal egemenliği) sağlamak</strong></p>
+                        </div>
+
+                        <div class="bg-white/95 hover:bg-white dark:bg-slate-900/90 dark:hover:bg-slate-900 transition-colors p-5 rounded-2xl border border-indigo-100 dark:border-indigo-800/50 backdrop-blur-sm relative">
+                            <div class="absolute -top-3 -left-3 bg-indigo-600 text-white font-black text-xs px-3 py-1.5 rounded-lg shadow-md">2019 KPSS</div>
+                            <p class="text-sm font-medium leading-relaxed mt-2 text-slate-800 dark:text-slate-200">Büyük Taarruz'un ardından gerçekleğen en büyük siyasi gelişme nedir?<br><strong class="text-indigo-600 dark:text-indigo-400 mt-2 block text-base">Cevap: Saltanatın kaldırılması</strong></p>
+                        </div>
+
+                        <div class="bg-white/95 hover:bg-white dark:bg-slate-900/90 dark:hover:bg-slate-900 transition-colors p-5 rounded-2xl border border-indigo-100 dark:border-indigo-800/50 backdrop-blur-sm relative">
+                            <div class="absolute -top-3 -left-3 bg-indigo-600 text-white font-black text-xs px-3 py-1.5 rounded-lg shadow-md">2021 KPSS</div>
+                            <p class="text-sm font-medium leading-relaxed mt-2 text-slate-800 dark:text-slate-200">Hukuk alanında yapılan Medeni Kanun gibi yeniliklerin temel amacı nedir?<br><strong class="text-indigo-600 dark:text-indigo-400 mt-2 block text-base">Cevap: Ülkede tek hukuk sistemine geçilmesi (hukukta ikiliğin bitirilmesi)</strong></p>
+                        </div>
+
+                        <div class="bg-white/95 hover:bg-white dark:bg-slate-900/90 dark:hover:bg-slate-900 transition-colors p-5 rounded-2xl border border-indigo-100 dark:border-indigo-800/50 backdrop-blur-sm relative">
+                            <div class="absolute -top-3 -left-3 bg-indigo-600 text-white font-black text-xs px-3 py-1.5 rounded-lg shadow-md">2019 KPSS</div>
+                            <p class="text-sm font-medium leading-relaxed mt-2 text-slate-800 dark:text-slate-200">1923 İzmir İktisat Kongresi'nin sanayi ile ilgili en önemli kararı nedir?<br><strong class="text-indigo-600 dark:text-indigo-400 mt-2 block text-base">Cevap: "Ham maddesi yurt içinden temin edilen sanayi dalları kurulmalıdır"</strong></p>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 mt-12">
+        <div class="max-w-[1600px] mx-auto px-8 flex flex-col md:flex-row justify-between items-center text-slate-500 dark:text-slate-400 text-sm">
+            <p>© 2025 KPSS Tarih Notları ⬢ Bağarılar Dileriz!</p>
+            <div class="flex space-x-4 mt-4 md:mt-0">
+                <a href="#" class="hover:text-indigo-500 transition-colors"><i class="fab fa-twitter text-xl"></i></a>
+                <a href="#" class="hover:text-indigo-500 transition-colors"><i class="fab fa-instagram text-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/script.js"></script>
+    
+
+
+    <!-- Odaklanma Modu Butonu -->
+    <div class="focus-controls">
+        <button id="focus-mode-btn" class="focus-btn" title="Odaklanma Modu (Sadece Notlar)">
+            <i class="fas fa-expand"></i>
+        </button>
+    </div>
+
+    <script>
+        (function() {
+            const focusBtn = document.getElementById('focus-mode-btn');
+            const body = document.body;
+            if (focusBtn) {
+                focusBtn.addEventListener('click', function() {
+                    body.classList.toggle('focus-mode');
+                    focusBtn.classList.toggle('active');
+                    const icon = focusBtn.querySelector('i');
+                    if (body.classList.contains('focus-mode')) {
+                        icon.className = 'fas fa-compress';
+                    } else {
+                        icon.className = 'fas fa-expand';
+                    }
+                });
+            }
+        })();
+    </script>
+
+</body>
+</html>
+

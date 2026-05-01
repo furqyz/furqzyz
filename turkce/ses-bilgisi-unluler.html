@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ünlülerle İlgili Ses Olayları - KPSS Türkçe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-slate-50 text-slate-900 leading-relaxed antialiased">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm px-4 py-4 border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
+        <div class="max-w-[1600px] mx-auto flex justify-between items-center px-4 md:px-8">
+            <div class="flex items-center space-x-4">
+                <div class="bg-gradient-to-br from-rose-500 to-pink-600 text-white p-2.5 rounded-xl shadow-lg shadow-rose-200/50 dark:shadow-rose-900/50">
+                    <i class="fas fa-volume-up text-lg"></i>
+                </div>
+                <h1 class="text-2xl font-extrabold tracking-tight">KPSS <span class="bg-clip-text text-transparent bg-gradient-to-r from-rose-600 to-pink-600 dark:from-rose-400 dark:to-pink-400">Ders Notlarım</span></h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <!-- Dersler Menüsü -->
+                <a href="../anasayfa.html" class="hidden lg:flex items-center gap-1.5 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-rose-600 dark:hover:text-rose-400 font-semibold text-sm transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700 mr-1" title="Ana Sayfaya Dön">
+                    <i class="fas fa-home text-sm"></i>
+                    <span>Ana Sayfa</span>
+                </a>
+                <nav class="hidden lg:flex items-center space-x-1 mr-2">
+                    <a href="../index.html" class="px-3 py-2 rounded-lg font-bold text-sm transition-colors text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 font-semibold">Tarih</a>
+                    <a href="../turkce.html" class="px-3 py-2 rounded-lg font-bold text-sm transition-colors bg-rose-50 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400">Türkçe</a>
+                    <a href="#" class="px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 font-semibold text-sm transition-colors">Coğrafya</a>
+                    <a href="#" class="px-3 py-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 font-semibold text-sm transition-colors">Vatandaşlık</a>
+                </nav>
+                
+                <!-- Arama Kutusu -->
+                <div class="hidden md:flex items-center bg-slate-100 dark:bg-slate-800 rounded-full px-4 py-2 border border-slate-200 dark:border-slate-700 focus-within:ring-2 focus-within:ring-rose-500 transition-all relative z-50">
+                    <i class="fas fa-search text-slate-400"></i>
+                    <input type="text" id="searchInput" placeholder="Notlarda ara..." class="bg-transparent border-none outline-none ml-2 text-sm text-slate-800 dark:text-slate-200 placeholder-slate-400 w-48 lg:w-64" autocomplete="off">
+                    
+                    <!-- Sonuç Kutusu -->
+                    <div id="searchResults" class="absolute top-full right-0 mt-3 w-80 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 hidden flex-col max-h-[70vh] overflow-y-auto z-50 custom-scrollbar divide-y divide-slate-100 dark:divide-slate-700/50">
+                    </div>
+                </div>
+                
+                <button id="dark-mode-toggle" class="p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300">
+                    <i class="fas fa-moon dark:hidden text-lg"></i>
+                    <i class="fas fa-sun hidden dark:block text-yellow-400 text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-[1600px] mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12 p-4 md:p-8 lg:px-12">
+        
+        <!-- Sidebar Navigation -->
+                                                                        <aside class="w-full lg:w-72 shrink-0">
+            <div class="sticky top-28 space-y-4">
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden">
+                    <button onclick="toggleSidebarSection('turkceNav', this)" class="w-full text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer">
+                        <span class="flex items-center"><i class="fas fa-language mr-2"></i> TÜRKÇE ÜNİTELERİ</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300 rotate-180" id="turkceNav-chevron"></i>
+                    </button>
+                    <div class="px-3 pb-3">
+                        <nav id="turkceNav" class="space-y-1.5 max-h-[80vh] overflow-y-auto pr-1.5 custom-scrollbar">
+                            <!-- 1. Ses Bilgisi -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('sesBilgisiSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-volume-up w-4 text-center mt-0.5 text-rose-500"></i>
+                                        <span class="text-[13px] leading-snug">1. Ses Bilgisi</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform rotate-180" id="sesBilgisiSub-chevron"></i>
+                                </button>
+                                <div id="sesBilgisiSub" class="pl-7 pr-2 py-1 space-y-1 ">
+                                    <a href="ses-bilgisi-unluler.html" class="block text-[12.5px] font-bold text-rose-600 dark:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 "></i>Ünlülerle İlgili Ses Olayları</a>
+                                    <a href="ses-bilgisi-unsuzler.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Ünsüzlerle İlgili Ses Olayları</a>
+                                    <a href="ses-bilgisi-analiz.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>⭐ Çıkmış Analizleri</a>
+                                </div>
+                            </div>
+                            <!-- 2. Yazım Kuralları -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('yazimKurallariSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-pen-nib w-4 text-center mt-0.5 text-rose-500"></i>
+                                        <span class="text-[13px] leading-snug">2. Yazım Kuralları</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform " id="yazimKurallariSub-chevron"></i>
+                                </button>
+                                <div id="yazimKurallariSub" class="pl-7 pr-2 py-1 space-y-1 hidden">
+                                    <a href="yazim-kurallari-buyuk-harf.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Büyük Harflerin Yazımı</a>
+                                    <a href="yazim-kurallari-sayilar-kisaltmalar.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Sayıların ve Kısaltmaların Yazımı</a>
+                                    <a href="yazim-kurallari-bitisik-ayri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Bitişik ve Ayrı Yazılan Kelimeler</a>
+                                    <a href="yazim-kurallari-de-ki-mi.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>De, Ki, Mi Yazımı</a>
+                                    <a href="yazim-kurallari-ikilemeler.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Düzeltme İşareti, İkilemeler ve Pekiştirmeler</a>
+                                    <a href="yazim-kurallari-analiz.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>⭐ Çıkmış Analizleri</a>
+                                </div>
+                            </div>
+                            <!-- 3. Noktalama İşaretleri -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('noktalamaSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-ellipsis-h w-4 text-center mt-0.5 text-rose-500"></i>
+                                        <span class="text-[13px] leading-snug">3. Noktalama İşaretleri</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform " id="noktalamaSub-chevron"></i>
+                                </button>
+                                <div id="noktalamaSub" class="pl-7 pr-2 py-1 space-y-1 hidden">
+                                    <a href="noktalama-nokta-virgul.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Nokta ve Virgülün Kullanımı</a>
+                                    <a href="noktalama-noktali-virgul-iki-nokta.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Noktalı Virgül ve İki Nokta</a>
+                                    <a href="noktalama-diger-isaretler.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Soru, Ünlem, Kesme, Üç Nokta</a>
+                                    <a href="noktalama-analiz.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>⭐ Çıkmış Analizleri</a>
+                                </div>
+                            </div>
+                            <!-- 4. Sözcükte Yapı -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('yapiSekilSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-cubes w-4 text-center mt-0.5 text-rose-500"></i>
+                                        <span class="text-[13px] leading-snug">4. Sözcükte Yapı</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform " id="yapiSekilSub-chevron"></i>
+                                </button>
+                                <div id="yapiSekilSub" class="pl-7 pr-2 py-1 space-y-1 hidden">
+                                    <a href="yapi-sekil-kok-ve-yapim.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Kök Türleri ve Yapım Ekleri</a>
+                                    <a href="yapi-sekil-cekim-ekleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>İsim ve Fiil Çekim Ekleri</a>
+                                    <a href="yapi-sekil-sozcugun-yapisi.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Sözcüğün Yapısı: Basit, Türemiş, Birleşik</a>
+                                    <a href="yapi-sekil-analiz.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>⭐ Çıkmış Analizleri</a>
+                                </div>
+                            </div>
+                            <!-- 5. Sözcük Türleri -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('sozcukTurleriSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-tags w-4 text-center mt-0.5 text-rose-500"></i>
+                                        <span class="text-[13px] leading-snug">5. Sözcük Türleri</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform " id="sozcukTurleriSub-chevron"></i>
+                                </button>
+                                <div id="sozcukTurleriSub" class="pl-7 pr-2 py-1 space-y-1 hidden">
+                                    <a href="sozcuk-turleri-isimler.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>İsimler (Adlar) ve İsim Tamlamaları</a>
+                                    <a href="sozcuk-turleri-sifatlar.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Sıfatlar (Ön Adlar) ve Sıfat Tamlamaları</a>
+                                    <a href="sozcuk-turleri-zamirler.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Zamirler (Adıllar)</a>
+                                    <a href="sozcuk-turleri-zarflar.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Zarflar (Belirteçler)</a>
+                                    <a href="sozcuk-turleri-edat-baglac.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Edat, Bağlaç ve Ünlem</a>
+                                    <a href="sozcuk-turleri-fiiller.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Fiillerde Kip, Çekim ve Anlam Özellikleri</a>
+                                    <a href="sozcuk-turleri-fiilimsiler.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Fiilimsiler (Eylemsiler)</a>
+                                    <a href="sozcuk-turleri-fiilde-cati.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Fiilde Çatı</a>
+                                    <a href="sozcuk-turleri-analiz.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>⭐ Çıkmış Analizleri</a>
+                                </div>
+                            </div>
+                            <!-- 6. Cümlenin Ögeleri -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('cumleninOgeleriSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-sitemap w-4 text-center mt-0.5 text-rose-500"></i>
+                                        <span class="text-[13px] leading-snug">6. Cümlenin Ögeleri</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform " id="cumleninOgeleriSub-chevron"></i>
+                                </button>
+                                <div id="cumleninOgeleriSub" class="pl-7 pr-2 py-1 space-y-1 hidden">
+                                    <a href="cumlenin-ogeleri-temel.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Temel Ögeler: Yüklem ve Özne</a>
+                                    <a href="cumlenin-ogeleri-yardimci.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Yardımcı Ögeler: Nesne, Dolaylı Tümleç ve Zarf Tümleci</a>
+                                    <a href="cumlenin-ogeleri-analiz.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>⭐ Çıkmış Analizleri</a>
+                                </div>
+                            </div>
+                            <!-- 7. Cümle Türleri -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('cumleTurleriSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-list-alt w-4 text-center mt-0.5 text-rose-500"></i>
+                                        <span class="text-[13px] leading-snug">7. Cümle Türleri</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform " id="cumleTurleriSub-chevron"></i>
+                                </button>
+                                <div id="cumleTurleriSub" class="pl-7 pr-2 py-1 space-y-1 hidden">
+                                    <a href="cumle-turleri-yapi.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Yapısına Göre Cümleler</a>
+                                </div>
+                            </div>
+                            <div class="space-y-1 mt-2">
+                                <a href="anlatim-bozuklugu.html" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 hover:scale-[1.02] text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-exclamation-circle w-4 text-center mt-0.5 text-rose-500"></i>
+                                        <span class="text-[13px] leading-snug">8. Anlatım Bozuklukları</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 space-y-8 lg:space-y-12">
+            
+            <header class="space-y-4 bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 relative overflow-hidden">
+                <div class="relative z-10">
+                    <a href="ses-bilgisi.html" class="inline-flex items-center text-rose-600 dark:text-rose-400 hover:text-rose-800 dark:hover:text-rose-300 font-bold text-sm mb-4 transition-colors"><i class="fas fa-arrow-left mr-2"></i>Ses Bilgisi Ana Menüye Dön</a>
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white leading-tight tracking-tight">Ünlülerle İlgili Ses Olayları</h2>
+                </div>
+            </header>
+
+            <div class="columns-1 xl:columns-2 gap-8 space-y-8">
+                
+                <section class="note-card category-red p-6 md:p-8 rounded-2xl shadow-sm">
+                    <h3 class="text-xl font-extrabold mb-6 flex items-center text-rose-900 dark:text-rose-200">
+                        <div class="bg-rose-100 dark:bg-rose-900/50 p-2.5 rounded-xl mr-3 shadow-sm">
+                            <i class="fas fa-level-down-alt text-rose-600 dark:text-rose-300"></i>
+                        </div>
+                        Ünlü Düşmesi (Hece Düşmesi)
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800">
+                            <p class="text-sm font-bold text-rose-600 dark:text-rose-400 mb-2 uppercase tracking-wide">1. Çekim Eki Alırken Düşme</p>
+                            <p class="text-slate-700 dark:text-slate-300 font-medium">İkinci hecesinde dar ünlü (ı, i, u, ü) bulunan sözcüklere ünlüyle başlayan ek gelince dar ünlü düşer.</p>
+                            <div class="mt-3 flex flex-wrap gap-2">
+                                <span class="bg-white dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-sm">akıl-ı → <strong>aklı</strong></span>
+                                <span class="bg-white dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 text-sm">burun-u → <strong>burnu</strong></span>
+                            </div>
+                        </div>
+
+                        <div class="bg-rose-50/50 dark:bg-rose-900/10 p-4 rounded-2xl border border-rose-100 dark:border-rose-900/30">
+                            <p class="text-sm font-bold text-rose-600 dark:text-rose-400 mb-2 uppercase tracking-wide">2. Türetilirken (Yapım Eki) Düşme</p>
+                            <p class="text-slate-700 dark:text-slate-300 font-medium">Sözcük türetilirken yaşanan bu düşme türü sınavda çok sık sorulur.</p>
+                            <div class="mt-3 flex flex-wrap gap-2">
+                                <span class="bg-white dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-rose-200 dark:border-rose-800 text-sm">oyun-a → <strong>oyna-</strong></span>
+                                <span class="bg-white dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-rose-200 dark:border-rose-800 text-sm">ileri-le → <strong>ilerle-</strong></span>
+                                <span class="bg-white dark:bg-slate-800 px-3 py-1.5 rounded-lg border border-rose-200 dark:border-rose-800 text-sm">sızı-la → <strong>sızla-</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="note-card category-red p-6 md:p-8 rounded-2xl shadow-sm">
+                    <h3 class="text-xl font-extrabold mb-6 flex items-center text-pink-900 dark:text-pink-200">
+                        <div class="bg-pink-100 dark:bg-pink-900/50 p-2.5 rounded-xl mr-3 shadow-sm">
+                            <i class="fas fa-compress-arrows-alt text-pink-600 dark:text-pink-300"></i>
+                        </div>
+                        Ünlü Daralması
+                    </h3>
+                    <div class="bg-slate-50 dark:bg-slate-900/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 mb-6">
+                        <p class="text-slate-700 dark:text-slate-300 font-medium leading-relaxed">
+                            Sonu geniş ünlüyle (<strong>a, e</strong>) biten bir eyleme <strong>"-yor"</strong> eki geldiğinde, sondaki geniş ünlüler daralarak <strong>"ı, i, u, ü"</strong> seslerine dönüşür.
+                        </p>
+                        <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
+                            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-pink-100 dark:border-pink-900/30">
+                                <span class="text-xs text-slate-400 block mb-1">başla-yor</span>
+                                <i class="fas fa-long-arrow-alt-right text-pink-500 mr-2"></i><strong class="text-lg">başlıyor</strong>
+                            </div>
+                            <div class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-pink-100 dark:border-pink-900/30">
+                                <span class="text-xs text-slate-400 block mb-1">özle-yor</span>
+                                <i class="fas fa-long-arrow-alt-right text-pink-500 mr-2"></i><strong class="text-lg">özlüyor</strong>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="note-card category-indigo p-6 md:p-8 rounded-2xl shadow-sm">
+                    <h3 class="text-xl font-extrabold mb-6 flex items-center text-indigo-900 dark:text-indigo-200">
+                        <div class="bg-indigo-100 dark:bg-indigo-900/50 p-2.5 rounded-xl mr-3 shadow-sm">
+                            <i class="fas fa-star text-indigo-600 dark:text-indigo-300"></i>
+                        </div>
+                        Ekstra Bilgi & İstisnalar
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start bg-indigo-50/50 dark:bg-indigo-900/10 p-4 rounded-2xl">
+                            <i class="fas fa-link mt-1.5 mr-3 text-indigo-500"></i>
+                            <div>
+                                <p class="font-bold text-indigo-800 dark:text-indigo-300">Birleşme Sırasında (Aşınma)</p>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">ne+için → <strong>niçin</strong>, kahve+altı → <strong>kahvaltı</strong>, kayıp+etmek → <strong>kaybetmek</strong></p>
+                            </div>
+                        </div>
+                        <div class="flex items-start bg-indigo-50/50 dark:bg-indigo-900/10 p-4 rounded-2xl">
+                            <i class="fas fa-magic mt-1.5 mr-3 text-indigo-500"></i>
+                            <div>
+                                <p class="font-bold text-indigo-800 dark:text-indigo-300">"y" Kaynaştırma Daralması</p>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">Sadece <strong>"de-", "ye-"</strong> fiilleri ve <strong>"ne"</strong> sözcüğünde daralma yapar.</p>
+                                <p class="text-xs mt-1 font-mono text-indigo-600 dark:text-indigo-400">diyecek, yiyecek, niye</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="bg-rose-600 text-white p-6 md:p-8 rounded-3xl shadow-xl shadow-rose-200 dark:shadow-none">
+                    <h3 class="text-xl font-extrabold mb-6 flex items-center">
+                        <div class="bg-white/20 p-2.5 rounded-xl mr-3">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        Kritik Uyarılar
+                    </h3>
+                    <div class="space-y-4">
+                        <p class="font-medium">Her "-yor" ekini daralma sanmayın!</p>
+                        <div class="bg-white/10 p-4 rounded-2xl border border-white/20">
+                            <p class="text-sm leading-relaxed">
+                                "seviyor" veya "biliyor" sözcüklerinde daralma <strong>YOKTUR</strong>. Kök "sev-" ve "bil-"dir. Aradaki "i" sadece yardımcı sestir.
+                            </p>
+                        </div>
+                        <p class="text-xs opacity-80 italic">* İpucu: Kelimenin köküne bakın, sonu 'a' veya 'e' ile bitmiyorsa daralma olamaz.</p>
+                    </div>
+                </section>
+
+            </div>
+
+                            <section class="note-card category-emerald p-6 md:p-8 rounded-2xl shadow-sm">
+                    <h3 class="text-xl font-extrabold mb-6 flex items-center text-emerald-900 dark:text-emerald-200">
+                        <div class="bg-emerald-100 dark:bg-emerald-900/50 p-2.5 rounded-xl mr-3 shadow-sm">
+                            <i class="fas fa-plus text-emerald-600 dark:text-emerald-300"></i>
+                        </div>
+                        Ünlü Türemesi
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800">
+                            <p class="text-slate-700 dark:text-slate-300 font-medium">Sözcüklere küçültme eki (-cık/-cik) geldiğinde araya bir ünlünün girmesidir.</p>
+                            <div class="mt-2 text-xs font-mono">dar-a-cık, bir-i-cik</div>
+                        </div>
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800">
+                            <p class="text-slate-700 dark:text-slate-300 font-medium">Pekiştirilmiş sözcüklerde de görülür.</p>
+                            <div class="mt-2 text-xs font-mono">sap-a-sağlam, çep-e-çevre</div>
+                        </div>
+                        <div class="bg-rose-50 dark:bg-rose-900/20 p-4 rounded-2xl border border-rose-100 dark:border-rose-800/50">
+                            <p class="text-sm font-bold text-rose-600 dark:text-rose-400 mb-2"><i class="fas fa-exclamation-triangle mr-1"></i> Kritik Sınav Tuzağı</p>
+                            <p class="text-slate-700 dark:text-slate-300 text-sm"><strong>Öpücük</strong> ve <strong>gülücük</strong> kelimelerinde ünlü türemesi KESİNLİKLE YOKTUR! Bu kelimeler "öp-üş-cük" ve "gül-üş-cük"ten türediği için buralarda <strong>ünsüz düşmesi</strong> vardır.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="note-card category-amber p-6 md:p-8 rounded-2xl shadow-sm">
+                    <h3 class="text-xl font-extrabold mb-6 flex items-center text-amber-900 dark:text-amber-200">
+                        <div class="bg-amber-100 dark:bg-amber-900/50 p-2.5 rounded-xl mr-3 shadow-sm">
+                            <i class="fas fa-sync text-amber-600 dark:text-amber-300"></i>
+                        </div>
+                        Kökte Ünlü Değişimi
+                    </h3>
+                    <div class="bg-slate-50 dark:bg-slate-900/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                        <p class="mb-4">Türkçede <strong>sadece iki kelimede</strong> karşımıza çıkar. "Ben" ve "sen" kişi zamirlerine yönelme durum eki (-e/-a) geldiğinde kökteki ünlünün değişerek "bana" ve "sana" olmasıdır.</p>
+                        <div class="flex flex-col space-y-2 font-mono bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-200 dark:border-slate-700">
+                            <span>ben + e → <strong class="text-amber-600 dark:text-amber-400">bana</strong></span>
+                            <span>sen + e → <strong class="text-amber-600 dark:text-amber-400">sana</strong></span>
+                        </div>
+                    </div>
+                </section>
+
+            <!-- SINAV HAFIZASI -->
+            <section class="note-card p-8 md:p-12 rounded-3xl shadow-2xl shadow-rose-500/20 relative overflow-hidden group mt-12">
+                <div class="absolute right-0 top-0 w-64 h-64 bg-rose-500/5 rounded-full blur-3xl -mr-16 -mt-16"></div>
+                
+                <div class="relative z-10">
+                    <h3 class="text-3xl font-black mb-8 flex items-center tracking-tight text-slate-900 dark:text-white">
+                        <i class="fas fa-graduation-cap text-4xl mr-4 text-rose-600"></i> SINAV HAFIZASI & ANALİZ
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white/90 dark:bg-slate-900/90 p-6 rounded-2xl border border-rose-100 dark:border-rose-800/50">
+                            <p class="text-rose-600 font-bold mb-2 flex items-center"><i class="fas fa-check-circle mr-2"></i>Türetilirken Düşme Tuzakları</p>
+                            <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                                ÖSYM özellikle şu üç kelimeye bayılır: <strong>Kıvrım</strong> (kıvır-), <strong>Çevre</strong> (çevir-), <strong>Ayrıntı</strong> (ayır-).
+                            </p>
+                        </div>
+                        <div class="bg-white/90 dark:bg-slate-900/90 p-6 rounded-2xl border border-rose-100 dark:border-rose-800/50">
+                            <p class="text-rose-600 font-bold mb-2 flex items-center"><i class="fas fa-search-plus mr-2"></i>"Diye" Kelimesi</p>
+                            <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                                <strong>"diye"</strong> (de-y-e) kelimesindeki daralma sınavda en çok yoklanan tuzaklardan biridir. Genellikle gözden kaçar, dikkat!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        if (localStorage.getItem('darkMode') === 'true') document.documentElement.classList.add('dark');
+        document.getElementById('dark-mode-toggle').addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+        });
+
+        function toggleSidebarSection(id, btn) {
+            const nav = document.getElementById(id);
+            const chevron = document.getElementById(id + '-chevron');
+            nav.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
+
+        function toggleSubNav(id, btn) {
+            const nav = document.getElementById(id);
+            const chevron = document.getElementById(id + '-chevron');
+            nav.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
+    </script>
+
+    
+
+
+    <!-- Odaklanma Modu Butonu -->
+    <div class="focus-controls">
+        <button id="focus-mode-btn" class="focus-btn" title="Odaklanma Modu (Sadece Notlar)">
+            <i class="fas fa-expand"></i>
+        </button>
+    </div>
+
+    <script>
+        (function() {
+            const focusBtn = document.getElementById('focus-mode-btn');
+            const body = document.body;
+            if (focusBtn) {
+                focusBtn.addEventListener('click', function() {
+                    body.classList.toggle('focus-mode');
+                    focusBtn.classList.toggle('active');
+                    const icon = focusBtn.querySelector('i');
+                    if (body.classList.contains('focus-mode')) {
+                        icon.className = 'fas fa-compress';
+                    } else {
+                        icon.className = 'fas fa-expand';
+                    }
+                });
+            }
+        })();
+    </script>
+
+</body>
+</html>
