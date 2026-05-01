@@ -98,18 +98,31 @@ aside .sticky {
    AKILLI REVİZYON & FOCUS MODE
 ═══════════════════════════════════════════ */
 
-/* Focus Mode: Header ve Sidebar gizleme */
+/* Focus Mode: Header ve Sidebar gizleme + içerik tam genişliğe */
 body.focus-mode header,
 body.focus-mode aside {
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-20px);
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity: 0 !important;
+    pointer-events: none !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    max-width: 0 !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body.focus-mode main {
-    margin-top: -60px; /* Header boşluğunu kapat */
-    transition: all 0.5s ease;
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-top: 1.5rem !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Layout wrapper'ı da düzeltelim */
+body.focus-mode .flex.min-h-screen,
+body.focus-mode .lg\:flex {
+    display: block !important;
 }
 
 /* Revision Mode: Normal metinleri karart, kutuları parlat */
