@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuzey'e Doğru (Kutuplara Gittikçe Değişenler) - KPSS Coğrafya</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-slate-50 text-slate-900 leading-relaxed antialiased">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm px-4 py-4 border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
+        <div class="max-w-[1600px] mx-auto flex justify-between items-center px-4 md:px-8">
+            <div class="flex items-center space-x-4">
+                <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white p-2.5 rounded-xl shadow-lg shadow-emerald-200/50 dark:shadow-emerald-900/50">
+                    <i class="fas fa-earth-americas text-lg"></i>
+                </div>
+                <h1 class="text-2xl font-extrabold tracking-tight">KPSS <span class="bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400">Ders Notlarım</span></h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <!-- Dersler Menüsü -->
+                <a href="../index.html" class="hidden lg:flex items-center gap-1.5 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-emerald-600 dark:hover:text-emerald-400 font-semibold text-sm transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700 mr-1" title="Ana Sayfaya Dön">
+                    <i class="fas fa-home text-sm"></i>
+                    <span>Ana Sayfa</span>
+                </a>
+                <nav class="hidden lg:flex items-center space-x-1 mr-2">
+                    <a href="../tarih.html" class="px-3 py-2 rounded-lg font-bold text-sm transition-colors text-slate-500 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 font-semibold">Tarih</a>
+                    <a href="../turkce.html" class="px-3 py-2 rounded-lg font-bold text-sm transition-colors text-slate-500 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 font-semibold">Türkçe</a>
+                    <a href="../cografya.html" class="px-3 py-2 rounded-lg font-bold text-sm transition-colors bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400">Coğrafya</a>
+                    <a href="#" class="px-3 py-2 rounded-lg text-slate-500 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 font-semibold text-sm transition-colors">Vatandaşlık</a>
+                </nav>
+                
+                <!-- Arama Kutusu -->
+                <div class="hidden md:flex items-center bg-slate-100 dark:bg-slate-800 rounded-full px-4 py-2 border border-slate-200 dark:border-slate-700 focus-within:ring-2 focus-within:ring-emerald-500 transition-all relative z-50">
+                    <i class="fas fa-search text-slate-400"></i>
+                    <input type="text" id="searchInput" placeholder="Notlarda ara..." class="bg-transparent border-none outline-none ml-2 text-sm text-slate-800 dark:text-slate-200 placeholder-slate-400 w-48 lg:w-64" autocomplete="off">
+                    
+                    <!-- Sonuç Kutusu -->
+                    <div id="searchResults" class="absolute top-full right-0 mt-3 w-80 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 hidden flex-col max-h-[70vh] overflow-y-auto z-50 custom-scrollbar divide-y divide-slate-100 dark:divide-slate-700/50">
+                    </div>
+                </div>
+                
+                <button id="dark-mode-toggle" class="p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300">
+                    <i class="fas fa-moon dark:hidden text-lg"></i>
+                    <i class="fas fa-sun hidden dark:block text-yellow-400 text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-[1600px] mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12 p-4 md:p-8 lg:px-12">
+        
+        <!-- Sidebar Navigation -->
+                                                                        <aside class="w-full lg:w-72 shrink-0">
+            <div class="sticky top-28 space-y-4">
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden">
+                    <button onclick="toggleSidebarSection('cografyaNav', this)" class="w-full text-xs font-bold text-slate-400 dark:text-slate-300 uppercase tracking-widest p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer">
+                        <span class="flex items-center"><i class="fas fa-earth-americas mr-2"></i> COĞRAFYA ÜNİTELERİ</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300 rotate-180" id="cografyaNav-chevron"></i>
+                    </button>
+                    <div class="px-3 pb-3">
+                        <nav id="cografyaNav" class="space-y-1.5 max-h-[80vh] overflow-y-auto pr-1.5 custom-scrollbar">
+                            <!-- 1. Ünite: Coğrafi Konum -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('konumSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-compass w-4 text-center mt-0.5 text-emerald-500"></i>
+                                        <span class="text-[13px] leading-snug">1. Ünite: Coğrafi Konum</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform rotate-180" id="konumSub-chevron"></i>
+                                </button>
+                                <div id="konumSub" class="pl-7 pr-2 py-1 space-y-1 ">
+                                    <a href="enlem-boylam.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Enlem - Boylam</a>
+                                    <a href="kuzeye-dogru.html" class="block text-[12.5px] text-emerald-600 dark:text-emerald-400 font-bold py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 "></i>Kuzey'e Doğru</a>
+                                    <a href="sinir-kapilari.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Sınır Kapıları</a>
+                                </div>
+                            </div>
+                            <!-- 2. Ünite: İklim ve Bitki Örtüsü -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('iklimSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-cloud-sun-rain w-4 text-center mt-0.5 text-sky-500"></i>
+                                        <span class="text-[13px] leading-snug">2. Ünite: İklim ve Bitki Örtüsü</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform " id="iklimSub-chevron"></i>
+                                </button>
+                                <div id="iklimSub" class="pl-7 pr-2 py-1 space-y-1 hidden">
+                                    <a href="basinc-merkezleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Basınç Merkezleri</a>
+                                    <a href="ruzgar-yonleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Rüzgarlar ve Rüzgar Gülleri</a>
+                                    <a href="nem-turleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Nem Türleri ve Dağılımı</a>
+                                    <a href="yagis-mevsimleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Yağış Mevsimleri</a>
+                                    <a href="yagis-turleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Yağış Türleri ve Oluşumları</a>
+                                    <a href="yagisli-yoreler.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Yağışlı Yöreleri</a>
+                                    <a href="iklim-cesitleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'de İklim Çeşitleri</a>
+                                    <a href="bitki-ortusu.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Bitki Örtüsü Bölgeleri</a>
+                                    <a href="flora-bolgeleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Flora Bölgeleri</a>
+                                    <a href="agac-turleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Ağaç Türleri</a>
+                                </div>
+                            </div>
+                            <!-- 3. Ünite: Fiziki Özellikler -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('fizikiSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-mountain w-4 text-center mt-0.5 text-teal-500"></i>
+                                        <span class="text-[13px] leading-snug">3. Ünite: Fiziki Özellikler</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform " id="fizikiSub-chevron"></i>
+                                </button>
+                                <div id="fizikiSub" class="pl-7 pr-2 py-1 space-y-1 hidden">
+                                    <a href="turkiyenin-daglari.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Dağları</a>
+                                    <a href="ova-ve-platolar.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Ova ve Platolar</a>
+                                    <a href="delta-ovalari.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Delta Ovaları</a>
+                                    <a href="masif-araziler.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Masif Araziler</a>
+                                    <a href="deprem-bolgeleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Deprem Bölgeleri</a>
+                                    <a href="karstik-kayaclar.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Karstik Kayaçlar</a>
+                                    <a href="kumullar.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'de Kumullar</a>
+                                    <a href="ruzgar-sekillendirme.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Rüzgar Şekillendirme</a>
+                                    <a href="vadi-turleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Vadi Türleri</a>
+                                    <a href="goller.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Gölleri</a>
+                                    <a href="korfezler.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Körfezleri</a>
+                                    <a href="su-varligi.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Su Varlığı ve Havzalar</a>
+                                    <a href="kiyi-tipleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Kıyı Tipleri</a>
+                                    <a href="kiyi-sekilleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Kıyı Şekilleri</a>
+                                    <a href="sahanlik.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Kıta Sahanlığı (Sahanlık)</a>
+                                    <a href="toprak-turleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Toprak Türleri</a>
+                                    <a href="gecitler.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Karayolu Geçitleri ve Boğazları</a>
+                                </div>
+                            </div>
+                            <!-- 4. Ünite: Nüfus ve Yerleşme -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('nufusSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-people-group w-4 text-center mt-0.5 text-violet-500"></i>
+                                        <span class="text-[13px] leading-snug">4. Ünite: Nüfus ve Yerleşme</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform " id="nufusSub-chevron"></i>
+                                </button>
+                                <div id="nufusSub" class="pl-7 pr-2 py-1 space-y-1 hidden">
+                                    <a href="nufus-dagilisi.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-violet-600 dark:hover:text-violet-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Nüfusun Dağılışı</a>
+                                    <a href="koy-alti-yerlesmeleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-violet-600 dark:hover:text-violet-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Köy Altı Yerleşmeleri</a>
+                                    <a href="mesken-tipleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-violet-600 dark:hover:text-violet-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Kırsal Mesken Tipleri</a>
+                                </div>
+                            </div>
+                            <!-- 5. Ünite: Ekonomik Coğrafya -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('ekonomiSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-chart-line w-4 text-center mt-0.5 text-amber-500"></i>
+                                        <span class="text-[13px] leading-snug">5. Ünite: Ekonomik Coğrafya</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform " id="ekonomiSub-chevron"></i>
+                                </button>
+                                <div id="ekonomiSub" class="pl-7 pr-2 py-1 space-y-1 hidden">
+                                    <a href="tarim-urunleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Tarım Ürünleri Dağılımı</a>
+                                    <a href="hayvancilik.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'de Hayvancılık</a>
+                                    <a href="maden-isletmeleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Maden İşletmeleri ve Tesisleri</a>
+                                    <a href="petrol-boruhatlari.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Petrol Boru Hatları</a>
+                                    <a href="dogalgaz-boruhatlari.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Doğal Gaz Boru Hatları</a>
+                                    <a href="demiryollari.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Demiryolları ve YHT Ağı</a>
+                                    <a href="otoyollar.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Otoyolları</a>
+                                    <a href="limanlar.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Denizyolu Limanları</a>
+                                    <a href="ramsar-alanlari.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Ramsar Alanları</a>
+                                </div>
+                            </div>
+                            <!-- 6. Ünite: Bölgeler Coğrafyası -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('bolgelerSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-map w-4 text-center mt-0.5 text-rose-500"></i>
+                                        <span class="text-[13px] leading-snug">6. Ünite: Bölgeler Coğrafyası</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform " id="bolgelerSub-chevron"></i>
+                                </button>
+                                <div id="bolgelerSub" class="pl-7 pr-2 py-1 space-y-1 hidden">
+                                    <a href="bolgeler-cografyasi.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>İşlevsel Bölgeler (GAP, DAP...)</a>
+                                </div>
+                            </div>
+                            <!-- 7. Ünite: Güncel TÜİK Verileri -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('tuikSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-square-poll-vertical w-4 text-center mt-0.5 text-red-500"></i>
+                                        <span class="text-[13px] leading-snug">7. Ünite: Güncel TÜİK Verileri</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform " id="tuikSub-chevron"></i>
+                                </button>
+                                <div id="tuikSub" class="pl-7 pr-2 py-1 space-y-1 hidden">
+                                    <a href="tuik-hayvancilik.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>TÜİK: Hayvancılık</a>
+                                    <a href="tuik-tarim.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>TÜİK: Tarım</a>
+                                    <a href="tuik-nufus.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>TÜİK: Nüfus (ADNKS)</a>
+                                    <a href="tuik-ekonomi.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>TÜİK: Ekonomi & Turizm</a>
+                                    <a href="tuik-afetler.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>TÜİK: Doğal Afetler</a>
+                                    <a href="tuik-ormanlar.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>TÜİK: Orman Varlığı</a>
+                                    <a href="tuik-koruma.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>TÜİK: Koruma Alanları</a>
+                                    <a href="tuik-ilkler.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>TÜİK: İlkler & Sakin Şehir</a>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 space-y-8 lg:space-y-12">
+            
+            <header class="space-y-4 bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 relative overflow-hidden">
+                <div class="relative z-10">
+                    <a href="../cografya.html" class="inline-flex items-center text-emerald-600 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300 font-bold text-sm mb-4 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>Coğrafya Ana Menüye Dön
+                    </a>
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white leading-tight tracking-tight uppercase">Kuzey'e Doğru (Kutuplara Doğru Değişenler)</h2>
+                    <p class="text-slate-500 dark:text-slate-200 mt-2 text-sm">PDF Sayfa: 7</p>
+                </div>
+            </header>
+
+            <!-- HARİTA GÖRSEL KARTI -->
+            <section class="bg-white dark:bg-slate-800 p-6 md:p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm relative overflow-hidden">
+                <h3 class="text-xl font-extrabold mb-4 flex items-center text-slate-900 dark:text-white">
+                    <i class="fas fa-map-marked-alt text-emerald-500 mr-3"></i> Orijinal Not Haritası
+                </h3>
+                <div class="bg-slate-100 dark:bg-slate-900/50 p-2 rounded-2xl border border-slate-200 dark:border-slate-800 flex justify-center items-center">
+                    <img src="../assets/images/cografya/page_7.png" alt="Kuzey'e Doğru Gittikçe Türkiye'de Değişenler Haritası" class="max-w-full h-auto rounded-xl shadow-md select-none pointer-events-none hover:scale-[1.01] transition-transform duration-300">
+                </div>
+            </section>
+
+            <!-- DETAYLI İÇERİK BÖLÜMÜ -->
+            <div class="columns-1 xl:columns-2 gap-8 space-y-8">
+                
+                <!-- ARTAN ÖZELLİKLER (KUZEYE GİTTİKÇE ARTANLAR) -->
+                <section class="note-card category-emerald p-6 md:p-8 rounded-2xl shadow-sm break-inside-avoid">
+                    <h3 class="text-xl font-extrabold mb-6 flex items-center text-emerald-950 dark:text-emerald-100">
+                        <div class="bg-emerald-100 dark:bg-emerald-900/50 p-2.5 rounded-xl mr-3 shadow-sm">
+                            <i class="fas fa-arrow-trend-up text-emerald-600 dark:text-emerald-300"></i>
+                        </div>
+                        Kuzey'e Doğru Gittikçe Artanlar
+                    </h3>
+                    
+                    <div class="space-y-4">
+                        <!-- Yer Çekimi -->
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 hover:border-emerald-200 dark:hover:border-emerald-900/50 transition-colors">
+                            <div class="flex items-center space-x-2.5 mb-1">
+                                <span class="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 p-1.5 rounded-lg text-xs"><i class="fas fa-weight-hanging"></i></span>
+                                <h4 class="font-bold text-slate-800 dark:text-slate-200 text-sm">Yer Çekimi</h4>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-slate-200 leading-relaxed font-medium">
+                                Dünyanın kutuplardan basık geoit şeklinden ötürü kutuplara yaklaştıkça yerin merkezine yaklaşılır. Bu nedenle kuzeye doğru gittikçe yer çekimi kuvveti <strong>artar</strong>. (Sinop'ta yer çekimi Hatay'a göre daha fazladır).
+                            </p>
+                        </div>
+
+                        <!-- Gölge Boyu -->
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 hover:border-emerald-200 dark:hover:border-emerald-900/50 transition-colors">
+                            <div class="flex items-center space-x-2.5 mb-1">
+                                <span class="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 p-1.5 rounded-lg text-xs"><i class="fas fa-umbrella"></i></span>
+                                <h4 class="font-bold text-slate-800 dark:text-slate-200 text-sm">Gölge Boyu</h4>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-slate-200 leading-relaxed font-medium">
+                                Güneş ışınlarının geliş açısı kuzeye doğru daraldığı için, cisimlerin öğle vaktinde oluşan gölge boyları kuzeye gittikçe <strong>uzar (artar)</strong>.
+                            </p>
+                        </div>
+
+                        <!-- Işınların Tutulma Süresi (Tutulma Oranı) -->
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 hover:border-emerald-200 dark:hover:border-emerald-900/50 transition-colors">
+                            <div class="flex items-center space-x-2.5 mb-1">
+                                <span class="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 p-1.5 rounded-lg text-xs"><i class="fas fa-sun-plant-wilt"></i></span>
+                                <h4 class="font-bold text-slate-800 dark:text-slate-200 text-sm">Işınların Tutulma Süresi / Oranı</h4>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-slate-200 leading-relaxed font-medium">
+                                Güneş ışınları eğik açıyla geldiğinde atmosferde daha uzun bir yol katetmek zorunda kalır. Yol uzadıkça atmosferdeki gazlar tarafından soğurulma, yansıma ve dağılma yani tutulma oranı <strong>artar</strong>.
+                            </p>
+                        </div>
+
+                        <!-- Gece-Gündüz Süre Farkı -->
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 hover:border-emerald-200 dark:hover:border-emerald-900/50 transition-colors">
+                            <div class="flex items-center space-x-2.5 mb-1">
+                                <span class="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 p-1.5 rounded-lg text-xs"><i class="fas fa-arrows-left-right-to-line"></i></span>
+                                <h4 class="font-bold text-slate-800 dark:text-slate-200 text-sm">Gece-Gündüz Süre Farkı</h4>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-slate-200 leading-relaxed font-medium">
+                                Ekvator'da yıl boyu 12 saat gece, 12 saat gündüz yaşanır ve süre farkı sıfırdır. Kutuplara gittikçe (kuzeye doğru) gece ile gündüz arasındaki süre farkı belirgin şekilde <strong>artar</strong>.
+                            </p>
+                        </div>
+
+                        <!-- Grup ve Tan Süresi / Alacakaranlık Süresi -->
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 hover:border-emerald-200 dark:hover:border-emerald-900/50 transition-colors">
+                            <div class="flex items-center space-x-2.5 mb-1">
+                                <span class="bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 p-1.5 rounded-lg text-xs"><i class="fas fa-hourglass-half"></i></span>
+                                <h4 class="font-bold text-slate-800 dark:text-slate-200 text-sm">Grup ve Tan Süresi (Alacakaranlık)</h4>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-slate-200 leading-relaxed font-medium">
+                                Kuzeye doğru gidildikçe çizgisel hız azaldığı için Güneş'in doğuş (tan) ve batış (grup) anları daha yavaş gerçekleşir; yani Güneş'in ufukta kalma ve alacakaranlık süresi <strong>uzar (artar)</strong>.
+                            </p>
+                            <div class="mt-2 text-[11px] text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/30 p-2 rounded-lg border border-emerald-500/10 italic">
+                                💡 İPUCU: Romantik anlar yaşamak, güneşin batışını uzun uzun izlemek isteyenler kuzeydeki Sinop kıyılarını tercih etmelidir!
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- AZALAN ÖZELLİKLER (KUZEYE GİTTİKÇE AZALANLAR) -->
+                <section class="note-card category-teal p-6 md:p-8 rounded-2xl shadow-sm break-inside-avoid">
+                    <h3 class="text-xl font-extrabold mb-6 flex items-center text-teal-950 dark:text-teal-100">
+                        <div class="bg-teal-100 dark:bg-teal-900/50 p-2.5 rounded-xl mr-3 shadow-sm">
+                            <i class="fas fa-arrow-trend-down text-teal-600 dark:text-teal-300"></i>
+                        </div>
+                        Kuzey'e Doğru Gittikçe Azalanlar
+                    </h3>
+                    
+                    <div class="space-y-4">
+                        <!-- Çizgisel Hız -->
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 hover:border-teal-200 dark:hover:border-teal-900/50 transition-colors">
+                            <div class="flex items-center space-x-2.5 mb-1">
+                                <span class="bg-teal-100 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 p-1.5 rounded-lg text-xs"><i class="fas fa-gauge-high"></i></span>
+                                <h4 class="font-bold text-slate-800 dark:text-slate-200 text-sm">Çizgisel Hız</h4>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-slate-200 leading-relaxed font-medium">
+                                Dünyanın ekseni etrafındaki dönüş hızı (çizgisel hız) Ekvator'da en fazladır, kutuplara doğru azalır. Bu yüzden Türkiye'de kuzeye gidildikçe çizgisel hız <strong>azalır</strong> (En yavaş dönen yer Sinop, en hızlı dönen yer Hatay'dır).
+                            </p>
+                        </div>
+
+                        <!-- Deniz Sıcaklığı ve Tuzluluğu -->
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 hover:border-teal-200 dark:hover:border-teal-900/50 transition-colors">
+                            <div class="flex items-center space-x-2.5 mb-1">
+                                <span class="bg-teal-100 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 p-1.5 rounded-lg text-xs"><i class="fas fa-temperature-empty"></i></span>
+                                <h4 class="font-bold text-slate-800 dark:text-slate-200 text-sm">Deniz Sıcaklığı ve Tuzluluğu</h4>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-slate-200 leading-relaxed font-medium">
+                                Güneş ışınlarının düşme açısının daralması, sıcaklığı ve dolayısıyla deniz buharlaşmasını azaltır. Buharlaşma azaldığı için deniz suyu tuzluluk oranı güneyden kuzeye doğru <strong>azalır</strong> (Akdeniz %38, Ege %33, Marmara %22, Karadeniz %18 tuzluluğa sahiptir).
+                            </p>
+                        </div>
+
+                        <!-- Paralel Boyları / Çevre Uzunluğu -->
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 hover:border-teal-200 dark:hover:border-teal-900/50 transition-colors">
+                            <div class="flex items-center space-x-2.5 mb-1">
+                                <span class="bg-teal-100 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 p-1.5 rounded-lg text-xs"><i class="fas fa-circle-notch"></i></span>
+                                <h4 class="font-bold text-slate-800 dark:text-slate-200 text-sm">Paralel Boyları (Uzunluğu)</h4>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-slate-200 leading-relaxed font-medium">
+                                Dünyanın küresel şeklinden ötürü paralel dairelerinin çevre uzunluğu Ekvator'dan kutuplara doğru kısalır. Türkiye'de kuzeye gidildikçe paralellerin boyu <strong>kısalır (azalır)</strong>.
+                            </p>
+                        </div>
+
+                        <!-- Sıcaklık (Enlem Etkisi) -->
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 hover:border-teal-200 dark:hover:border-teal-900/50 transition-colors">
+                            <div class="flex items-center space-x-2.5 mb-1">
+                                <span class="bg-teal-100 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 p-1.5 rounded-lg text-xs"><i class="fas fa-wind"></i></span>
+                                <h4 class="font-bold text-slate-800 dark:text-slate-200 text-sm">Sıcaklık (Genel Dağılış)</h4>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-slate-200 leading-relaxed font-medium">
+                                Güneş ışınlarının geliş açısı küçüldüğü için sıcaklık değerleri genel olarak güneyden kuzeye doğru <strong>azalır</strong> (Enlem etkisi). Ancak yükselti, denizellik ve karasallık gibi özel konum şartları bu kuralı yer yer bozabilir.
+                            </p>
+                        </div>
+
+                        <!-- Işınların Geliş Açısı -->
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 hover:border-teal-200 dark:hover:border-teal-900/50 transition-colors">
+                            <div class="flex items-center space-x-2.5 mb-1">
+                                <span class="bg-teal-100 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 p-1.5 rounded-lg text-xs"><i class="fas fa-compass-drafting"></i></span>
+                                <h4 class="font-bold text-slate-800 dark:text-slate-200 text-sm">Işınların Geliş Açısı</h4>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-slate-200 leading-relaxed font-medium">
+                                Ekvator'dan uzaklaşıp kutuplara (kuzeye) doğru ilerledikçe, Güneş ışınlarının yeryüzüne düşme açısı daralır yani <strong>azalır</strong>.
+                            </p>
+                        </div>
+
+                        <!-- Atmosfer Kalınlığı -->
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-2xl border border-slate-100 dark:border-slate-800 hover:border-teal-200 dark:hover:border-teal-900/50 transition-colors">
+                            <div class="flex items-center space-x-2.5 mb-1">
+                                <span class="bg-teal-100 dark:bg-teal-900/40 text-teal-600 dark:text-teal-400 p-1.5 rounded-lg text-xs"><i class="fas fa-cloud"></i></span>
+                                <h4 class="font-bold text-slate-800 dark:text-slate-200 text-sm">Atmosfer Kalınlığı</h4>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-slate-200 leading-relaxed font-medium">
+                                Kutuplarda yer çekiminin fazla olması gazları sıkıştırır; ayrıca çizgisel hızın ve sıcaklığın düşük olması merkezkaç kuvvetini azaltır. Bu sebeplerle atmosferin kalınlığı kutuplara (kuzeye) doğru <strong>azalır (inceleşir)</strong>.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- SINAV HAFIZASI & KRİTİK UYARILAR -->
+                <section class="bg-gradient-to-br from-emerald-600 to-teal-700 text-white p-6 md:p-8 rounded-3xl shadow-xl shadow-emerald-200 dark:shadow-none break-inside-avoid">
+                    <h3 class="text-xl font-extrabold mb-6 flex items-center">
+                        <div class="bg-white/20 p-2.5 rounded-xl mr-3">
+                            <i class="fas fa-graduation-cap text-lg"></i>
+                        </div>
+                        KPSS Sınav Hafızası & Tüyolar
+                    </h3>
+                    
+                    <div class="space-y-4">
+                        <!-- Tüyolar -->
+                        <div class="bg-white/10 p-4 rounded-2xl border border-white/20">
+                            <p class="font-bold text-yellow-300 text-sm mb-1"><i class="fas fa-exclamation-triangle mr-1"></i> Çizgisel Hız ile Alacakaranlık (Grup-Tan) İlişkisi</p>
+                            <p class="text-xs leading-relaxed">
+                                Sorularda çizgisel hız doğrudan sorulabileceği gibi dolaylı olarak <strong class="text-yellow-200">Grup ve Tan süresi</strong> üzerinden de sorulabilir. 
+                                Unutma: Dünya ne kadar <strong class="text-white">yavaş dönerse (kuzeyde olduğu gibi)</strong>, Güneş o kadar yavaş batar ve alacakaranlık süresi o kadar <strong>uzun sürer</strong>.
+                                Bu yüzden Türkiye'de grup ve tan süresi en uzun <strong class="text-yellow-200">Sinop'ta (kuzey uçta)</strong>, en kısa ise <strong class="text-yellow-200">Hatay'da (güney uçta)</strong> yaşanır.
+                            </p>
+                        </div>
+
+                        <div class="bg-white/10 p-4 rounded-2xl border border-white/20">
+                            <p class="font-bold text-yellow-300 text-sm mb-1"><i class="fas fa-lightbulb mr-1"></i> Yer Çekimi ve Kilo İlişkisi</p>
+                            <p class="text-sm leading-relaxed">
+                                Yer çekimi kuzeye doğru arttığı için, Sinop'ta tartılan hassas bir cisim Hatay'a göre daha ağır ölçülür. Dinamometre ile yapılan ölçümlerde kuzeye gittikçe ibre daha büyük değer gösterir!
+                            </p>
+                        </div>
+
+                        <div class="bg-emerald-900/30 p-3 rounded-xl border border-emerald-500/20 text-xs opacity-90 italic">
+                            * Önemli Not: Deniz suyu tuzluluğunun güneyden kuzeye gidildikçe azalması %100 matematiksel konum (enlem) sonucudur. Buharlaşma miktarı ile doğrudan ilişkilidir.
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Scriptler -->
+    <script>
+        if (localStorage.getItem('dark-mode') === 'true') document.documentElement.classList.add('dark');
+        
+
+        function toggleSidebarSection(id, btn) {
+            const nav = document.getElementById(id);
+            const chevron = document.getElementById(id + '-chevron');
+            nav.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
+
+        function toggleSubNav(id, btn) {
+            const nav = document.getElementById(id);
+            const chevron = document.getElementById(id + '-chevron');
+            nav.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
+    </script>
+
+    <!-- Odaklanma Modu -->
+    <div class="focus-controls">
+        <button id="focus-mode-btn" class="focus-btn" title="Odaklanma Modu (Sadece Notlar)">
+            <i class="fas fa-expand"></i>
+        </button>
+    </div>
+
+    <script>
+        (function() {
+            const focusBtn = document.getElementById('focus-mode-btn');
+            const body = document.body;
+            if (focusBtn) {
+                focusBtn.addEventListener('click', function() {
+                    body.classList.toggle('focus-mode');
+                    focusBtn.classList.toggle('active');
+                    const icon = focusBtn.querySelector('i');
+                    if (body.classList.contains('focus-mode')) {
+                        icon.className = 'fas fa-compress';
+                    } else {
+                        icon.className = 'fas fa-expand';
+                    }
+                });
+            }
+        })();
+    </script>
+    <script src="../assets/js/script.js"></script>
+</body>
+</html>

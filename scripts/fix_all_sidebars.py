@@ -1,7 +1,7 @@
 import os
 import re
 
-root_dir = r'c:\Users\67ded\OneDrive\Masaüstü\tarih özet kanalı'
+root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 turkce_dir = os.path.join(root_dir, 'turkce')
 
 menu_structure = [
@@ -61,6 +61,7 @@ menu_structure = [
             ('sozcuk-turleri-zarflar.html', 'Zarflar (Belirteçler)'),
             ('sozcuk-turleri-edat-baglac.html', 'Edat, Bağlaç ve Ünlem'),
             ('sozcuk-turleri-fiiller.html', 'Fiillerde Kip, Çekim ve Anlam Özellikleri'),
+            ('sozcuk-turleri-ek-fiil.html', 'Ek-Fiil (Ek-Eylem)'),
             ('sozcuk-turleri-fiilimsiler.html', 'Fiilimsiler (Eylemsiler)'),
             ('sozcuk-turleri-fiilde-cati.html', 'Fiilde Çatı'),
             ('sozcuk-turleri-analiz.html', '⭐ Çıkmış Analizleri')

@@ -10,19 +10,29 @@ function toggleSidebarSection(id, btn) {
 
 document.addEventListener('DOMContentLoaded', () => {
     const toggleBtn = document.getElementById('dark-mode-toggle');
-    const body = document.body;
 
-    // Sistem tercihini veya kaydedilmiş tercihi kontrol et
-    if (localStorage.getItem('dark-mode') === 'true') {
-        body.classList.add('dark');
-    } else if (localStorage.getItem('dark-mode') === null && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        body.classList.add('dark');
+    if (toggleBtn) {
+        const applyTheme = (isDark) => {
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+                document.body.classList.add('dark');
+                localStorage.setItem('dark-mode', 'true');
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.body.classList.remove('dark');
+                localStorage.setItem('dark-mode', 'false');
+            }
+        };
+
+        // Let HTML inline script set the initial state, then we sync here if needed
+        const isCurrentlyDark = document.documentElement.classList.contains('dark');
+        
+        // Remove cloned button logic as we don't have inline event listener conflicts anymore
+        toggleBtn.addEventListener('click', () => {
+            const currentDark = document.documentElement.classList.contains('dark');
+            applyTheme(!currentDark);
+        });
     }
-
-    toggleBtn.addEventListener('click', () => {
-        body.classList.toggle('dark');
-        localStorage.setItem('dark-mode', body.classList.contains('dark'));
-    });
 
     // Arama vurgulama (Highlight) mantığı
     const urlParams = new URLSearchParams(window.location.search);
@@ -97,20 +107,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (searchInput && searchResults) {
         // Find depth of current page relative to root
-        const pathSegments = window.location.pathname.split('/').filter(p => p);
-        const isSubDir = window.location.pathname.includes('/unitler/') || window.location.pathname.includes('/turkce/');
+        const isSubDir = window.location.pathname.includes('/unitler/') || 
+                         window.location.pathname.includes('/turkce/') || 
+                         window.location.pathname.includes('/cografya/') ||
+                         window.location.pathname.includes('\\cografya\\') ||
+                         window.location.pathname.includes('\\unitler\\') ||
+                         window.location.pathname.includes('\\turkce\\');
         const prefix = isSubDir ? '../' : '';
         
-        const isTurkce = window.location.pathname.includes('turkce');
-        // If we're in turkce, maybe load searchIndex_turkce.js (if it exists) later.
-        // For now, let's keep loading the main searchIndex.js but fix the path
-        const scriptPath = prefix + 'assets/js/searchIndex.js';
+        const path = window.location.pathname.toLowerCase();
+        let indexName = 'searchIndex.js';
+        
+        if (path.includes('cografya') || path.includes('/cografya/') || path.includes('\\cografya\\')) {
+            indexName = 'searchIndex_cografya.js';
+        } else if (path.includes('turkce') || path.includes('/turkce/') || path.includes('\\turkce\\')) {
+            indexName = 'searchIndex_turkce.js';
+        }
+        
+        const scriptPath = prefix + 'assets/js/' + indexName;
         
         const script = document.createElement('script');
         script.src = scriptPath;
+        script.onerror = () => {
+            // searchIndex yüklenemedi, arama kutusu gizleniyor
+            const searchBox = searchInput.closest('div');
+            if (searchBox) searchBox.style.display = 'none';
+        };
         document.body.appendChild(script);
 
         script.onload = () => {
+            if (typeof searchIndex === 'undefined') return;
+            
             searchInput.addEventListener('input', (e) => {
                 const query = e.target.value.toLowerCase().trim();
                 
@@ -131,16 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     searchResults.innerHTML = '<div class="p-4 text-center text-sm text-slate-500 font-medium">Sonuç bulunamadı.</div>';
                 } else {
                     searchResults.innerHTML = results.map(item => {
-                        // For history items
-                        let targetUrl = isSubDir ? 
-                            (item.unit_id === 1 ? '../index.html' : `../unitler/unite${item.unit_id}.html`) : 
-                            (item.unit_id === 1 ? 'index.html' : `unitler/unite${item.unit_id}.html`);
-                            
-                        // If current page is in unitler, targetUrl to another unit is just `uniteX.html`
-                        if (window.location.pathname.includes('/unitler/')) {
-                            targetUrl = item.unit_id === 1 ? '../index.html' : `unite${item.unit_id}.html`;
-                        }
-                            
+                        let targetUrl = isSubDir ? `../${item.url}` : item.url;
                         targetUrl += `?search=${encodeURIComponent(query)}`;
 
                         let displayContent = item.content;
@@ -178,5 +196,84 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         };
+    }
+
+    // Dynamic Back to Top Button
+    const backToTopBtn = document.createElement('button');
+    backToTopBtn.className = 'back-to-top-btn';
+    backToTopBtn.innerHTML = '<i class="fas fa-arrow-up text-lg"></i>';
+    backToTopBtn.setAttribute('title', 'Yukarı Git');
+    document.body.appendChild(backToTopBtn);
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('show');
+        } else {
+            backToTopBtn.classList.remove('show');
+        }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    // Dynamic Focus Mode Button (for pages missing it, like TÜİK pages)
+    let focusBtn = document.getElementById('focus-mode-btn');
+    if (!focusBtn) {
+        let focusControls = document.querySelector('.focus-controls');
+        if (!focusControls) {
+            focusControls = document.createElement('div');
+            focusControls.className = 'focus-controls';
+            document.body.appendChild(focusControls);
+        }
+        
+        focusBtn = document.createElement('button');
+        focusBtn.id = 'focus-mode-btn';
+        focusBtn.className = 'focus-btn';
+        focusBtn.setAttribute('title', 'Odaklanma Modu (Sadece Notlar)');
+        focusBtn.innerHTML = '<i class="fas fa-expand"></i>';
+        focusControls.appendChild(focusBtn);
+        
+        // Dynamically toggle focus mode
+        focusBtn.addEventListener('click', () => {
+            const body = document.body;
+            body.classList.toggle('focus-mode');
+            focusBtn.classList.toggle('active');
+            const icon = focusBtn.querySelector('i');
+            if (body.classList.contains('focus-mode')) {
+                icon.className = 'fas fa-compress';
+            } else {
+                icon.className = 'fas fa-expand';
+            }
+        });
+    }
+
+    // Dynamic Test Çöz Button in the Sidebar Navigation (injects at the top of the menu)
+    const cografyaNav = document.getElementById('cografyaNav');
+    if (cografyaNav) {
+        let testCozBtn = document.getElementById('sidebar-test-coz-btn');
+        if (!testCozBtn) {
+            const isSubDir = window.location.pathname.includes('/unitler/') || 
+                             window.location.pathname.includes('/turkce/') || 
+                             window.location.pathname.includes('/cografya/') ||
+                             window.location.pathname.includes('\\cografya\\') ||
+                             window.location.pathname.includes('\\unitler\\') ||
+                             window.location.pathname.includes('\\turkce\\');
+            const href = isSubDir ? 'test-coz.html' : 'cografya/test-coz.html';
+            
+            const btnWrapper = document.createElement('div');
+            btnWrapper.id = 'sidebar-test-coz-btn';
+            btnWrapper.className = 'mb-4 px-1';
+            btnWrapper.innerHTML = `
+                <a href="${href}" class="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 text-white py-3 px-4 rounded-xl font-extrabold text-sm transition-transform hover:scale-[1.03] shadow-md shadow-emerald-200/50 dark:shadow-emerald-900/30">
+                    <i class="fas fa-play-circle text-base"></i>
+                    <span>TEST ÇÖZ (Çıkmış Sorular)</span>
+                </a>
+            `;
+            cografyaNav.insertBefore(btnWrapper, cografyaNav.firstChild);
+        }
     }
 });

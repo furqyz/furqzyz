@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TÜİK: Ekonomi, Enerji ve Turizm - KPSS Coğrafya</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-slate-50 text-slate-900 leading-relaxed antialiased">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm px-4 py-4 border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
+        <div class="max-w-[1600px] mx-auto flex justify-between items-center px-4 md:px-8">
+            <div class="flex items-center space-x-4">
+                <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white p-2.5 rounded-xl shadow-lg shadow-emerald-200/50 dark:shadow-emerald-900/50">
+                    <i class="fas fa-earth-americas text-lg"></i>
+                </div>
+                <h1 class="text-2xl font-extrabold tracking-tight">KPSS <span class="bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400">Ders Notlarım</span></h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="../index.html" class="hidden lg:flex items-center gap-1.5 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-emerald-600 dark:hover:text-emerald-400 font-semibold text-sm transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700 mr-1" title="Ana Sayfaya Dön">
+                    <i class="fas fa-home text-sm"></i>
+                    <span>Ana Sayfa</span>
+                </a>
+                <nav class="hidden lg:flex items-center space-x-1 mr-2">
+                    <a href="../tarih.html" class="px-3 py-2 rounded-lg font-bold text-sm transition-colors text-slate-500 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 font-semibold">Tarih</a>
+                    <a href="../turkce.html" class="px-3 py-2 rounded-lg font-bold text-sm transition-colors text-slate-500 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 font-semibold">Türkçe</a>
+                    <a href="../cografya.html" class="px-3 py-2 rounded-lg font-bold text-sm transition-colors bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400">Coğrafya</a>
+                    <a href="#" class="px-3 py-2 rounded-lg text-slate-500 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 font-semibold text-sm transition-colors">Vatandaşlık</a>
+                </nav>
+                
+                <div class="hidden md:flex items-center bg-slate-100 dark:bg-slate-800 rounded-full px-4 py-2 border border-slate-200 dark:border-slate-700 focus-within:ring-2 focus-within:ring-emerald-500 transition-all relative z-50">
+                    <i class="fas fa-search text-slate-400"></i>
+                    <input type="text" id="searchInput" placeholder="Notlarda ara..." class="bg-transparent border-none outline-none ml-2 text-sm text-slate-800 dark:text-slate-200 placeholder-slate-400 w-48 lg:w-64" autocomplete="off">
+                    <div id="searchResults" class="absolute top-full right-0 mt-3 w-80 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 hidden flex-col max-h-[70vh] overflow-y-auto z-50 custom-scrollbar divide-y divide-slate-100 dark:divide-slate-700/50"></div>
+                </div>
+                
+                <button id="dark-mode-toggle" class="p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300">
+                    <i class="fas fa-moon dark:hidden text-lg"></i>
+                    <i class="fas fa-sun hidden dark:block text-yellow-400 text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-[1600px] mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12 p-4 md:p-8 lg:px-12">
+        
+        <!-- Sidebar Navigation -->
+                <aside class="w-full lg:w-72 shrink-0">
+            <div class="sticky top-28 space-y-4">
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden">
+                    <button onclick="toggleSidebarSection('cografyaNav', this)" class="w-full text-xs font-bold text-slate-400 dark:text-slate-300 uppercase tracking-widest p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer">
+                        <span class="flex items-center"><i class="fas fa-earth-americas mr-2"></i> COĞRAFYA ÜNİTELERİ</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300 rotate-180" id="cografyaNav-chevron"></i>
+                    </button>
+                    <div class="px-3 pb-3">
+                        <nav id="cografyaNav" class="space-y-1.5 max-h-[80vh] overflow-y-auto pr-1.5 custom-scrollbar">
+                            <!-- 1. Ünite: Coğrafi Konum -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('konumSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-compass w-4 text-center mt-0.5 text-emerald-500"></i>
+                                        <span class="text-[13px] leading-snug">1. Ünite: Coğrafi Konum</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform " id="konumSub-chevron"></i>
+                                </button>
+                                <div id="konumSub" class="pl-7 pr-2 py-1 space-y-1 hidden">
+                                    <a href="enlem-boylam.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Enlem - Boylam</a>
+                                    <a href="kuzeye-dogru.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Kuzey'e Doğru</a>
+                                    <a href="sinir-kapilari.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Sınır Kapıları</a>
+                                </div>
+                            </div>
+                            <!-- 2. Ünite: İklim ve Bitki Örtüsü -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('iklimSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-cloud-sun-rain w-4 text-center mt-0.5 text-sky-500"></i>
+                                        <span class="text-[13px] leading-snug">2. Ünite: İklim ve Bitki Örtüsü</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform " id="iklimSub-chevron"></i>
+                                </button>
+                                <div id="iklimSub" class="pl-7 pr-2 py-1 space-y-1 hidden">
+                                    <a href="basinc-merkezleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Basınç Merkezleri</a>
+                                    <a href="ruzgar-yonleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Rüzgarlar ve Rüzgar Gülleri</a>
+                                    <a href="nem-turleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Nem Türleri ve Dağılımı</a>
+                                    <a href="yagis-mevsimleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Yağış Mevsimleri</a>
+                                    <a href="yagis-turleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Yağış Türleri ve Oluşumları</a>
+                                    <a href="yagisli-yoreler.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Yağışlı Yöreleri</a>
+                                    <a href="iklim-cesitleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'de İklim Çeşitleri</a>
+                                    <a href="bitki-ortusu.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Bitki Örtüsü Bölgeleri</a>
+                                    <a href="flora-bolgeleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Flora Bölgeleri</a>
+                                    <a href="agac-turleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Ağaç Türleri</a>
+                                </div>
+                            </div>
+                            <!-- 3. Ünite: Fiziki Özellikler -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('fizikiSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-mountain w-4 text-center mt-0.5 text-teal-500"></i>
+                                        <span class="text-[13px] leading-snug">3. Ünite: Fiziki Özellikler</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform " id="fizikiSub-chevron"></i>
+                                </button>
+                                <div id="fizikiSub" class="pl-7 pr-2 py-1 space-y-1 hidden">
+                                    <a href="turkiyenin-daglari.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Dağları</a>
+                                    <a href="ova-ve-platolar.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Ova ve Platolar</a>
+                                    <a href="delta-ovalari.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Delta Ovaları</a>
+                                    <a href="masif-araziler.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Masif Araziler</a>
+                                    <a href="deprem-bolgeleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Deprem Bölgeleri</a>
+                                    <a href="karstik-kayaclar.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Karstik Kayaçlar</a>
+                                    <a href="kumullar.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'de Kumullar</a>
+                                    <a href="ruzgar-sekillendirme.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Rüzgar Şekillendirme</a>
+                                    <a href="vadi-turleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Vadi Türleri</a>
+                                    <a href="goller.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Gölleri</a>
+                                    <a href="korfezler.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Körfezleri</a>
+                                    <a href="su-varligi.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Su Varlığı ve Havzalar</a>
+                                    <a href="kiyi-tipleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Kıyı Tipleri</a>
+                                    <a href="kiyi-sekilleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Kıyı Şekilleri</a>
+                                    <a href="sahanlik.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Kıta Sahanlığı (Sahanlık)</a>
+                                    <a href="toprak-turleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Toprak Türleri</a>
+                                    <a href="gecitler.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Karayolu Geçitleri ve Boğazları</a>
+                                </div>
+                            </div>
+                            <!-- 4. Ünite: Nüfus ve Yerleşme -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('nufusSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-people-group w-4 text-center mt-0.5 text-violet-500"></i>
+                                        <span class="text-[13px] leading-snug">4. Ünite: Nüfus ve Yerleşme</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform " id="nufusSub-chevron"></i>
+                                </button>
+                                <div id="nufusSub" class="pl-7 pr-2 py-1 space-y-1 hidden">
+                                    <a href="nufus-dagilisi.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-violet-600 dark:hover:text-violet-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Nüfusun Dağılışı</a>
+                                    <a href="koy-alti-yerlesmeleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-violet-600 dark:hover:text-violet-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Köy Altı Yerleşmeleri</a>
+                                    <a href="mesken-tipleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-violet-600 dark:hover:text-violet-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Kırsal Mesken Tipleri</a>
+                                </div>
+                            </div>
+                            <!-- 5. Ünite: Ekonomik Coğrafya -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('ekonomiSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-chart-line w-4 text-center mt-0.5 text-amber-500"></i>
+                                        <span class="text-[13px] leading-snug">5. Ünite: Ekonomik Coğrafya</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform " id="ekonomiSub-chevron"></i>
+                                </button>
+                                <div id="ekonomiSub" class="pl-7 pr-2 py-1 space-y-1 hidden">
+                                    <a href="tarim-urunleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Tarım Ürünleri Dağılımı</a>
+                                    <a href="hayvancilik.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'de Hayvancılık</a>
+                                    <a href="maden-isletmeleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Maden İşletmeleri ve Tesisleri</a>
+                                    <a href="petrol-boruhatlari.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Petrol Boru Hatları</a>
+                                    <a href="dogalgaz-boruhatlari.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Doğal Gaz Boru Hatları</a>
+                                    <a href="demiryollari.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Demiryolları ve YHT Ağı</a>
+                                    <a href="otoyollar.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Otoyolları</a>
+                                    <a href="limanlar.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Denizyolu Limanları</a>
+                                    <a href="ramsar-alanlari.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Ramsar Alanları</a>
+                                </div>
+                            </div>
+                            <!-- 6. Ünite: Bölgeler Coğrafyası -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('bolgelerSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-map w-4 text-center mt-0.5 text-rose-500"></i>
+                                        <span class="text-[13px] leading-snug">6. Ünite: Bölgeler Coğrafyası</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform " id="bolgelerSub-chevron"></i>
+                                </button>
+                                <div id="bolgelerSub" class="pl-7 pr-2 py-1 space-y-1 hidden">
+                                    <a href="bolgeler-cografyasi.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>İşlevsel Bölgeler (GAP, DAP...)</a>
+                                </div>
+                            </div>
+                            <!-- 7. Ünite: Güncel TÜİK Verileri -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('tuikSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-square-poll-vertical w-4 text-center mt-0.5 text-red-500"></i>
+                                        <span class="text-[13px] leading-snug">7. Ünite: Güncel TÜİK Verileri</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform rotate-180" id="tuikSub-chevron"></i>
+                                </button>
+                                <div id="tuikSub" class="pl-7 pr-2 py-1 space-y-1 ">
+                                    <a href="tuik-hayvancilik.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>TÜİK: Hayvancılık</a>
+                                    <a href="tuik-tarim.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>TÜİK: Tarım</a>
+                                    <a href="tuik-nufus.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>TÜİK: Nüfus (ADNKS)</a>
+                                    <a href="tuik-ekonomi.html" class="block text-[12.5px] text-red-600 dark:text-red-400 font-bold py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 "></i>TÜİK: Ekonomi & Turizm</a>
+                                    <a href="tuik-afetler.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>TÜİK: Doğal Afetler</a>
+                                    <a href="tuik-ormanlar.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>TÜİK: Orman Varlığı</a>
+                                    <a href="tuik-koruma.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>TÜİK: Koruma Alanları</a>
+                                    <a href="tuik-ilkler.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>TÜİK: İlkler & Sakin Şehir</a>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 space-y-8 lg:space-y-12">
+            
+            <header class="space-y-4 bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 relative overflow-hidden">
+                <div class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div>
+                        <a href="../cografya.html" class="inline-flex items-center text-emerald-600 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300 font-bold text-sm mb-4 transition-colors">
+                            <i class="fas fa-arrow-left mr-2"></i>Coğrafya Ana Menüye Dön
+                        </a>
+                        <h2 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white leading-tight tracking-tight uppercase">TÜİK: Ekonomi, Enerji ve Turizm</h2>
+                        <p class="text-slate-500 dark:text-slate-200 mt-2 text-sm">Aktif Nüfus Sektörleri, Dış Ticaret, Enerji İthalatı, Elektrik Üretimi ve Liman İstatistikleri.</p>
+                    </div>
+                    <div class="shrink-0">
+                        <span class="inline-flex items-center bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 font-black text-xs px-4 py-2.5 rounded-2xl border border-emerald-100 dark:border-emerald-900/50 uppercase tracking-widest shadow-sm">
+                            <i class="fas fa-calendar-check mr-2 text-emerald-500"></i> TÜİK 2025 Güncellemesi
+                        </span>
+                    </div>
+                </div>
+            </header>
+
+            <section id="ekonomi-ticaret" class="note-card bg-white dark:bg-slate-800 p-6 md:p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm space-y-8 scroll-mt-28">
+                <div class="border-b border-slate-100 dark:border-slate-700 pb-4 flex items-center space-x-3">
+                    <div class="bg-amber-100 dark:bg-amber-900/50 p-2.5 rounded-xl text-amber-600 dark:text-amber-400">
+                        <i class="fas fa-chart-pie text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-wide">Aktif Nüfus, Enerji, Maden ve Dış Ticaret (2025/2026)</h3>
+                        <p class="text-slate-500 dark:text-slate-200 text-xs mt-0.5">Ekonomik Coğrafya, Enerji Kaynakları, MTA Maden Rezervleri ve Dış Ticaret Verileri</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                    <!-- Aktif Nüfusun İş Kollarına Dağılımı -->
+                    <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-bl-[80px] -mr-3 -mt-3"></div>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-3xl">💼</span>
+                                <h4 class="font-extrabold text-base text-slate-900 dark:text-white group-hover:text-amber-650 dark:group-hover:text-amber-450 transition-colors">Sektörel Dağılım (2025-2026)</h4>
+                            </div>
+
+                            <div class="space-y-3 text-xs font-bold text-slate-750 dark:text-slate-350">
+                                <!-- Hizmet -->
+                                <div class="space-y-1">
+                                    <div class="flex justify-between">
+                                        <span>🛠️ Hizmet Sektörü</span>
+                                        <span class="text-slate-950 dark:text-white">%59</span>
+                                    </div>
+                                    <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+                                        <div class="bg-indigo-500 h-full rounded-full" style="width: 59%"></div>
+                                    </div>
+                                </div>
+                                <!-- Sanayi -->
+                                <div class="space-y-1">
+                                    <div class="flex justify-between">
+                                        <span>🏭 Sanayi Sektörü</span>
+                                        <span class="text-slate-950 dark:text-white">%20</span>
+                                    </div>
+                                    <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+                                        <div class="bg-emerald-500 h-full rounded-full" style="width: 20%"></div>
+                                    </div>
+                                </div>
+                                <!-- Tarım -->
+                                <div class="space-y-1">
+                                    <div class="flex justify-between">
+                                        <span>🌾 Tarım Sektörü</span>
+                                        <span class="text-slate-950 dark:text-white">%14</span>
+                                    </div>
+                                    <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+                                        <div class="bg-amber-500 h-full rounded-full" style="width: 14%"></div>
+                                    </div>
+                                </div>
+                                <!-- İnşaat -->
+                                <div class="space-y-1">
+                                    <div class="flex justify-between">
+                                        <span>🏗️ İnşaat Sektörü</span>
+                                        <span class="text-slate-950 dark:text-white">%7</span>
+                                    </div>
+                                    <div class="w-full bg-slate-200 dark:bg-slate-700 h-2 rounded-full overflow-hidden">
+                                        <div class="bg-rose-500 h-full rounded-full" style="width: 7%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-slate-200/50 dark:border-slate-700/50 text-[10.5px] text-slate-500">
+                            <strong>Tarihsel Not:</strong> Cumhuriyet'in ilk yıllarında tarım sektöründe istihdam çok yüksek iken, zamanla tarım oranı azalmış, sanayi ve hizmet sektöründeki çalışan oranı büyük artış kaydetmiştir.
+                        </div>
+                    </div>
+
+                    <!-- Elektrik Enerjisi Üretimi -->
+                    <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-sky-500/5 rounded-bl-[80px] -mr-3 -mt-3"></div>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-3xl">🔌</span>
+                                <h4 class="font-extrabold text-base text-slate-900 dark:text-white group-hover:text-sky-650 dark:group-hover:text-sky-400 transition-colors">Elektrik Üretimi (2025)</h4>
+                            </div>
+
+                            <div class="space-y-2 text-xs font-semibold text-slate-700 dark:text-slate-350">
+                                <div class="flex justify-between items-center bg-white dark:bg-slate-800 p-1.5 px-2.5 rounded-xl border border-slate-100 dark:border-slate-750">
+                                    <span class="font-black text-slate-800 dark:text-white">1. Kömür</span>
+                                    <span class="bg-rose-100 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 px-2 py-0.5 rounded text-[10px] font-black">%33,6</span>
+                                </div>
+                                <div class="flex justify-between items-center bg-white dark:bg-slate-800 p-1.5 px-2.5 rounded-xl border border-slate-100 dark:border-slate-750">
+                                    <span>2. Doğal Gaz</span>
+                                    <span class="text-slate-550 dark:text-slate-200 text-[11px] font-bold">%23,0</span>
+                                </div>
+                                <div class="flex justify-between items-center bg-white dark:bg-slate-800 p-1.5 px-2.5 rounded-xl border border-slate-100 dark:border-slate-750 border-l-4 border-l-emerald-500">
+                                    <span class="font-black text-emerald-600 dark:text-emerald-450"><i class="fas fa-leaf mr-1"></i>3. Hidrolik (Su)</span>
+                                    <span class="bg-emerald-100 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 px-2 py-0.5 rounded text-[10px] font-black">%15,8</span>
+                                </div>
+                                <div class="flex justify-between items-center bg-white dark:bg-slate-800 p-1.5 px-2.5 rounded-xl border border-slate-100 dark:border-slate-750">
+                                    <span>4. Rüzgar</span>
+                                    <span class="text-slate-550 dark:text-slate-200 text-[11px] font-bold">%10,9</span>
+                                </div>
+                                <div class="flex justify-between items-center bg-white dark:bg-slate-800 p-1.5 px-2.5 rounded-xl border border-slate-100 dark:border-slate-750">
+                                    <span>5. Güneş</span>
+                                    <span class="text-slate-550 dark:text-slate-200 text-[11px] font-bold">%10,5</span>
+                                </div>
+                                <div class="flex justify-between items-center bg-white dark:bg-slate-800 p-1.5 px-2.5 rounded-xl border border-slate-100 dark:border-slate-750">
+                                    <span>6. Jeotermal / Diğer</span>
+                                    <span class="text-slate-550 dark:text-slate-200 text-[11px] font-bold">%6,3</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-slate-200/50 dark:border-slate-700/50 text-[10px] text-slate-550 space-y-1 font-medium">
+                            <div class="flex items-start"><i class="fas fa-star text-amber-500 mr-1.5 mt-0.5"></i> <span>Yerli ve yenilenebilir enerji kaynakları içinde en yüksek pay <strong>Hidroelektrik</strong>'tir.</span></div>
+                            <div class="flex items-start"><i class="fas fa-star text-amber-500 mr-1.5 mt-0.5"></i> <span>Elektrik tüketiminde en büyük pay <strong>Sanayi</strong> sektörüne aittir.</span></div>
+                        </div>
+                    </div>
+
+                    <!-- MTA En Çok Rezervi Olan Madenler -->
+                    <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-violet-500/5 rounded-bl-[80px] -mr-3 -mt-3"></div>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-3xl">🪨</span>
+                                <h4 class="font-extrabold text-base text-slate-900 dark:text-white group-hover:text-violet-650 dark:group-hover:text-violet-400 transition-colors">MTA Rezerv Sıralaması</h4>
+                            </div>
+
+                            <div class="space-y-2 text-xs font-bold text-slate-750 dark:text-slate-350">
+                                <div class="flex justify-between border-b border-slate-200/30 pb-1.5">
+                                    <span>1. Dolomit</span>
+                                    <span class="text-slate-950 dark:text-white font-black">15,8 Milyar Ton</span>
+                                </div>
+                                <div class="flex justify-between border-b border-slate-200/30 pb-1.5">
+                                    <span class="text-amber-600 dark:text-amber-400">🔥 2. Linyit (Enerji)</span>
+                                    <span class="text-slate-950 dark:text-white font-black">13,9 Milyar Ton</span>
+                                </div>
+                                <div class="flex justify-between border-b border-slate-200/30 pb-1.5">
+                                    <span>3. Mermer</span>
+                                    <span class="text-slate-950 dark:text-white font-black">13 Milyar Ton</span>
+                                </div>
+                                <div class="flex justify-between border-b border-slate-200/30 pb-1.5">
+                                    <span>4. Kaya Tuzu</span>
+                                    <span class="text-slate-950 dark:text-white font-black">5,7 Milyar Ton</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-indigo-600 dark:text-indigo-400">👑 5. Bor</span>
+                                    <span class="text-slate-950 dark:text-white font-black">3,3 Milyar Ton</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-slate-200/50 dark:border-slate-700/50 text-[10px] text-slate-500 font-semibold">
+                            <strong>Önemli Bilgi:</strong> Mermer ve doğal taşlar genellikle metreküp (m³) cinsinden hesaplanır. Ancak linyit veya bor ton ile ifade edilir.
+                        </div>
+                    </div>
+
+                    <!-- Enerji İthalatı Yapılan Ülkeler -->
+                    <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-rose-500/5 rounded-bl-[80px] -mr-3 -mt-3"></div>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-3xl">🔥</span>
+                                <h4 class="font-extrabold text-base text-slate-900 dark:text-white group-hover:text-rose-650 dark:group-hover:text-rose-450 transition-colors">Enerji İthal Edilen Ülkeler (2025)</h4>
+                            </div>
+
+                            <div class="grid grid-cols-1 gap-3.5">
+                                <div class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-150 dark:border-slate-750 shadow-sm">
+                                    <span class="text-[10px] font-black text-rose-600 dark:text-rose-400 uppercase tracking-wider block mb-1.5"><i class="fas fa-gas-pump mr-1"></i>Doğal Gaz İthalatı (İlk 5):</span>
+                                    <p class="text-xs font-extrabold text-slate-750 dark:text-slate-350 leading-relaxed">
+                                        1. Rusya &nbsp;•&nbsp; 2. Azerbaycan &nbsp;•&nbsp; 3. ABD &nbsp;•&nbsp; 4. İran &nbsp;•&nbsp; 5. Cezayir
+                                    </p>
+                                </div>
+                                <div class="bg-white dark:bg-slate-800 p-3 rounded-xl border border-slate-150 dark:border-slate-750 shadow-sm">
+                                    <span class="text-[10px] font-black text-rose-600 dark:text-rose-400 uppercase tracking-wider block mb-1.5"><i class="fas fa-oil-can mr-1"></i>Petrol İthalatı (İlk 5):</span>
+                                    <p class="text-xs font-extrabold text-slate-750 dark:text-slate-350 leading-relaxed">
+                                        1. Rusya &nbsp;•&nbsp; 2. Irak &nbsp;•&nbsp; 3. Kazakistan &nbsp;•&nbsp; 4. Suudi Arabistan &nbsp;•&nbsp; 5. BAE
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-slate-200/50 dark:border-slate-700/50 text-[10px] text-rose-650 dark:text-rose-400 font-black">
+                            <i class="fas fa-circle-exclamation mr-1 animate-pulse"></i> Rusya hem doğal gaz hem de petrol ithalatımızda ilk sıradadır!
+                        </div>
+                    </div>
+
+                    <!-- Dış Ticaret Hacim ve Dengesi Tablosu -->
+                    <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden group md:col-span-2 xl:col-span-2">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-bl-[80px] -mr-3 -mt-3"></div>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-3xl">📊</span>
+                                <h4 class="font-extrabold text-base text-slate-900 dark:text-white group-hover:text-emerald-650 dark:group-hover:text-emerald-400 transition-colors">Dış Ticaret Değerleri Karşılaştırma Tablosu (Milyar $)</h4>
+                            </div>
+
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-[11px] text-left text-slate-550 border border-slate-250 dark:border-slate-800 rounded-lg overflow-hidden">
+                                    <thead class="bg-slate-100 dark:bg-slate-850 text-[10px] font-black text-slate-400 dark:text-slate-300 uppercase">
+                                        <tr>
+                                            <th class="p-2.5 border-b border-slate-250 dark:border-slate-750">YILLIK GÖSTERGE</th>
+                                            <th class="p-2.5 border-b border-slate-250 dark:border-slate-750 text-center">2022</th>
+                                            <th class="p-2.5 border-b border-slate-250 dark:border-slate-750 text-center">2023</th>
+                                            <th class="p-2.5 border-b border-slate-250 dark:border-slate-750 text-center">2024</th>
+                                            <th class="p-2.5 border-b border-slate-250 dark:border-slate-750 text-center bg-emerald-50/50 dark:bg-emerald-950/20 text-emerald-600">2025</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-200 dark:divide-slate-850 font-bold text-slate-750 dark:text-slate-350">
+                                        <tr>
+                                            <td class="p-2.5">📈 İHRACAT (Export)</td>
+                                            <td class="p-2.5 text-center">254,2</td>
+                                            <td class="p-2.5 text-center">255,5</td>
+                                            <td class="p-2.5 text-center">262,0</td>
+                                            <td class="p-2.5 text-center bg-emerald-50/20 dark:bg-emerald-950/10 text-slate-900 dark:text-white font-black">273,0</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2.5">📉 İTHALAT (Import)</td>
+                                            <td class="p-2.5 text-center">363,7</td>
+                                            <td class="p-2.5 text-center">361,7</td>
+                                            <td class="p-2.5 text-center">344,0</td>
+                                            <td class="p-2.5 text-center bg-emerald-50/20 dark:bg-emerald-950/10 text-slate-900 dark:text-white">365,0</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="p-2.5">🔄 DIŞ TİCARET HACMİ</td>
+                                            <td class="p-2.5 text-center text-slate-500">617,9</td>
+                                            <td class="p-2.5 text-center text-slate-500">617,3</td>
+                                            <td class="p-2.5 text-center text-slate-500">606,0</td>
+                                            <td class="p-2.5 text-center bg-emerald-50/20 dark:bg-emerald-950/10 text-slate-900 dark:text-white font-black">638,0</td>
+                                        </tr>
+                                        <tr class="text-red-600 dark:text-red-400 font-black">
+                                            <td class="p-2.5">⚠️ DIŞ TİCARET AÇIĞI</td>
+                                            <td class="p-2.5 text-center">-109,5</td>
+                                            <td class="p-2.5 text-center">-106,2</td>
+                                            <td class="p-2.5 text-center">-82,0</td>
+                                            <td class="p-2.5 text-center bg-emerald-50/20 dark:bg-emerald-950/10 font-black">-92,0</td>
+                                        </tr>
+                                        <tr class="text-emerald-600 dark:text-emerald-400 font-black">
+                                            <td class="p-2.5">⚖️ İHRACAT / İTHALAT (%)</td>
+                                            <td class="p-2.5 text-center">%69,9</td>
+                                            <td class="p-2.5 text-center">%70,6</td>
+                                            <td class="p-2.5 text-center">%76,0</td>
+                                            <td class="p-2.5 text-center bg-emerald-50/20 dark:bg-emerald-950/10 font-black">%74,0</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-slate-200/50 dark:border-slate-700/50 grid grid-cols-1 md:grid-cols-2 gap-3 text-[10.5px] text-slate-550 leading-relaxed font-semibold">
+                            <div>
+                                <span class="font-bold text-slate-750 dark:text-slate-350">İhracatta İlk 5 Ülke:</span> 1. Almanya &nbsp;•&nbsp; 2. Birleşik Krallık &nbsp;•&nbsp; 3. ABD &nbsp;•&nbsp; 4. İtalya &nbsp;•&nbsp; 5. Irak
+                            </div>
+                            <div>
+                                <span class="font-bold text-slate-750 dark:text-slate-350">İthalatta İlk 5 Ülke:</span> 1. Çin &nbsp;•&nbsp; 2. Rusya &nbsp;•&nbsp; 3. Almanya &nbsp;•&nbsp; 4. İtalya &nbsp;•&nbsp; 5. ABD
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dış Ticarette Konu Olan Ürünler -->
+                    <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden group md:col-span-2 xl:col-span-2">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-sky-500/5 rounded-bl-[80px] -mr-3 -mt-3"></div>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-3xl">📦</span>
+                                <h4 class="font-extrabold text-base text-slate-900 dark:text-white group-hover:text-sky-650 dark:group-hover:text-sky-400 transition-colors">Dış Ticarette En Çok Konu Olan Başlıca Ürünler</h4>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-150 dark:border-slate-750 shadow-sm space-y-2">
+                                    <span class="text-[11px] font-black text-emerald-600 dark:text-emerald-450 uppercase tracking-wider block"><i class="fas fa-circle-chevron-up mr-1"></i>En Çok İhracat Yapılan Ürünler:</span>
+                                    <ol class="list-decimal pl-4 text-xs font-bold text-slate-750 dark:text-slate-300 space-y-1.5">
+                                        <li>Motorlu kara taşıtları, traktörler, bisikletler</li>
+                                        <li>Kazanlar, makineler, mekanik cihazlar</li>
+                                        <li>Elektrikli makine ve ses cihazları</li>
+                                        <li>Plastikler ve mamulleri</li>
+                                        <li>Mineral yakıtlar ve yağlar</li>
+                                    </ol>
+                                </div>
+                                <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-150 dark:border-slate-750 shadow-sm space-y-2">
+                                    <span class="text-[11px] font-black text-rose-600 dark:text-rose-455 uppercase tracking-wider block"><i class="fas fa-circle-chevron-down mr-1"></i>En Çok İthalat Yapılan Ürünler:</span>
+                                    <ol class="list-decimal pl-4 text-xs font-bold text-slate-750 dark:text-slate-300 space-y-1.5">
+                                        <li class="text-rose-650 dark:text-rose-400">Mineral-fosil yağlar ve yakıtlar (Enerji)</li>
+                                        <li>Kazanlar ve makineler</li>
+                                        <li>Kıymetli ve yarı kıymetli taşlar (Altın vb.)</li>
+                                        <li>Motorlu kara taşıtları, parçaları</li>
+                                        <li>Elektrikli makine ve cihazlar</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-slate-200/50 dark:border-slate-700/50 grid grid-cols-1 md:grid-cols-2 gap-3 text-[10.5px] text-slate-550 leading-relaxed font-semibold">
+                            <div>
+                                <span class="font-bold text-slate-750 dark:text-slate-350">Lider Dış Ticaret İlleri:</span> İhracatta ilk 5 il sırasıyla İstanbul, Kocaeli, İzmir, Bursa ve Tekirdağ'dır. Hem ihracatta hem ithalatta 1. sırada yer alan ilimiz ise <strong>İstanbul</strong>'dur.
+                            </div>
+                            <div>
+                                <span class="font-bold text-slate-750 dark:text-slate-350">Sektörel Dağılım:</span> İhracatta en büyük pay <strong>İmalat (Sanayi)</strong> sektörünündür. Ardından sırasıyla Tarım ve Madencilik gelmektedir. En büyük ihracatçı ülkeler birliği <strong>OECD</strong>'dir.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ulaşım Sistemleri ve Ticaret -->
+                    <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-indigo-500/5 rounded-bl-[80px] -mr-3 -mt-3"></div>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-3xl">🚢</span>
+                                <h4 class="font-extrabold text-base text-slate-900 dark:text-white group-hover:text-indigo-650 dark:group-hover:text-indigo-455 transition-colors">Ulaşım Sistemleri & Ticaret</h4>
+                            </div>
+
+                            <div class="space-y-3.5 text-xs font-bold text-slate-700 dark:text-slate-350">
+                                <div class="bg-white dark:bg-slate-800 p-2.5 rounded-xl border border-slate-150 dark:border-slate-750 flex items-center justify-between border-l-4 border-l-indigo-500">
+                                    <span>🌐 Dış Ticarette En Çok:</span>
+                                    <span class="text-indigo-600 dark:text-indigo-400 font-black">Deniz Yolu</span>
+                                </div>
+                                <div class="bg-white dark:bg-slate-800 p-2.5 rounded-xl border border-slate-150 dark:border-slate-750 flex items-center justify-between border-l-4 border-l-rose-500">
+                                    <span>🔻 Dış Ticarette En Az:</span>
+                                    <span class="text-rose-600 dark:text-rose-400 font-black">Demir Yolu</span>
+                                </div>
+                                <div class="bg-white dark:bg-slate-800 p-2.5 rounded-xl border border-slate-150 dark:border-slate-750 flex items-center justify-between border-l-4 border-l-amber-500">
+                                    <span>🚚 İç Ticarette En Çok:</span>
+                                    <span class="text-amber-600 dark:text-amber-400 font-black">Kara Yolu</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 pt-4 border-t border-slate-200/50 dark:border-slate-700/50 text-[10px] text-slate-500">
+                            Deniz yolu en ucuz taşıma sistemidir. Demir yolu sınırlardaki hat yetersizliğinden dolayı dış ticarette en az paya sahiptir.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+<section id="turizm" class="note-card bg-white dark:bg-slate-800 p-6 md:p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm space-y-8 scroll-mt-28">
+                <div class="border-b border-slate-100 dark:border-slate-700 pb-4 flex items-center space-x-3">
+                    <div class="bg-indigo-100 dark:bg-indigo-900/50 p-2.5 rounded-xl text-indigo-600 dark:text-indigo-400">
+                        <i class="fas fa-umbrella-beach text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-wide">TÜRKİYE TURİZM VE DENİZCİLİK İSTATİSTİKLERİ (2025/2026)</h3>
+                        <p class="text-slate-500 dark:text-slate-200 text-xs mt-0.5">Turizm Gelirleri, Ziyaretçi Analizleri, Liman, Elleçleme ve Ro-Ro İstatistikleri</p>
+                    </div>
+                </div>
+
+                <!-- Turizm Geliri ve Ziyaretçi Kartları -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-gradient-to-br from-indigo-500 to-indigo-650 text-white p-6 rounded-2xl shadow-sm relative overflow-hidden group hover:shadow-md transition-all">
+                        <div class="absolute -right-6 -bottom-6 text-7xl opacity-15 group-hover:scale-110 transition-transform">🌍</div>
+                        <span class="text-[10px] font-black uppercase tracking-widest text-indigo-200/90 block">Yurt Dışı Ziyaretçi Sayısı</span>
+                        <h4 class="text-3xl font-black mt-2">63.9 Milyon <span class="text-sm font-semibold">Kişi</span></h4>
+                        <p class="text-xs text-indigo-100/80 mt-3 font-semibold">Türkiye'den çıkış yapan toplam ziyaretçi sayısı <strong>63.917.057 kişi</strong> olarak gerçekleşmiştir.</p>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-emerald-500 to-emerald-650 text-white p-6 rounded-2xl shadow-sm relative overflow-hidden group hover:shadow-md transition-all">
+                        <div class="absolute -right-6 -bottom-6 text-7xl opacity-15 group-hover:scale-110 transition-transform">💰</div>
+                        <span class="text-[10px] font-black uppercase tracking-widest text-emerald-200/90 block">Yıllık Turizm Geliri</span>
+                        <h4 class="text-3xl font-black mt-2">$65.23 Milyar <span class="text-sm font-semibold">Dolar</span></h4>
+                        <p class="text-xs text-emerald-100/80 mt-3 font-semibold">Toplam gelir bir önceki yıla göre <strong>%6,8 artarak</strong> 65.230.749.000 dolara yükselmiştir.</p>
+                    </div>
+
+                    <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-20 h-20 bg-indigo-500/5 rounded-bl-[60px] -mr-3 -mt-3"></div>
+                        <div class="space-y-3">
+                            <span class="text-[10px] font-black text-indigo-650 dark:text-indigo-400 uppercase tracking-widest block">Ülkelere Göre Ziyaretçiler</span>
+                            <div class="space-y-2 text-xs font-bold text-slate-750 dark:text-slate-350">
+                                <div class="flex items-center justify-between">
+                                    <span>🥇 1. Rusya</span>
+                                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-455 font-black">Lider</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span>🥈 2. Almanya</span>
+                                    <span class="text-slate-400">İkinci</span>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span>🥉 3. İngiltere (Birleşik Krallık)</span>
+                                    <span class="text-slate-400">Üçüncü</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Turizm Önemli Detayları Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-slate-50 dark:bg-slate-900/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 hover:shadow-md transition-all text-center space-y-3">
+                        <div class="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950 flex items-center justify-center text-2xl mx-auto">✈️</div>
+                        <h5 class="font-extrabold text-xs text-slate-400 uppercase tracking-wider">En Çok Kullanılan Ulaşım</h5>
+                        <p class="font-black text-slate-800 dark:text-white text-base">Hava Yolu</p>
+                    </div>
+
+                    <div class="bg-slate-50 dark:bg-slate-900/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 hover:shadow-md transition-all text-center space-y-3">
+                        <div class="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-950 flex items-center justify-center text-2xl mx-auto">🏢</div>
+                        <h5 class="font-extrabold text-xs text-slate-400 uppercase tracking-wider">Kongre Turizminde 1.</h5>
+                        <p class="font-black text-emerald-650 dark:text-emerald-400 text-base">İstanbul</p>
+                    </div>
+
+                    <div class="bg-slate-50 dark:bg-slate-900/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-800 hover:shadow-md transition-all text-center space-y-3">
+                        <div class="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-950 flex items-center justify-center text-2xl mx-auto">🔑</div>
+                        <h5 class="font-extrabold text-xs text-slate-400 uppercase tracking-wider">Giriş Yapılan Lider Şehir</h5>
+                        <p class="font-black text-amber-650 dark:text-amber-400 text-base">İstanbul</p>
+                    </div>
+
+                    <div class="bg-rose-50/50 dark:bg-rose-950/20 p-5 rounded-2xl border border-rose-100 dark:border-rose-900/50 hover:shadow-md transition-all text-center flex flex-col justify-center space-y-1">
+                        <span class="text-xs font-black text-rose-600 dark:text-rose-455 block">💡 SINAV İPUCU:</span>
+                        <p class="text-[11px] font-bold text-slate-750 dark:text-slate-300 leading-relaxed">
+                            Türkiye'ye gelen turistler en çok <strong>hava yolunu</strong> tercih etmektedirler. Karayolu ikinci sırada olup demiryolu en az paya sahiptir.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Deniz Ticareti ve Liman Verileri (Kruvaziyer, Liman, Elleçleme, Ro-Ro) -->
+                <div>
+                    <h4 class="text-base font-extrabold text-slate-800 dark:text-white uppercase tracking-wider mb-4 flex items-center space-x-2">
+                        <span>🚢</span>
+                        <span>Liman ve Denizcilik İstatistikleri (2025 Resmi Verileri)</span>
+                    </h4>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                        <!-- Kruvaziyer -->
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4.5 rounded-2xl border border-slate-100 dark:border-slate-800 hover:scale-[1.02] hover:shadow-sm transition-all space-y-3.5">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-indigo-650 dark:text-indigo-400 uppercase tracking-wider">Kruvaziyer Turizmi</span>
+                                <span class="text-xl">🛳️</span>
+                            </div>
+                            <ol class="text-xs font-bold text-slate-750 dark:text-slate-300 space-y-2">
+                                <li class="flex items-center space-x-1.5"><span class="w-4 h-4 rounded bg-indigo-100 dark:bg-indigo-900/50 text-indigo-600 dark:text-indigo-400 text-[10px] flex items-center justify-center font-black">1</span> <span>Kuşadası</span></li>
+                                <li class="flex items-center space-x-1.5"><span class="w-4 h-4 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] flex items-center justify-center font-black">2</span> <span>İstanbul</span></li>
+                                <li class="flex items-center space-x-1.5"><span class="w-4 h-4 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] flex items-center justify-center font-black">3</span> <span>Bodrum</span></li>
+                            </ol>
+                            <span class="text-[9.5px] font-bold text-slate-400 block pt-1 border-t border-slate-200/50 dark:border-slate-700/50">Gemi ve yolcu sayısı bazında</span>
+                        </div>
+
+                        <!-- Gemi Sayısı -->
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4.5 rounded-2xl border border-slate-100 dark:border-slate-800 hover:scale-[1.02] hover:shadow-sm transition-all space-y-3.5">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-emerald-650 dark:text-emerald-400 uppercase tracking-wider">Uğrayan Gemi Sayısı</span>
+                                <span class="text-xl">🚢</span>
+                            </div>
+                            <ol class="text-xs font-bold text-slate-750 dark:text-slate-300 space-y-2">
+                                <li class="flex items-center space-x-1.5"><span class="w-4 h-4 rounded bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 text-[10px] flex items-center justify-center font-black">1</span> <span>Kocaeli</span></li>
+                                <li class="flex items-center space-x-1.5"><span class="w-4 h-4 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] flex items-center justify-center font-black">2</span> <span>Aliağa</span></li>
+                                <li class="flex items-center space-x-1.5"><span class="w-4 h-4 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] flex items-center justify-center font-black">3</span> <span>Ambarlı</span></li>
+                            </ol>
+                            <span class="text-[9.5px] font-bold text-slate-400 block pt-1 border-t border-slate-200/50 dark:border-slate-700/50">Yerli + yabancı bayraklı toplam</span>
+                        </div>
+
+                        <!-- Yük Elleçleme -->
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4.5 rounded-2xl border border-slate-100 dark:border-slate-800 hover:scale-[1.02] hover:shadow-sm transition-all space-y-3.5">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-amber-650 dark:text-amber-400 uppercase tracking-wider">Yük Elleçleme (Ton)</span>
+                                <span class="text-xl">📦</span>
+                            </div>
+                            <ol class="text-xs font-bold text-slate-750 dark:text-slate-300 space-y-2">
+                                <li class="flex items-center space-x-1.5"><span class="w-4 h-4 rounded bg-amber-100 dark:bg-amber-900/50 text-amber-600 dark:text-amber-400 text-[10px] flex items-center justify-center font-black">1</span> <span>Aliağa</span></li>
+                                <li class="flex items-center space-x-1.5"><span class="w-4 h-4 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] flex items-center justify-center font-black">2</span> <span>Kocaeli</span></li>
+                                <li class="flex items-center space-x-1.5"><span class="w-4 h-4 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] flex items-center justify-center font-black">3</span> <span>İskenderun</span></li>
+                            </ol>
+                            <span class="text-[9.5px] font-bold text-slate-400 block pt-1 border-t border-slate-200/50 dark:border-slate-700/50">Yükleme + Boşaltma Toplamı</span>
+                        </div>
+
+                        <!-- Konteyner Elleçleme -->
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4.5 rounded-2xl border border-slate-100 dark:border-slate-800 hover:scale-[1.02] hover:shadow-sm transition-all space-y-3.5">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-rose-650 dark:text-rose-455 uppercase tracking-wider">Konteyner Elleçleme</span>
+                                <span class="text-xl">📥</span>
+                            </div>
+                            <ol class="text-xs font-bold text-slate-750 dark:text-slate-300 space-y-2">
+                                <li class="flex items-center space-x-1.5"><span class="w-4 h-4 rounded bg-rose-100 dark:bg-rose-900/50 text-rose-600 dark:text-rose-455 text-[10px] flex items-center justify-center font-black">1</span> <span>Ambarlı (İst)</span></li>
+                                <li class="flex items-center space-x-1.5"><span class="w-4 h-4 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] flex items-center justify-center font-black">2</span> <span>Kocaeli</span></li>
+                                <li class="flex items-center space-x-1.5"><span class="w-4 h-4 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] flex items-center justify-center font-black">3</span> <span>Tekirdağ</span></li>
+                            </ol>
+                            <span class="text-[9.5px] font-bold text-slate-400 block pt-1 border-t border-slate-200/50 dark:border-slate-700/50">TEU Hacmi Bazında</span>
+                        </div>
+
+                        <!-- Ro-Ro -->
+                        <div class="bg-slate-50 dark:bg-slate-900/50 p-4.5 rounded-2xl border border-slate-100 dark:border-slate-800 hover:scale-[1.02] hover:shadow-sm transition-all space-y-3.5">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs font-black text-cyan-655 dark:text-cyan-455 uppercase tracking-wider">Ro-Ro Taşımacılığı</span>
+                                <span class="text-xl">🚚</span>
+                            </div>
+                            <ol class="text-xs font-bold text-slate-750 dark:text-slate-300 space-y-2">
+                                <li class="flex items-center space-x-1.5"><span class="w-4 h-4 rounded bg-cyan-100 dark:bg-cyan-900/50 text-cyan-600 dark:text-cyan-400 text-[10px] flex items-center justify-center font-black">1</span> <span>Tuzla</span></li>
+                                <li class="flex items-center space-x-1.5"><span class="w-4 h-4 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] flex items-center justify-center font-black">2</span> <span>Yalova</span></li>
+                                <li class="flex items-center space-x-1.5"><span class="w-4 h-4 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 text-[10px] flex items-center justify-center font-black">3</span> <span>Çeşme</span></li>
+                            </ol>
+                            <span class="text-[9.5px] font-bold text-slate-400 block pt-1 border-t border-slate-200/50 dark:border-slate-700/50">Tekerlekli araç taşıyan gemiler</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+
+        </main>
+    </div>
+
+    <!-- Scriptler -->
+    <script>
+        function toggleSidebarSection(id, btn) {
+            const nav = document.getElementById(id);
+            const chevron = document.getElementById(id + '-chevron');
+            nav.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
+
+        function toggleSubNav(id, btn) {
+            const nav = document.getElementById(id);
+            const chevron = document.getElementById(id + '-chevron');
+            nav.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
+    </script>
+    
+    <!-- Arama motorunu aktifleştiren script -->
+    <script src="../assets/js/script.js"></script>
+</body>
+</html>

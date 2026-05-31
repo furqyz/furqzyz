@@ -71,6 +71,37 @@ aside .sticky {
 .dark .border-gray-200 { border-color: #1e2d45; }
 
 /* ═══════════════════════════════════════════
+   CUSTOM UNMAPPED TAILWIND COLORS
+   Used throughout KPSS Coğrafya pages
+   (Fixes low-contrast dark-grey-on-dark-bg text)
+   ═══════════════════════════════════════════ */
+.text-slate-650 { color: #475569; }
+.text-amber-650 { color: #d97706; }
+.text-emerald-650 { color: #059669; }
+.text-rose-650 { color: #e11d48; }
+
+.dark .dark\:text-slate-350,
+.dark .text-slate-350 { color: #cbd5e1 !important; }
+
+/* Global Text Contrast & Readability improvements */
+main .text-slate-500,
+.note-card .text-slate-500 {
+    color: #475569 !important; /* Highly readable dark slate in light mode */
+}
+
+.dark main .text-slate-500,
+.dark .note-card .text-slate-500 {
+    color: #cbd5e1 !important; /* High contrast light slate in dark mode */
+}
+
+.dark .dark\:text-emerald-450 { color: #34d399 !important; }
+.dark .dark\:text-amber-450 { color: #fbbf24 !important; }
+.dark .dark\:text-sky-450 { color: #38bdf8 !important; }
+.dark .dark\:text-rose-450 { color: #fb7185 !important; }
+.dark .dark\:text-purple-450 { color: #c084fc !important; }
+.dark .dark\:text-yellow-450 { color: #facc15 !important; }
+
+/* ═══════════════════════════════════════════
    DARK MODE CATEGORY COLORS - Softer & Lighter
 ═══════════════════════════════════════════ */
 .dark .category-purple    { background-color: rgba(139,92,246,0.12); color: #ddd6fe; border-left-color: #a78bfa; }
@@ -101,15 +132,7 @@ aside .sticky {
 /* Focus Mode: Header ve Sidebar gizleme + içerik tam genişliğe */
 body.focus-mode header,
 body.focus-mode aside {
-    opacity: 0 !important;
-    pointer-events: none !important;
-    width: 0 !important;
-    min-width: 0 !important;
-    max-width: 0 !important;
-    overflow: hidden !important;
-    padding: 0 !important;
-    margin: 0 !important;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: none !important;
 }
 
 body.focus-mode main {
@@ -270,10 +293,27 @@ body.focus-mode .focus-controls {
 .dark ::-webkit-scrollbar-thumb { background: #334155; }
 ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-.custom-scrollbar::-webkit-scrollbar { display: none; }
+/* Elegant visible thin scrollbar instead of hidden */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #334155;
+}
 .custom-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+    -ms-overflow-style: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+}
+.dark .custom-scrollbar {
+    scrollbar-color: #334155 transparent;
 }
 
 /* ═══════════════════════════════════════════
@@ -318,4 +358,53 @@ main > header {
 /* Sidebar accordion toggle polish */
 [id$="-chevron"] {
     transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Floating Back to Top Button */
+.back-to-top-btn {
+    position: fixed;
+    bottom: 30px;
+    left: 30px; /* On the left side to avoid clashing with focus controls on the right */
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    background: #6366f1;
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 10px 20px -3px rgba(99,102,241,0.4);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 9999;
+}
+
+.back-to-top-btn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top-btn:hover {
+    transform: scale(1.1);
+    background: #4f46e5;
+    box-shadow: 0 10px 25px -3px rgba(79,70,229,0.5);
+}
+
+.back-to-top-btn:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 1024px) {
+    .back-to-top-btn {
+        bottom: 30px !important;
+        left: 20px !important; /* Mobilde de sol alt köşede yer alsın */
+        width: 54px !important;
+        height: 54px !important;
+        border-radius: 50% !important;
+    }
 }

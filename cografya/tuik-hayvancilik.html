@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TÜİK: Hayvancılık İstatistikleri - KPSS Coğrafya</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-slate-50 text-slate-900 leading-relaxed antialiased">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm px-4 py-4 border-b border-slate-200 dark:border-slate-800 transition-colors duration-300">
+        <div class="max-w-[1600px] mx-auto flex justify-between items-center px-4 md:px-8">
+            <div class="flex items-center space-x-4">
+                <div class="bg-gradient-to-br from-emerald-500 to-teal-600 text-white p-2.5 rounded-xl shadow-lg shadow-emerald-200/50 dark:shadow-emerald-900/50">
+                    <i class="fas fa-earth-americas text-lg"></i>
+                </div>
+                <h1 class="text-2xl font-extrabold tracking-tight">KPSS <span class="bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400">Ders Notlarım</span></h1>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="../index.html" class="hidden lg:flex items-center gap-1.5 px-3 py-2 rounded-lg text-slate-500 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-emerald-600 dark:hover:text-emerald-400 font-semibold text-sm transition-colors border border-transparent hover:border-slate-200 dark:hover:border-slate-700 mr-1" title="Ana Sayfaya Dön">
+                    <i class="fas fa-home text-sm"></i>
+                    <span>Ana Sayfa</span>
+                </a>
+                <nav class="hidden lg:flex items-center space-x-1 mr-2">
+                    <a href="../tarih.html" class="px-3 py-2 rounded-lg font-bold text-sm transition-colors text-slate-500 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 font-semibold">Tarih</a>
+                    <a href="../turkce.html" class="px-3 py-2 rounded-lg font-bold text-sm transition-colors text-slate-500 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 font-semibold">Türkçe</a>
+                    <a href="../cografya.html" class="px-3 py-2 rounded-lg font-bold text-sm transition-colors bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400">Coğrafya</a>
+                    <a href="#" class="px-3 py-2 rounded-lg text-slate-500 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-slate-200 font-semibold text-sm transition-colors">Vatandaşlık</a>
+                </nav>
+                
+                <div class="hidden md:flex items-center bg-slate-100 dark:bg-slate-800 rounded-full px-4 py-2 border border-slate-200 dark:border-slate-700 focus-within:ring-2 focus-within:ring-emerald-500 transition-all relative z-50">
+                    <i class="fas fa-search text-slate-400"></i>
+                    <input type="text" id="searchInput" placeholder="Notlarda ara..." class="bg-transparent border-none outline-none ml-2 text-sm text-slate-800 dark:text-slate-200 placeholder-slate-400 w-48 lg:w-64" autocomplete="off">
+                    <div id="searchResults" class="absolute top-full right-0 mt-3 w-80 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-700 hidden flex-col max-h-[70vh] overflow-y-auto z-50 custom-scrollbar divide-y divide-slate-100 dark:divide-slate-700/50"></div>
+                </div>
+                
+                <button id="dark-mode-toggle" class="p-3 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-all border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300">
+                    <i class="fas fa-moon dark:hidden text-lg"></i>
+                    <i class="fas fa-sun hidden dark:block text-yellow-400 text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-[1600px] mx-auto flex flex-col lg:flex-row gap-8 lg:gap-12 p-4 md:p-8 lg:px-12">
+        
+        <!-- Sidebar Navigation -->
+                <aside class="w-full lg:w-72 shrink-0">
+            <div class="sticky top-28 space-y-4">
+                <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 overflow-hidden">
+                    <button onclick="toggleSidebarSection('cografyaNav', this)" class="w-full text-xs font-bold text-slate-400 dark:text-slate-300 uppercase tracking-widest p-4 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer">
+                        <span class="flex items-center"><i class="fas fa-earth-americas mr-2"></i> COĞRAFYA ÜNİTELERİ</span>
+                        <i class="fas fa-chevron-down transition-transform duration-300 rotate-180" id="cografyaNav-chevron"></i>
+                    </button>
+                    <div class="px-3 pb-3">
+                        <nav id="cografyaNav" class="space-y-1.5 max-h-[80vh] overflow-y-auto pr-1.5 custom-scrollbar">
+                            <!-- 1. Ünite: Coğrafi Konum -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('konumSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-compass w-4 text-center mt-0.5 text-emerald-500"></i>
+                                        <span class="text-[13px] leading-snug">1. Ünite: Coğrafi Konum</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform " id="konumSub-chevron"></i>
+                                </button>
+                                <div id="konumSub" class="pl-7 pr-2 py-1 space-y-1 hidden">
+                                    <a href="enlem-boylam.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Enlem - Boylam</a>
+                                    <a href="kuzeye-dogru.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Kuzey'e Doğru</a>
+                                    <a href="sinir-kapilari.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-emerald-600 dark:hover:text-emerald-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Sınır Kapıları</a>
+                                </div>
+                            </div>
+                            <!-- 2. Ünite: İklim ve Bitki Örtüsü -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('iklimSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-cloud-sun-rain w-4 text-center mt-0.5 text-sky-500"></i>
+                                        <span class="text-[13px] leading-snug">2. Ünite: İklim ve Bitki Örtüsü</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform " id="iklimSub-chevron"></i>
+                                </button>
+                                <div id="iklimSub" class="pl-7 pr-2 py-1 space-y-1 hidden">
+                                    <a href="basinc-merkezleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Basınç Merkezleri</a>
+                                    <a href="ruzgar-yonleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Rüzgarlar ve Rüzgar Gülleri</a>
+                                    <a href="nem-turleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Nem Türleri ve Dağılımı</a>
+                                    <a href="yagis-mevsimleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Yağış Mevsimleri</a>
+                                    <a href="yagis-turleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Yağış Türleri ve Oluşumları</a>
+                                    <a href="yagisli-yoreler.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Yağışlı Yöreleri</a>
+                                    <a href="iklim-cesitleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'de İklim Çeşitleri</a>
+                                    <a href="bitki-ortusu.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Bitki Örtüsü Bölgeleri</a>
+                                    <a href="flora-bolgeleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Flora Bölgeleri</a>
+                                    <a href="agac-turleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-sky-600 dark:hover:text-sky-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Ağaç Türleri</a>
+                                </div>
+                            </div>
+                            <!-- 3. Ünite: Fiziki Özellikler -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('fizikiSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-mountain w-4 text-center mt-0.5 text-teal-500"></i>
+                                        <span class="text-[13px] leading-snug">3. Ünite: Fiziki Özellikler</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform " id="fizikiSub-chevron"></i>
+                                </button>
+                                <div id="fizikiSub" class="pl-7 pr-2 py-1 space-y-1 hidden">
+                                    <a href="turkiyenin-daglari.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Dağları</a>
+                                    <a href="ova-ve-platolar.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Ova ve Platolar</a>
+                                    <a href="delta-ovalari.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Delta Ovaları</a>
+                                    <a href="masif-araziler.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Masif Araziler</a>
+                                    <a href="deprem-bolgeleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Deprem Bölgeleri</a>
+                                    <a href="karstik-kayaclar.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Karstik Kayaçlar</a>
+                                    <a href="kumullar.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'de Kumullar</a>
+                                    <a href="ruzgar-sekillendirme.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Rüzgar Şekillendirme</a>
+                                    <a href="vadi-turleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Vadi Türleri</a>
+                                    <a href="goller.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Gölleri</a>
+                                    <a href="korfezler.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Körfezleri</a>
+                                    <a href="su-varligi.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Su Varlığı ve Havzalar</a>
+                                    <a href="kiyi-tipleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Kıyı Tipleri</a>
+                                    <a href="kiyi-sekilleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Kıyı Şekilleri</a>
+                                    <a href="sahanlik.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Kıta Sahanlığı (Sahanlık)</a>
+                                    <a href="toprak-turleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Toprak Türleri</a>
+                                    <a href="gecitler.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-teal-600 dark:hover:text-teal-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Karayolu Geçitleri ve Boğazları</a>
+                                </div>
+                            </div>
+                            <!-- 4. Ünite: Nüfus ve Yerleşme -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('nufusSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-people-group w-4 text-center mt-0.5 text-violet-500"></i>
+                                        <span class="text-[13px] leading-snug">4. Ünite: Nüfus ve Yerleşme</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform " id="nufusSub-chevron"></i>
+                                </button>
+                                <div id="nufusSub" class="pl-7 pr-2 py-1 space-y-1 hidden">
+                                    <a href="nufus-dagilisi.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-violet-600 dark:hover:text-violet-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Nüfusun Dağılışı</a>
+                                    <a href="koy-alti-yerlesmeleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-violet-600 dark:hover:text-violet-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Köy Altı Yerleşmeleri</a>
+                                    <a href="mesken-tipleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-violet-600 dark:hover:text-violet-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Kırsal Mesken Tipleri</a>
+                                </div>
+                            </div>
+                            <!-- 5. Ünite: Ekonomik Coğrafya -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('ekonomiSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-chart-line w-4 text-center mt-0.5 text-amber-500"></i>
+                                        <span class="text-[13px] leading-snug">5. Ünite: Ekonomik Coğrafya</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform " id="ekonomiSub-chevron"></i>
+                                </button>
+                                <div id="ekonomiSub" class="pl-7 pr-2 py-1 space-y-1 hidden">
+                                    <a href="tarim-urunleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Tarım Ürünleri Dağılımı</a>
+                                    <a href="hayvancilik.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'de Hayvancılık</a>
+                                    <a href="maden-isletmeleri.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Maden İşletmeleri ve Tesisleri</a>
+                                    <a href="petrol-boruhatlari.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Petrol Boru Hatları</a>
+                                    <a href="dogalgaz-boruhatlari.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Doğal Gaz Boru Hatları</a>
+                                    <a href="demiryollari.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Demiryolları ve YHT Ağı</a>
+                                    <a href="otoyollar.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Otoyolları</a>
+                                    <a href="limanlar.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Denizyolu Limanları</a>
+                                    <a href="ramsar-alanlari.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-amber-600 dark:hover:text-amber-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>Türkiye'nin Ramsar Alanları</a>
+                                </div>
+                            </div>
+                            <!-- 6. Ünite: Bölgeler Coğrafyası -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('bolgelerSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-map w-4 text-center mt-0.5 text-rose-500"></i>
+                                        <span class="text-[13px] leading-snug">6. Ünite: Bölgeler Coğrafyası</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform " id="bolgelerSub-chevron"></i>
+                                </button>
+                                <div id="bolgelerSub" class="pl-7 pr-2 py-1 space-y-1 hidden">
+                                    <a href="bolgeler-cografyasi.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-rose-600 dark:hover:text-rose-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>İşlevsel Bölgeler (GAP, DAP...)</a>
+                                </div>
+                            </div>
+                            <!-- 7. Ünite: Güncel TÜİK Verileri -->
+                            <div class="space-y-1 mt-2">
+                                <button onclick="toggleSubNav('tuikSub', this)" class="w-full flex items-center justify-between bg-slate-50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-200 px-3 py-3 rounded-xl font-semibold transition-transform hover:scale-[1.02] mb-1">
+                                    <div class="flex items-start space-x-3">
+                                        <i class="fas fa-square-poll-vertical w-4 text-center mt-0.5 text-red-500"></i>
+                                        <span class="text-[13px] leading-snug">7. Ünite: Güncel TÜİK Verileri</span>
+                                    </div>
+                                    <i class="fas fa-chevron-down text-[10px] opacity-70 shrink-0 ml-2 mt-1 transition-transform rotate-180" id="tuikSub-chevron"></i>
+                                </button>
+                                <div id="tuikSub" class="pl-7 pr-2 py-1 space-y-1 ">
+                                    <a href="tuik-hayvancilik.html" class="block text-[12.5px] text-red-600 dark:text-red-400 font-bold py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 "></i>TÜİK: Hayvancılık</a>
+                                    <a href="tuik-tarim.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>TÜİK: Tarım</a>
+                                    <a href="tuik-nufus.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>TÜİK: Nüfus (ADNKS)</a>
+                                    <a href="tuik-ekonomi.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>TÜİK: Ekonomi & Turizm</a>
+                                    <a href="tuik-afetler.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>TÜİK: Doğal Afetler</a>
+                                    <a href="tuik-ormanlar.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>TÜİK: Orman Varlığı</a>
+                                    <a href="tuik-koruma.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>TÜİK: Koruma Alanları</a>
+                                    <a href="tuik-ilkler.html" class="block text-[12.5px] font-medium text-slate-500 dark:text-slate-200 hover:text-red-600 dark:hover:text-red-400 py-1.5 transition-colors"><i class="fas fa-caret-right mr-1.5 opacity-50"></i>TÜİK: İlkler & Sakin Şehir</a>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 space-y-8 lg:space-y-12">
+            
+            <header class="space-y-4 bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700 relative overflow-hidden">
+                <div class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div>
+                        <a href="../cografya.html" class="inline-flex items-center text-emerald-600 dark:text-emerald-400 hover:text-emerald-800 dark:hover:text-emerald-300 font-bold text-sm mb-4 transition-colors">
+                            <i class="fas fa-arrow-left mr-2"></i>Coğrafya Ana Menüye Dön
+                        </a>
+                        <h2 class="text-3xl md:text-4xl font-black text-slate-900 dark:text-white leading-tight tracking-tight uppercase">TÜİK: Hayvancılık İstatistikleri</h2>
+                        <p class="text-slate-500 dark:text-slate-200 mt-2 text-sm">TÜİK Güncel Hayvancılık, Kümes, Arıcılık ve Su Ürünleri İstatistikleri.</p>
+                    </div>
+                    <div class="shrink-0">
+                        <span class="inline-flex items-center bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 font-black text-xs px-4 py-2.5 rounded-2xl border border-emerald-100 dark:border-emerald-900/50 uppercase tracking-widest shadow-sm">
+                            <i class="fas fa-calendar-check mr-2 text-emerald-500"></i> TÜİK 2025 Güncellemesi
+                        </span>
+                    </div>
+                </div>
+            </header>
+
+            <section id="kucukbas" class="note-card bg-white dark:bg-slate-800 p-6 md:p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm space-y-8 scroll-mt-28">
+                <div class="border-b border-slate-100 dark:border-slate-700 pb-4 flex items-center space-x-3">
+                    <div class="bg-emerald-100 dark:bg-emerald-900/50 p-2.5 rounded-xl text-emerald-600 dark:text-emerald-400">
+                        <i class="fas fa-sheep text-lg"></i>
+                    </div>
+                    <h3 class="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-wide">Küçükbaş Hayvancılık ve Dağılımı</h3>
+                </div>
+
+                <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                    <!-- KOYUN -->
+                    <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-bl-[80px] -mr-3 -mt-3"></div>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-3xl">🐑</span>
+                                <h4 class="font-extrabold text-lg text-slate-900 dark:text-white group-hover:text-emerald-650 dark:group-hover:text-emerald-400 transition-colors">Koyun</h4>
+                            </div>
+                            <ul class="space-y-2 text-[12px] text-slate-650 dark:text-slate-350 leading-relaxed list-none pl-0">
+                                <li class="flex items-start"><i class="fas fa-check text-emerald-500 mr-2 mt-1 shrink-0"></i> İç kesimlerdeki bozkır alanlar elverişlidir.</li>
+                                <li class="flex items-start"><i class="fas fa-check text-emerald-500 mr-2 mt-1 shrink-0"></i> Karasal iklimden dolayı çok geniş bir alanda yetiştirilir.</li>
+                                <li class="flex items-start"><i class="fas fa-check text-emerald-500 mr-2 mt-1 shrink-0"></i> Genellikle mera hayvancılığı şeklinde yapılır.</li>
+                            </ul>
+                        </div>
+                        
+                        
+                            <!-- Harita Görseli -->
+                            <div class="mt-4 bg-white dark:bg-slate-850 p-1.5 rounded-xl border border-slate-200/60 dark:border-slate-700/50 flex justify-center items-center overflow-hidden">
+                                <img src="../assets/images/cografya/koyun.png" alt="Koyun Dağılış Haritası" class="max-w-full h-auto rounded-lg shadow-sm hover:scale-[1.03] transition-transform duration-300 cursor-zoom-in" onclick="openMapModal(this.src, 'Koyun Dağılış Haritası')">
+                            </div>
+                        <div class="mt-6 pt-4 border-t border-slate-200/50 dark:border-slate-700/50 space-y-3">
+                            <span class="text-[11px] font-black text-emerald-600 dark:text-emerald-450 uppercase tracking-wider block">TÜİK 2025 Lider İller:</span>
+                            <div class="grid grid-cols-3 gap-2 text-center text-xs font-bold">
+                                <div class="bg-emerald-100/60 dark:bg-emerald-950/40 p-2 rounded-xl border border-emerald-200/40 dark:border-emerald-900/30">
+                                    <span class="text-[10px] text-emerald-600 dark:text-emerald-400 block mb-0.5">1. Sırada</span>
+                                    <span class="text-slate-800 dark:text-white block">Van</span>
+                                </div>
+                                <div class="bg-slate-200/50 dark:bg-slate-800/80 p-2 rounded-xl">
+                                    <span class="text-[10px] text-slate-400 dark:text-slate-300 block mb-0.5">2. Sırada</span>
+                                    <span class="text-slate-800 dark:text-white block">Konya</span>
+                                </div>
+                                <div class="bg-slate-200/50 dark:bg-slate-800/80 p-2 rounded-xl">
+                                    <span class="text-[10px] text-slate-400 dark:text-slate-300 block mb-0.5">3. Sırada</span>
+                                    <span class="text-slate-800 dark:text-white block">Şanlıurfa</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- KIL KEÇİSİ -->
+                    <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-sky-500/5 rounded-bl-[80px] -mr-3 -mt-3"></div>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-3xl">🐐</span>
+                                <h4 class="font-extrabold text-lg text-slate-900 dark:text-white group-hover:text-sky-650 dark:group-hover:text-sky-400 transition-colors">Kıl (Kara) Keçisi</h4>
+                            </div>
+                            <ul class="space-y-2 text-[12px] text-slate-650 dark:text-slate-350 leading-relaxed list-none pl-0">
+                                <li class="flex items-start"><i class="fas fa-check text-sky-500 mr-2 mt-1 shrink-0"></i> Maki ve çalılarla beslenir.</li>
+                                <li class="flex items-start"><i class="fas fa-check text-sky-500 mr-2 mt-1 shrink-0"></i> Eğimli arazileri sever. (Toros Dağları)</li>
+                                <li class="flex items-start text-rose-600 dark:text-rose-400"><i class="fas fa-exclamation-triangle text-rose-500 mr-2 mt-1 shrink-0"></i> Ormanlara zarar verdiği gerekçesiyle "Keçi Islah Projesi" adı altında sınırlamalar getirildi!</li>
+                            </ul>
+                        </div>
+                        
+                        
+                            <!-- Harita Görseli -->
+                            <div class="mt-4 bg-white dark:bg-slate-850 p-1.5 rounded-xl border border-slate-200/60 dark:border-slate-700/50 flex justify-center items-center overflow-hidden">
+                                <img src="../assets/images/cografya/kil_kecisi.png" alt="Kıl Keçisi Dağılış Haritası" class="max-w-full h-auto rounded-lg shadow-sm hover:scale-[1.03] transition-transform duration-300 cursor-zoom-in" onclick="openMapModal(this.src, 'Kıl Keçisi Dağılış Haritası')">
+                            </div>
+                        <div class="mt-6 pt-4 border-t border-slate-200/50 dark:border-slate-700/50 space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[11px] font-black text-sky-600 dark:text-sky-455 uppercase tracking-wider block">TÜİK 2025 Lider İller:</span>
+                                <span class="bg-rose-100 dark:bg-rose-950/40 text-rose-600 dark:text-rose-450 font-black text-[9px] px-2 py-0.5 rounded uppercase tracking-wider scale-90">İnatçı & Boğa Burcu</span>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 text-center text-xs font-bold">
+                                <div class="bg-sky-100/60 dark:bg-sky-950/40 p-2 rounded-xl border border-sky-200/40 dark:border-sky-900/30">
+                                    <span class="text-[10px] text-sky-600 dark:text-sky-400 block mb-0.5">1. Sırada</span>
+                                    <span class="text-slate-800 dark:text-white block">Mersin</span>
+                                </div>
+                                <div class="bg-slate-200/50 dark:bg-slate-800/80 p-2 rounded-xl">
+                                    <span class="text-[10px] text-slate-400 dark:text-slate-300 block mb-0.5">2. Sırada</span>
+                                    <span class="text-slate-800 dark:text-white block">Antalya</span>
+                                </div>
+                                <div class="bg-slate-200/50 dark:bg-slate-800/80 p-2 rounded-xl">
+                                    <span class="text-[10px] text-slate-400 dark:text-slate-300 block mb-0.5">3. Sırada</span>
+                                    <span class="text-slate-800 dark:text-white block">Siirt</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TİFTİK KEÇİSİ -->
+                    <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-pink-500/5 rounded-bl-[80px] -mr-3 -mt-3"></div>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-3xl">🐏</span>
+                                <h4 class="font-extrabold text-lg text-slate-900 dark:text-white group-hover:text-pink-650 dark:group-hover:text-pink-400 transition-colors">Tiftik Keçisi</h4>
+                            </div>
+                            <ul class="space-y-2 text-[12px] text-slate-650 dark:text-slate-350 leading-relaxed list-none pl-0">
+                                <li class="flex items-start"><i class="fas fa-check text-pink-500 mr-2 mt-1 shrink-0"></i> Eti, sütü ve kılı (tiftik) son derece değerlidir.</li>
+                                <li class="flex items-start"><i class="fas fa-check text-pink-500 mr-2 mt-1 shrink-0"></i> Literatürde <strong>Ankara Keçisi</strong> olarak bilinir.</li>
+                            </ul>
+                        </div>
+                        
+                        
+                            <!-- Harita Görseli -->
+                            <div class="mt-4 bg-white dark:bg-slate-850 p-1.5 rounded-xl border border-slate-200/60 dark:border-slate-700/50 flex justify-center items-center overflow-hidden">
+                                <img src="../assets/images/cografya/tiftik_kecisi.png" alt="Tiftik Keçisi Dağılış Haritası" class="max-w-full h-auto rounded-lg shadow-sm hover:scale-[1.03] transition-transform duration-300 cursor-zoom-in" onclick="openMapModal(this.src, 'Tiftik Keçisi Dağılış Haritası')">
+                            </div>
+                        <div class="mt-6 pt-4 border-t border-slate-200/50 dark:border-slate-700/50 space-y-3">
+                            <span class="text-[11px] font-black text-pink-600 dark:text-pink-455 uppercase tracking-wider block">TÜİK 2025 Lider İller:</span>
+                            <div class="grid grid-cols-3 gap-2 text-center text-xs font-bold">
+                                <div class="bg-pink-100/60 dark:bg-pink-950/40 p-2 rounded-xl border border-pink-200/40 dark:border-pink-900/30">
+                                    <span class="text-[10px] text-pink-600 dark:text-pink-400 block mb-0.5">1. Sırada</span>
+                                    <span class="text-slate-800 dark:text-white block">Ankara</span>
+                                </div>
+                                <div class="bg-slate-200/50 dark:bg-slate-800/80 p-2 rounded-xl">
+                                    <span class="text-[10px] text-slate-400 dark:text-slate-300 block mb-0.5">2. Sırada</span>
+                                    <span class="text-slate-800 dark:text-white block">Siirt</span>
+                                </div>
+                                <div class="bg-slate-200/50 dark:bg-slate-800/80 p-2 rounded-xl">
+                                    <span class="text-[10px] text-slate-400 dark:text-slate-300 block mb-0.5">3. Sırada</span>
+                                    <span class="text-slate-800 dark:text-white block">Eskişehir</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+<section id="buyukbas" class="note-card bg-white dark:bg-slate-800 p-6 md:p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm space-y-8 scroll-mt-28">
+                <div class="border-b border-slate-100 dark:border-slate-700 pb-4 flex items-center space-x-3">
+                    <div class="bg-amber-100 dark:bg-amber-900/50 p-2.5 rounded-xl text-amber-600 dark:text-amber-400">
+                        <i class="fas fa-cow text-lg"></i>
+                    </div>
+                    <h3 class="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-wide">Büyükbaş Hayvancılık ve Dağılımı</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- SIĞIR -->
+                    <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-amber-500/5 rounded-bl-[80px] -mr-3 -mt-3"></div>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-3xl">🐄</span>
+                                <h4 class="font-extrabold text-lg text-slate-900 dark:text-white group-hover:text-amber-650 dark:group-hover:text-amber-400 transition-colors">Sığır</h4>
+                            </div>
+                            <ul class="space-y-2 text-[12px] text-slate-650 dark:text-slate-350 leading-relaxed list-none pl-0">
+                                <li class="flex items-start"><i class="fas fa-check text-amber-500 mr-2 mt-1 shrink-0"></i> <strong>Çayır alanlarında</strong> mera hayvancılığı şeklinde (özellikle Doğu Anadolu'da) yetiştirilir.</li>
+                                <li class="flex items-start"><i class="fas fa-check text-amber-500 mr-2 mt-1 shrink-0"></i> <strong>Büyük şehirlerin çevresinde</strong> ise pazar yakınlığından dolayı <strong>besi (ahır) hayvancılığı</strong> şeklinde gelişmiştir.</li>
+                                <li class="flex items-start"><i class="fas fa-check text-amber-500 mr-2 mt-1 shrink-0"></i> Eti, sütü, derisi ve peyniri son derece değerlidir.</li>
+                            </ul>
+                        </div>
+                        
+                        
+                            <!-- Harita Görseli -->
+                            <div class="mt-4 bg-white dark:bg-slate-850 p-1.5 rounded-xl border border-slate-200/60 dark:border-slate-700/50 flex justify-center items-center overflow-hidden">
+                                <img src="../assets/images/cografya/sigir_inek.png" alt="Sığır Dağılış Haritası" class="max-w-full h-auto rounded-lg shadow-sm hover:scale-[1.03] transition-transform duration-300 cursor-zoom-in" onclick="openMapModal(this.src, 'Sığır Dağılış Haritası')">
+                            </div>
+                        <div class="mt-6 pt-4 border-t border-slate-200/50 dark:border-slate-700/50 space-y-3">
+                            <span class="text-[11px] font-black text-amber-600 dark:text-amber-455 uppercase tracking-wider block">TÜİK 2025 Lider İller:</span>
+                            <div class="grid grid-cols-3 gap-2 text-center text-xs font-bold">
+                                <div class="bg-amber-100/60 dark:bg-amber-950/40 p-2 rounded-xl border border-amber-200/40 dark:border-amber-900/30">
+                                    <span class="text-[10px] text-amber-600 dark:text-amber-400 block mb-0.5">1. Sırada</span>
+                                    <span class="text-slate-800 dark:text-white block">Konya</span>
+                                </div>
+                                <div class="bg-slate-200/50 dark:bg-slate-800/80 p-2 rounded-xl">
+                                    <span class="text-[10px] text-slate-400 dark:text-slate-300 block mb-0.5">2. Sırada</span>
+                                    <span class="text-slate-800 dark:text-white block">İzmir</span>
+                                </div>
+                                <div class="bg-slate-200/50 dark:bg-slate-800/80 p-2 rounded-xl">
+                                    <span class="text-[10px] text-slate-400 dark:text-slate-300 block mb-0.5">3. Sırada</span>
+                                    <span class="text-slate-800 dark:text-white block">Erzurum</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MANDA -->
+                    <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-violet-500/5 rounded-bl-[80px] -mr-3 -mt-3"></div>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-3xl">🐃</span>
+                                <h4 class="font-extrabold text-lg text-slate-900 dark:text-white group-hover:text-violet-650 dark:group-hover:text-violet-400 transition-colors">Manda (Camış)</h4>
+                            </div>
+                            <ul class="space-y-2 text-[12px] text-slate-650 dark:text-slate-350 leading-relaxed list-none pl-0">
+                                <li class="flex items-start"><i class="fas fa-check text-violet-500 mr-2 mt-1 shrink-0"></i> Türkiye'deki toplam sayıları <strong>180 bin</strong> civarındadır.</li>
+                                <li class="flex items-start text-emerald-600 dark:text-emerald-400"><i class="fas fa-tint text-emerald-500 mr-2 mt-1 shrink-0"></i> Bataklık ve sulak alanları çok sever; suya girerek serinleme ihtiyacı duyar.</li>
+                                <li class="flex items-start"><i class="fas fa-check text-violet-500 mr-2 mt-1 shrink-0"></i> Uzakdoğu Asya kökenli bir hayvandır; kaymağı ve sütü çok değerlidir.</li>
+                            </ul>
+                        </div>
+                        
+                        
+                            <!-- Harita Görseli -->
+                            <div class="mt-4 bg-white dark:bg-slate-850 p-1.5 rounded-xl border border-slate-200/60 dark:border-slate-700/50 flex justify-center items-center overflow-hidden">
+                                <img src="../assets/images/cografya/manda.png" alt="Manda Dağılış Haritası" class="max-w-full h-auto rounded-lg shadow-sm hover:scale-[1.03] transition-transform duration-300 cursor-zoom-in" onclick="openMapModal(this.src, 'Manda Dağılış Haritası')">
+                            </div>
+                        <div class="mt-6 pt-4 border-t border-slate-200/50 dark:border-slate-700/50 space-y-3">
+                            <span class="text-[11px] font-black text-violet-600 dark:text-violet-455 uppercase tracking-wider block">TÜİK 2025 Lider İl:</span>
+                            <div class="bg-violet-100/60 dark:bg-violet-950/40 p-3 rounded-xl border border-violet-200/40 dark:border-violet-900/30 text-center font-bold text-sm">
+                                <span class="text-[10px] text-violet-650 dark:text-violet-400 block mb-0.5">Açık Ara 1. Sırada</span>
+                                <span class="text-slate-800 dark:text-white block text-base font-black">👑 SAMSUN</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+<section id="kumes" class="note-card bg-white dark:bg-slate-800 p-6 md:p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm space-y-8 scroll-mt-28">
+                <div class="border-b border-slate-100 dark:border-slate-700 pb-4 flex items-center space-x-3">
+                    <div class="bg-red-100 dark:bg-red-900/50 p-2.5 rounded-xl text-red-600 dark:text-red-400">
+                        <i class="fas fa-egg text-lg"></i>
+                    </div>
+                    <h3 class="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-wide">Kümes (Tavuk) Hayvancılığı</h3>
+                </div>
+
+                <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                    <div class="space-y-6">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-3xl">🐓</span>
+                            <h4 class="font-extrabold text-xl text-slate-900 dark:text-white">Kümes Hayvancılığı Özellikleri</h4>
+                        </div>
+                        
+                        <ul class="space-y-3.5 text-xs text-slate-650 dark:text-slate-350 leading-relaxed list-none pl-0">
+                            <li class="flex items-start">
+                                <i class="fas fa-map-marker-alt text-red-500 mr-3 mt-1 shrink-0 text-sm"></i>
+                                <span><strong>Büyük kentlerin çevresinde</strong> yüksek gelişim gösterir. Bunun temel nedeni iklim koşulları değil, <strong>tüketici nüfusa (pazara) yakınlıktır.</strong></span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-industry text-red-500 mr-3 mt-1 shrink-0 text-sm"></i>
+                                <span>Kapalı ve modern entegre tesislerde yapıldığından <strong>iklim koşullarından etkilenmez</strong>; üretimde yıldan yıla dalgalanma görülmez.</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-seedling text-red-500 mr-3 mt-1 shrink-0 text-sm"></i>
+                                <span>Hazır yem ile tesislerde besleme esastır.</span>
+                            </li>
+                        </ul>
+
+                        
+                            <!-- Harita Görseli -->
+                            <div class="mt-4 bg-white dark:bg-slate-850 p-1.5 rounded-xl border border-slate-200/60 dark:border-slate-700/50 flex justify-center items-center overflow-hidden">
+                                <img src="../assets/images/cografya/kumes.png" alt="Kümes Hayvancılığı Haritası" class="max-w-full h-auto rounded-lg shadow-sm hover:scale-[1.03] transition-transform duration-300 cursor-zoom-in" onclick="openMapModal(this.src, 'Kümes Hayvancılığı Haritası')">
+                            </div>
+                        <div class="pt-4 border-t border-slate-100 dark:border-slate-700/50 space-y-3">
+                            <span class="text-xs font-black text-red-600 dark:text-red-400 uppercase tracking-widest block">TÜİK 2025 En Önde Gelen İller:</span>
+                            <div class="grid grid-cols-4 gap-2 text-center text-xs font-black">
+                                <div class="bg-red-50 dark:bg-red-950/20 p-2.5 rounded-xl border border-red-100 dark:border-red-900/40 text-red-700 dark:text-red-400">
+                                    <span class="block text-[9px] opacity-75 mb-0.5">1. Sıra</span>
+                                    <span>Manisa</span>
+                                </div>
+                                <div class="bg-slate-100 dark:bg-slate-900 p-2.5 rounded-xl text-slate-800 dark:text-white">
+                                    <span class="block text-[9px] text-slate-400 dark:text-slate-300 mb-0.5">2. Sıra</span>
+                                    <span>Bolu</span>
+                                </div>
+                                <div class="bg-slate-100 dark:bg-slate-900 p-2.5 rounded-xl text-slate-800 dark:text-white">
+                                    <span class="block text-[9px] text-slate-400 dark:text-slate-300 mb-0.5">3. Sıra</span>
+                                    <span>Sakarya</span>
+                                </div>
+                                <div class="bg-slate-100 dark:bg-slate-900 p-2.5 rounded-xl text-slate-800 dark:text-white">
+                                    <span class="block text-[9px] text-slate-400 dark:text-slate-300 mb-0.5">4. Sıra</span>
+                                    <span>Mersin</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SINAV HAFIZASI UYARI KART -->
+                    <div class="bg-gradient-to-br from-rose-500/10 to-pink-500/10 dark:from-rose-950/30 dark:to-pink-950/30 p-6 md:p-8 rounded-3xl border border-rose-200/50 dark:border-rose-900/50 flex flex-col justify-center relative overflow-hidden">
+                        <div class="absolute -right-4 -bottom-4 w-32 h-32 bg-rose-500/10 rounded-full blur-xl"></div>
+                        <div class="relative z-10 space-y-4">
+                            <span class="inline-flex items-center bg-rose-500 text-white font-black text-[10px] px-3 py-1 rounded-full uppercase tracking-wider shadow-sm">
+                                <i class="fas fa-lightbulb mr-1.5"></i> Sınav Hafızası & Kritik Bilgi
+                            </span>
+                            <h4 class="text-lg font-black text-rose-900 dark:text-rose-200 leading-snug">Neden Beyaz Et Tüketimi Çok Fazladır?</h4>
+                            <p class="text-xs text-rose-800 dark:text-rose-350 leading-relaxed font-medium">
+                                Beyaz et (tavuk) tüketiminin kırmızı ete göre çok daha yaygın ve yoğun olmasının iki temel nedeni vardır:
+                            </p>
+                            <div class="space-y-2.5 text-xs text-rose-850 dark:text-rose-300">
+                                <div class="flex items-center space-x-3 bg-white/50 dark:bg-slate-800/40 p-2 rounded-xl">
+                                    <span class="text-xl">🩺</span>
+                                    <span><strong>Sağlık Açısından:</strong> Hafif, kolesterol oranının düşük ve sindiriminin kolay olması.</span>
+                                </div>
+                                <div class="flex items-center space-x-3 bg-white/50 dark:bg-slate-800/40 p-2 rounded-xl">
+                                    <span class="text-xl">💰</span>
+                                    <span><strong>Fiyat Avantajı:</strong> Kırmızı ete göre son derece uygun fiyatlı olması.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+<section id="aricilik" class="note-card bg-white dark:bg-slate-800 p-6 md:p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm space-y-8 scroll-mt-28">
+                <div class="border-b border-slate-100 dark:border-slate-700 pb-4 flex items-center space-x-3">
+                    <div class="bg-yellow-100 dark:bg-yellow-900/50 p-2.5 rounded-xl text-yellow-600 dark:text-yellow-400">
+                        <i class="fas fa-bee text-lg"></i>
+                    </div>
+                    <h3 class="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-wide">Arıcılık ve İpek Böcekçiliği</h3>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- ARICILIK -->
+                    <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-yellow-500/5 rounded-bl-[80px] -mr-3 -mt-3"></div>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-3xl">🐝</span>
+                                <h4 class="font-extrabold text-lg text-slate-900 dark:text-white group-hover:text-yellow-650 dark:group-hover:text-yellow-400 transition-colors">Arıcılık</h4>
+                            </div>
+                            <ul class="space-y-2 text-[12px] text-slate-650 dark:text-slate-350 leading-relaxed list-none pl-0">
+                                <li class="flex items-start"><i class="fas fa-check text-yellow-500 mr-2 mt-1 shrink-0"></i> Doğrudan <strong>bitki örtüsü (flora) çeşitliliğine</strong> bağlı olarak gelişir.</li>
+                                <li class="flex items-start"><i class="fas fa-check text-yellow-500 mr-2 mt-1 shrink-0"></i> Tarımın zor olduğu engebeli, engebeli ve <strong>dağlık alanlarda</strong> yaygın bir geçim kaynağıdır.</li>
+                                <li class="flex items-start text-amber-600 dark:text-amber-400"><i class="fas fa-truck text-amber-500 mr-2 mt-1 shrink-0"></i> Bölgeler arasındaki çiçek açma dönemlerinin farklılığı, Türkiye'de <strong>"Gezgin Arıcılık"</strong> faaliyetlerini doğurmuştur!</li>
+                            </ul>
+                        </div>
+                        
+                        
+                            <!-- Harita Görseli -->
+                            <div class="mt-4 bg-white dark:bg-slate-850 p-1.5 rounded-xl border border-slate-200/60 dark:border-slate-700/50 flex justify-center items-center overflow-hidden">
+                                <img src="../assets/images/cografya/aricilik.png" alt="Arıcılık Dağılış Haritası" class="max-w-full h-auto rounded-lg shadow-sm hover:scale-[1.03] transition-transform duration-300 cursor-zoom-in" onclick="openMapModal(this.src, 'Arıcılık Dağılış Haritası')">
+                            </div>
+                        <div class="mt-6 pt-4 border-t border-slate-200/50 dark:border-slate-700/50 space-y-3">
+                            <span class="text-[11px] font-black text-yellow-600 dark:text-yellow-455 uppercase tracking-wider block">TÜİK 2025 Lider İller:</span>
+                            <div class="grid grid-cols-3 gap-2 text-center text-xs font-bold">
+                                <div class="bg-yellow-100/60 dark:bg-yellow-950/40 p-2 rounded-xl border border-yellow-200/40 dark:border-yellow-900/30">
+                                    <span class="text-[10px] text-yellow-600 dark:text-yellow-400 block mb-0.5">1. Sırada</span>
+                                    <span class="text-slate-800 dark:text-white block">Ordu</span>
+                                </div>
+                                <div class="bg-slate-200/50 dark:bg-slate-800/80 p-2 rounded-xl">
+                                    <span class="text-[10px] text-slate-400 dark:text-slate-300 block mb-0.5">2. Sırada</span>
+                                    <span class="text-slate-800 dark:text-white block">Adana</span>
+                                </div>
+                                <div class="bg-slate-200/50 dark:bg-slate-800/80 p-2 rounded-xl">
+                                    <span class="text-[10px] text-slate-400 dark:text-slate-300 block mb-0.5">3. Sırada</span>
+                                    <span class="text-slate-800 dark:text-white block">Muğla</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- İPEK BÖCEKÇİLİĞİ -->
+                    <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 flex flex-col justify-between hover:shadow-md transition-shadow relative overflow-hidden group">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-bl-[80px] -mr-3 -mt-3"></div>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-3xl">🐛</span>
+                                <h4 class="font-extrabold text-lg text-slate-900 dark:text-white group-hover:text-emerald-650 dark:group-hover:text-emerald-400 transition-colors">İpek Böcekçiliği</h4>
+                            </div>
+                            <ul class="space-y-2 text-[12px] text-slate-650 dark:text-slate-350 leading-relaxed list-none pl-0">
+                                <li class="flex items-start"><i class="fas fa-check text-emerald-500 mr-2 mt-1 shrink-0"></i> Yaş koza üretimi için dut ağacının varlığı şarttır; <strong>dut yaprağı</strong> ile beslenir.</li>
+                                <li class="flex items-start text-red-500"><i class="fas fa-chart-line-down mr-2 mt-1 shrink-0"></i> Suni (yapay) ipek üretiminin artması nedeniyle son yıllarda geleneksel üretimde gerileme olmuştur.</li>
+                                <li class="flex items-start"><i class="fas fa-check text-emerald-500 mr-2 mt-1 shrink-0"></i> Üretim faaliyetleri devlet tarafından <strong>Kozabirlik</strong> aracılığıyla desteklenmektedir.</li>
+                            </ul>
+                        </div>
+                        
+                        
+                            <!-- Harita Görseli -->
+                            <div class="mt-4 bg-white dark:bg-slate-850 p-1.5 rounded-xl border border-slate-200/60 dark:border-slate-700/50 flex justify-center items-center overflow-hidden">
+                                <img src="../assets/images/cografya/ipek_bocegi.png" alt="İpek Böcekçiliği Dağılış Haritası" class="max-w-full h-auto rounded-lg shadow-sm hover:scale-[1.03] transition-transform duration-300 cursor-zoom-in" onclick="openMapModal(this.src, 'İpek Böcekçiliği Dağılış Haritası')">
+                            </div>
+                        <div class="mt-6 pt-4 border-t border-slate-200/50 dark:border-slate-700/50 space-y-3">
+                            <span class="text-[11px] font-black text-emerald-600 dark:text-emerald-455 uppercase tracking-wider block">TÜİK 2025 Lider İller:</span>
+                            <div class="grid grid-cols-3 gap-2 text-center text-xs font-bold">
+                                <div class="bg-emerald-100/60 dark:bg-emerald-950/40 p-2 rounded-xl border border-emerald-200/40 dark:border-emerald-900/30">
+                                    <span class="text-[10px] text-emerald-600 dark:text-emerald-400 block mb-0.5">1. Sırada</span>
+                                    <span class="text-slate-800 dark:text-white block">Diyarbakır</span>
+                                </div>
+                                <div class="bg-slate-200/50 dark:bg-slate-800/80 p-2 rounded-xl">
+                                    <span class="text-[10px] text-slate-400 dark:text-slate-300 block mb-0.5">2. Sırada</span>
+                                    <span class="text-slate-800 dark:text-white block">Batman</span>
+                                </div>
+                                <div class="bg-slate-200/50 dark:bg-slate-800/80 p-2 rounded-xl">
+                                    <span class="text-[10px] text-slate-400 dark:text-slate-300 block mb-0.5">3. Sırada</span>
+                                    <span class="text-slate-800 dark:text-white block">Muğla</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+<section id="balikcilik" class="note-card bg-white dark:bg-slate-800 p-6 md:p-8 rounded-3xl border border-slate-100 dark:border-slate-700 shadow-sm space-y-8 scroll-mt-28">
+                <div class="border-b border-slate-100 dark:border-slate-700 pb-4 flex items-center space-x-3">
+                    <div class="bg-sky-100 dark:bg-sky-900/50 p-2.5 rounded-xl text-sky-600 dark:text-sky-400">
+                        <i class="fas fa-fish text-lg"></i>
+                    </div>
+                    <h3 class="text-2xl font-black text-slate-900 dark:text-white uppercase tracking-wide">Balıkçılık ve Kültür Yetiştiriciliği (2025 Verileri)</h3>
+                </div>
+
+                <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+                    <!-- ÜRETİM REKORU VE AVLANMA -->
+                    <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 space-y-6">
+                        <div class="flex items-center space-x-3 border-b border-slate-200/60 dark:border-slate-750 pb-3">
+                            <span class="text-2xl">🛥️</span>
+                            <h4 class="font-extrabold text-base text-slate-900 dark:text-white">Deniz Balıkçılığı ve Cumhuriyet Rekoru</h4>
+                        </div>
+                        
+                        <div class="bg-sky-50 dark:bg-sky-950/20 p-4 rounded-xl border border-sky-100 dark:border-sky-900/50 text-xs text-sky-900 dark:text-sky-350 leading-relaxed font-semibold">
+                            📈 <strong>Tarihi Rekor:</strong> 2025 yılı, Türkiye su ürünleri tarihinde üretim miktarının <strong>1 milyon 20 bin ton</strong> seviyesine ulaşmasıyla <strong>Cumhuriyet tarihinin en yüksek rekor yılı</strong> olarak kayıtlara geçmiştir!
+                        </div>
+
+                        <p class="text-xs text-slate-650 dark:text-slate-350 leading-relaxed">
+                            Deniz balıkları avcılığında, özellikle uygulanan <strong>sıkı kota sistemleri</strong> ve <strong>elverişli iklim koşullarının</strong> etkisiyle son derece verimli bir sezon geçirilmiştir.
+                        </p>
+
+                        <div class="space-y-2">
+                            <span class="text-[10px] font-black text-sky-600 dark:text-sky-400 uppercase tracking-widest block">Üretim Miktarında Önde Gelen Balık Türleri:</span>
+                            <div class="grid grid-cols-3 gap-2 text-center font-bold text-xs">
+                                <div class="bg-sky-100/60 dark:bg-sky-900/30 p-2.5 rounded-xl text-sky-850 dark:text-sky-300">
+                                    <span class="block text-[9px] uppercase tracking-wide opacity-80">1. Lider</span>
+                                    <span>🐟 Hamsi</span>
+                                </div>
+                                <div class="bg-slate-200/50 dark:bg-slate-800 p-2.5 rounded-xl text-slate-850 dark:text-slate-300">
+                                    <span class="block text-[9px] uppercase tracking-wide opacity-80">2. Sıra</span>
+                                    <span>🐟 Palamut</span>
+                                </div>
+                                <div class="bg-slate-200/50 dark:bg-slate-800 p-2.5 rounded-xl text-slate-850 dark:text-slate-300">
+                                    <span class="block text-[9px] uppercase tracking-wide opacity-80">3. Sıra</span>
+                                    <span>🐟 Sardalya</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- KÜLTÜR YETİŞTİRİCİLİĞİ VE İÇ SULAR -->
+                    <div class="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 space-y-6">
+                        <div class="flex items-center space-x-3 border-b border-slate-200/60 dark:border-slate-750 pb-3">
+                            <span class="text-2xl">🐟</span>
+                            <h4 class="font-extrabold text-base text-slate-900 dark:text-white">Kültür Balıkçılığı (Yetiştiricilik) Dağılımı</h4>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-150 dark:border-slate-700 shadow-sm text-center">
+                                <span class="text-2xl font-black text-sky-600 dark:text-sky-400 block mb-0.5">%70</span>
+                                <span class="text-[10px] font-bold text-slate-400 dark:text-slate-300 uppercase tracking-widest block">Denizlerde Üretim</span>
+                            </div>
+                            <div class="bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-150 dark:border-slate-700 shadow-sm text-center">
+                                <span class="text-2xl font-black text-emerald-600 dark:text-emerald-400 block mb-0.5">%30</span>
+                                <span class="text-[10px] font-bold text-slate-400 dark:text-slate-300 uppercase tracking-widest block">İç Sularda Üretim</span>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3.5 text-xs text-slate-650 dark:text-slate-350 leading-relaxed">
+                            <div class="flex items-start">
+                                <i class="fas fa-circle-chevron-right text-sky-500 mr-2.5 mt-1 shrink-0"></i>
+                                <span><strong>Yetiştirilen En Önemli Türler:</strong> İç sularda <strong>Alabalık</strong>, denizlerde ise <strong>Levrek</strong> ve <strong>Çipura</strong>'dır.</span>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-circle-chevron-right text-sky-500 mr-2.5 mt-1 shrink-0"></i>
+                                <span><strong>En Çok Balık Elde Edilen Yerler:</strong> Denizlerde açık ara <strong>Karadeniz</strong>, iç sularda ise <strong>Van Gölü</strong> (İnci Kefali ve yetiştiricilik) başı çekmektedir.</span>
+                            </div>
+                        </div>
+            </section>
+
+
+
+        </main>
+    </div>
+
+    <!-- Scriptler -->
+    <script>
+        function toggleSidebarSection(id, btn) {
+            const nav = document.getElementById(id);
+            const chevron = document.getElementById(id + '-chevron');
+            nav.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
+
+        function toggleSubNav(id, btn) {
+            const nav = document.getElementById(id);
+            const chevron = document.getElementById(id + '-chevron');
+            nav.classList.toggle('hidden');
+            chevron.classList.toggle('rotate-180');
+        }
+    </script>
+    
+    <!-- Arama motorunu aktifleştiren script -->
+    <script src="../assets/js/script.js"></script>
+
+    <!-- Harita Detay Modalı -->
+    <div id="mapModal" class="fixed inset-0 z-[100] bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-all duration-300" onclick="closeMapModal()">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-4xl w-full p-4 md:p-6 border border-slate-200 dark:border-slate-700 shadow-2xl relative" onclick="event.stopPropagation()">
+            <button onclick="closeMapModal()" class="absolute top-4 right-4 bg-slate-100 dark:bg-slate-900 hover:bg-slate-200 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-200 p-2.5 rounded-full transition-colors z-50 cursor-pointer">
+                <i class="fas fa-times text-lg"></i>
+            </button>
+            <h3 id="modalTitle" class="text-lg font-extrabold text-slate-900 dark:text-white mb-4 pr-10">Harita Detayı</h3>
+            <div class="bg-slate-50 dark:bg-slate-900 p-2 rounded-2xl border border-slate-200/50 dark:border-slate-800 flex justify-center items-center max-h-[80vh] overflow-hidden">
+                <img id="modalImage" src="" alt="Harita Detayı" class="max-w-full max-h-[70vh] h-auto object-contain rounded-xl">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openMapModal(src, title) {
+            document.getElementById('modalImage').src = src;
+            document.getElementById('modalTitle').innerText = title;
+            const modal = document.getElementById('mapModal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeMapModal() {
+            const modal = document.getElementById('mapModal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+        
+        // Escape tuşu ile kapatma
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeMapModal();
+        });
+    </script>
+</body>
+</html>
+
